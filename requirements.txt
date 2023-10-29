@@ -1,0 +1,9 @@
+Django~=4.2
+# djangorestframework>=3.14
+django-csp~=3.6
+django-otp~=1.2
+fido2~=1.1
+precis-i18n~=1.0
+user-agents>=2.2
+dj-database-url==2.1.0
+psycopg

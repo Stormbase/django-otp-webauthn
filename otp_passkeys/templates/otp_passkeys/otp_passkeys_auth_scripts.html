@@ -1,0 +1,4 @@
+{% load static %}{% spaceless %}
+{{ configuration|json_script:"otp_passkeys_config"}}
+<script type="module" src="{% static "otp_passkeys/otp_passkeys_auth.js" %}"></script>
+{% endspaceless %}
