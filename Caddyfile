@@ -1,0 +1,5 @@
+passkey-demo.xyz
+reverse_proxy :8000
+tls internal {
+    on_demand
+}

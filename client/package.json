@@ -1,0 +1,17 @@
+{
+  "name": "django-otp-passkeys",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "watch": "vite build --mode development --watch",
+    "start": "yarn watch",
+    "build": "vite build --minify",
+    "format": "prettier --write '**/*.{ts,js,jsx,css,scss}'",
+    "lint": "prettier --check '**/*.{ts,js,jsx,css,scss}'"
+  },
+  "devDependencies": {
+    "prettier": "2.x",
+    "typescript": "~5.1",
+    "vite": "~4.3"
+  }
+}

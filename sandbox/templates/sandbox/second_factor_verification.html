@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load otp_passkeys %}
+
+
+{% block title %}Security checkpoint{% endblock title %}
+{% block content %}
+
+<h1>Security checkpoint</h1>
+
+<p>Hello, {{ request.user }}</p>
+
+<p>You must confirm your identify by using your passkey.</p>
+
+
+<template id="passkey-verification-available-template">
+    <div>
+        <button id="passkey-verification-button">Confirm using Passkey</button>
+    </div>
+</template>
+
+<template id="passkey-verification-unavailable-template">
+    <p>Sorry, this browser does not support Passkeys. You cannot continue using this browser.</p>
+</template>
+
+<span id="passkey-verification-placeholder"></span>
+
+{% render_otp_passkeys_auth_scripts %}
+
+{% endblock content %}

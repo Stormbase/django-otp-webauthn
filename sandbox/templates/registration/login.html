@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load otp_passkeys %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+<h1>Login</h1>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button type="submit">Login</button>
+
+    {% render_otp_passkeys_auth_scripts username_field_selector="input[name='username']" %}
+</form>
+
+{% endblock content %}
