@@ -99,7 +99,8 @@ Additionally – once you've registered a passkey – your browser should prompt
 
 ## Known issues
 
-- I'm having issues using my Android 14 Pixel 5 as a roaming authenticator for passwordless logins (strangely it works properly when using already logged in and assing the 'verify now' link). It's telling me there are no passkeys available. I can do passwordless logins on GitHub using my Pixel so I'm guessing it's a bug in my code. I'm still investigating this.
+- [x] ~~I'm having issues using my Android 14 Pixel 5 as a roaming authenticator for passwordless logins (strangely it works properly when using already logged in and assing the 'verify now' link). It's telling me there are no passkeys available. I can do passwordless logins on GitHub using my Pixel so I'm guessing it's a bug in my code. I'm still investigating this.~~
+  - **Fixed!** This was because credentials were not created as discoverable credentials. Fixed by preferring the creation of discoverable credentials over non-discoverable credentials. When you use a browser like Safari or Chrome, credentials are always created as discoverable. Only Android appears to respect the creation options we passed it and created non-discoverable credentials by default. See commit `cfab0de`.
 
 ## Where is this going?
 
