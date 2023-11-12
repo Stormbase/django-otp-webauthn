@@ -16,6 +16,7 @@ from fido2.webauthn import (
     PublicKeyCredentialDescriptor,
     PublicKeyCredentialRpEntity,
     PublicKeyCredentialUserEntity,
+    ResidentKeyRequirement,
     UserVerificationRequirement,
 )
 from precis_i18n import get_profile
@@ -83,6 +84,38 @@ class FidoProvider:
         attestation = self.get_attestation_conveyance_preference(request)
 
         return Fido2Server(rp=rp, attestation=attestation)
+
+    def get_discoverable_credentials_preference(
+        self, request: HttpRequest
+    ) -> ResidentKeyRequirement:
+        """Determines if we'd like the authenticator to store the Passkey in authenticator memory
+        instead of encrypting and storing it on the the server. When stored on the server, the private key is encrypted
+        and encoded in the credential ID in an opaque format.
+
+        **Note**: this is sometimes referred to as "resident keys". Resident keys mean the same thing as "discoverable credentials".
+        Resident keys are an outdated term that was used in older  WebAuthn spec but still lives on in some places.
+        This library attempts to use the term "discoverable credentials" consistently.
+
+        Storing the Passkey in the authenticator makes it possible to do full passwordless authentication.
+        Without the relying party having to provide all credential IDs for a given user.
+        Providing credentials to unauthenticated users leaks information about the existence of the user
+        and their registered passkeys.
+
+        By default, this is set to 'preferred', which means we'd like the authenticator to store
+        the private key + metadata in persistent authenticator memory if possible.
+
+        Some devices - like security keys - have limited memory and can't store the private key and associated metadata
+        for dozens of credentials. Thus is why we don't set this to 'required' by default.
+
+        By default this is set to "preferred". This means we'd like the authenticator to store the private key
+        and associated metadata in authenticator memory if possible, but it's not required.
+
+        For source and for more information about discoverable credentials, see:
+        - https://www.w3.org/TR/webauthn-3/#client-side-discoverable-public-key-credential-source
+        - https://developers.yubico.com/WebAuthn/WebAuthn_Developer_Guide/Resident_Keys.html
+
+        """
+        return ResidentKeyRequirement.PREFERRED
 
     def get_attestation_conveyance_preference(
         self, request: HttpRequest
@@ -175,6 +208,9 @@ class FidoProvider:
             user=user_entity,
             credentials=credentials,
             user_verification=UserVerificationRequirement.PREFERRED,
+            resident_key_requirement=self.get_discoverable_credentials_preference(
+                request
+            ),
         )
 
         return options, state
