@@ -7,7 +7,7 @@ import { Config } from "./types";
 export async function getConfig(): Promise<Config> {
   let config: Config | null = null;
   const configElement = document.getElementById(
-    "otp_passkeys_config",
+    "otp_passkeys_config"
   ) as HTMLScriptElement;
 
   if (configElement) {

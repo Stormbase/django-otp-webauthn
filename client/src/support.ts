@@ -31,7 +31,7 @@ export async function bufferToBase64(buffer: ArrayBuffer): Promise<string> {
  * @returns
  */
 export async function encodeAuthenticatorRegistrationResponseAsJSON(
-  credential: PublicKeyCredential,
+  credential: PublicKeyCredential
 ): Promise<string> {
   const publicKeyCredential = credential;
   const rawId = await bufferToBase64(publicKeyCredential.rawId);
@@ -59,14 +59,13 @@ export async function encodeAuthenticatorRegistrationResponseAsJSON(
   return credentialJSON;
 }
 
-
 /**
  * Converts a PublicKeyCredential to a JSON string
  * @param credential the credential to encode as JSON
  * @returns
  */
 export async function encodeAuthenticatorAssertionResponseAsJSON(
-  credential: PublicKeyCredential,
+  credential: PublicKeyCredential
 ): Promise<string> {
   const publicKeyCredential = credential;
   const rawId = await bufferToBase64(publicKeyCredential.rawId);
@@ -94,7 +93,6 @@ export async function encodeAuthenticatorAssertionResponseAsJSON(
   return credentialJSON;
 }
 
-
 /**
  * Retrieves the CSRF token from the CSRF cookie
  */
@@ -108,7 +106,7 @@ export async function getCSRFToken(config: Config): Promise<string> {
       // Does this cookie string begin with the name we want?
       if (cookie.substring(0, cookieName.length + 1) === cookieName + "=") {
         cookieValue = decodeURIComponent(
-          cookie.substring(cookieName.length + 1),
+          cookie.substring(cookieName.length + 1)
         );
         break;
       }
@@ -128,7 +126,7 @@ export async function checkSupport(): Promise<Support> {
   // Check if running in a secure context
   if ("isSecureContext" in window && !window.isSecureContext) {
     console.warn(
-      "This page is not running in a secure context. WebAuthn will not work.",
+      "This page is not running in a secure context. WebAuthn will not work."
     );
     support.isSecureContext = false;
   }
@@ -159,7 +157,7 @@ export async function checkSupport(): Promise<Support> {
     )
   ) {
     console.log(
-      "This browser does not support user verifying platform authenticators.",
+      "This browser does not support user verifying platform authenticators."
     );
     support.isUserVerifyingPlatformAuthenticatorAvailable = false;
   }

@@ -13,8 +13,7 @@ import { BeginRegistrationPayload, Config } from "./types";
     const support = await checkSupport();
 
     const showPasskeyRegister =
-      support.isSecureContext &&
-      support.isWebAuthnAvailable
+      support.isSecureContext && support.isWebAuthnAvailable;
 
     setPasskeyRegisterVisible(showPasskeyRegister);
 
@@ -25,7 +24,7 @@ import { BeginRegistrationPayload, Config } from "./types";
 
 async function setupPasskeyRegistrationButton(config: Config): Promise<void> {
   const passkeyRegisterButton = document.getElementById(
-    "passkey-register-button",
+    "passkey-register-button"
   );
   if (!passkeyRegisterButton) {
     return;
@@ -38,16 +37,18 @@ async function setupPasskeyRegistrationButton(config: Config): Promise<void> {
     }
 
     await tryFetchCompleteRegistrationResponseData(config, credential);
-    alert("Registration complete")
+    alert("Registration complete");
   });
 }
 
 async function tryFetchCompleteRegistrationResponseData(
   config: Config,
-  credential: PublicKeyCredential,
+  credential: PublicKeyCredential
 ): Promise<boolean> {
   try {
-    const credentialJSON = await encodeAuthenticatorRegistrationResponseAsJSON(credential);
+    const credentialJSON = await encodeAuthenticatorRegistrationResponseAsJSON(
+      credential
+    );
     const response = await fetch(config.completeRegistrationUrl, {
       method: "POST",
       credentials: "same-origin",
@@ -62,8 +63,8 @@ async function tryFetchCompleteRegistrationResponseData(
       alert(
         config.messages.registration.error.serverError.replace(
           "$status_code$",
-          response.status.toString(),
-        ),
+          response.status.toString()
+        )
       );
       return false;
     }
@@ -75,7 +76,7 @@ async function tryFetchCompleteRegistrationResponseData(
 }
 
 async function tryFetchBeginRegistrationResponseData(
-  config: Config,
+  config: Config
 ): Promise<BeginRegistrationPayload | null> {
   try {
     const response = await fetch(config.beginRegistrationUrl, {
@@ -91,7 +92,7 @@ async function tryFetchBeginRegistrationResponseData(
     if (!response.ok) {
       const message = config.messages.registration.error.serverError.replace(
         "$status_code$",
-        response.status.toString(),
+        response.status.toString()
       );
       alert(message);
       return null;
@@ -106,11 +107,11 @@ async function tryFetchBeginRegistrationResponseData(
 
 async function tryRegisterCredentials(
   config: Config,
-  creationOptions: CredentialCreationOptions,
+  creationOptions: CredentialCreationOptions
 ): Promise<PublicKeyCredential | null> {
   try {
     return (await navigator.credentials.create(
-      creationOptions,
+      creationOptions
     )) as PublicKeyCredential;
   } catch (e: unknown) {
     console.log("Creation options used:");
@@ -118,7 +119,7 @@ async function tryRegisterCredentials(
     if (e instanceof DOMException) {
       if (e.name === "NotAllowedError") {
         alert(
-          config.messages.registration.error.clientSideCreationNotAllowedError,
+          config.messages.registration.error.clientSideCreationNotAllowedError
         );
         throw e;
       }
@@ -133,8 +134,8 @@ async function tryRegisterCredentials(
         alert(
           config.messages.registration.error.clientSideInvalidDomainError.replace(
             "$domain$",
-            window.location.hostname,
-          ),
+            window.location.hostname
+          )
         );
         throw e;
       }
@@ -154,7 +155,7 @@ async function tryRegisterCredentials(
 }
 
 async function beginRegistration(
-  config: Config,
+  config: Config
 ): Promise<PublicKeyCredential | null> {
   console.log("We shall begin registration");
 
@@ -166,13 +167,15 @@ async function beginRegistration(
   const challenge = await base64ToBuffer(data.publicKey.challenge);
   const userId = await base64ToBuffer(data.publicKey.user.id);
 
-  const excludeCredentials = await Promise.all(data.publicKey.excludeCredentials.map(async cred => {
-    return {
-      type: cred.type,
-      transports: cred.transports,
-      id: await base64ToBuffer(cred.id),
-    } as PublicKeyCredentialDescriptor;
-  }));
+  const excludeCredentials = await Promise.all(
+    data.publicKey.excludeCredentials.map(async (cred) => {
+      return {
+        type: cred.type,
+        transports: cred.transports,
+        id: await base64ToBuffer(cred.id),
+      } as PublicKeyCredentialDescriptor;
+    })
+  );
 
   // Add the decoded data back to the options
   const creationOptions: CredentialCreationOptions = {
@@ -190,16 +193,15 @@ async function beginRegistration(
   return await tryRegisterCredentials(config, creationOptions);
 }
 
-
 async function setPasskeyRegisterVisible(visible: boolean): Promise<void> {
   const placeholderElement = document.getElementById(
-    "passkey-registration-placeholder",
+    "passkey-registration-placeholder"
   );
   const availableTemplate = document.getElementById(
-    "passkey-registration-available-template",
+    "passkey-registration-available-template"
   ) as HTMLTemplateElement;
   const fallbackTemplate = document.getElementById(
-    "passkey-registration-unavailable-template",
+    "passkey-registration-unavailable-template"
   ) as HTMLTemplateElement;
 
   if (!placeholderElement) {

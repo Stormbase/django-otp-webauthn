@@ -37,7 +37,7 @@ export type BeginAuthenticationPayload = {
     rpId: string;
     challenge: string;
     allowCredentials: AllowedCredential[];
-  }
+  };
 };
 
 export type Support = {
@@ -46,7 +46,6 @@ export type Support = {
   isConditionalMediationAvailable: boolean;
   isUserVerifyingPlatformAuthenticatorAvailable: boolean;
 };
-
 
 export type Config = {
   autocompleteLoginFieldSelector: string | null;
