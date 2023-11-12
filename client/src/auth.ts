@@ -1,5 +1,10 @@
 import { getConfig } from "./config";
-import { base64ToBuffer, checkSupport, encodeAuthenticatorAssertionResponseAsJSON, getCSRFToken } from "./support";
+import {
+  base64ToBuffer,
+  checkSupport,
+  encodeAuthenticatorAssertionResponseAsJSON,
+  getCSRFToken,
+} from "./support";
 import { Config, BeginAuthenticationPayload } from "./types";
 
 (() =>
@@ -9,27 +14,31 @@ import { Config, BeginAuthenticationPayload } from "./types";
 
     if (!support.isSecureContext && !support.isWebAuthnAvailable) {
       console.warn(
-        "WebAuthn is not available. Please use a secure context (HTTPS) and a browser that supports WebAuthn.",
+        "WebAuthn is not available. Please use a secure context (HTTPS) and a browser that supports WebAuthn."
       );
     }
 
     if (config.autocompleteLoginFieldSelector) {
       await setupLoginFormAutocomplete(config);
     }
-    // If there is no login field, we show the verification button instead
-    else {
-      await setPasskeyVerificationButtonVisible(true);
-      await setupPasskeyVerificationButton(config);
-    }
 
-    if (support.isConditionalMediationAvailable && config.autocompleteLoginFieldSelector && !!document.querySelector(config.autocompleteLoginFieldSelector)) {
-      console.log("Conditional mediation is available, will try to use it now...");
+    await setPasskeyVerificationButtonVisible(true);
+    await setupPasskeyVerificationButton(config);
+
+    if (
+      support.isConditionalMediationAvailable &&
+      config.autocompleteLoginFieldSelector &&
+      !!document.querySelector(config.autocompleteLoginFieldSelector)
+    ) {
+      console.log(
+        "Conditional mediation is available, will try to use it now..."
+      );
       await handleAuthentication(config, true);
     }
   })())();
 
 async function tryFetchBeginAuthenticationResponseData(
-  config: Config,
+  config: Config
 ): Promise<BeginAuthenticationPayload | null> {
   try {
     const response = await fetch(config.beginAuthenticationUrl, {
@@ -45,7 +54,7 @@ async function tryFetchBeginAuthenticationResponseData(
     if (!response.ok) {
       const message = config.messages.authentication.error.serverError.replace(
         "$status_code$",
-        response.status.toString(),
+        response.status.toString()
       );
       alert(message);
       return null;
@@ -62,22 +71,34 @@ async function tryFetchBeginAuthenticationResponseData(
  *
  * @returns string|null the next url or null if not present
  */
-async function getNextUrl(): Promise<string|null> {
+async function getNextUrl(): Promise<string | null> {
   const nextUrlElement = document.querySelector("input[name=next]");
-  const nextUrlParameter = new URLSearchParams(window.location.search).get("next");
-  return (nextUrlElement && nextUrlElement.getAttribute("value")) || nextUrlParameter || null;
+  const nextUrlParameter = new URLSearchParams(window.location.search).get(
+    "next"
+  );
+  return (
+    (nextUrlElement && nextUrlElement.getAttribute("value")) ||
+    nextUrlParameter ||
+    null
+  );
 }
 
 async function tryFetchCompleteAuthenticationResponseData(
   config: Config,
-  credential: PublicKeyCredential,
+  credential: PublicKeyCredential
 ): Promise<Response> {
   try {
-    const credentialJSON = await encodeAuthenticatorAssertionResponseAsJSON(credential);
+    const credentialJSON = await encodeAuthenticatorAssertionResponseAsJSON(
+      credential
+    );
 
     // If there is a next url, we append it to the complete authentication url so that the user is redirected to it after
     const nextUrl = await getNextUrl();
-    const url = nextUrl ? `${config.completeAuthenticationUrl}?next=${encodeURIComponent(nextUrl)}` : config.completeAuthenticationUrl;
+    const url = nextUrl
+      ? `${config.completeAuthenticationUrl}?next=${encodeURIComponent(
+          nextUrl
+        )}`
+      : config.completeAuthenticationUrl;
     const response = await fetch(url, {
       method: "POST",
       credentials: "same-origin",
@@ -92,8 +113,8 @@ async function tryFetchCompleteAuthenticationResponseData(
       alert(
         config.messages.authentication.error.serverError.replace(
           "$status_code$",
-          response.status.toString(),
-        ),
+          response.status.toString()
+        )
       );
       return response;
     }
@@ -104,7 +125,6 @@ async function tryFetchCompleteAuthenticationResponseData(
   }
 }
 
-
 /**
  * Add the webauthn autocomplete attribute to the target element
  */
@@ -114,25 +134,26 @@ async function setupLoginFormAutocomplete(config: Config): Promise<void> {
   }
 
   const targetElement: HTMLElement | null = document.querySelector(
-    config.autocompleteLoginFieldSelector,
+    config.autocompleteLoginFieldSelector
   );
   if (!targetElement) {
     throw new Error(
-      `Target element not found. Selector: ${config.autocompleteLoginFieldSelector}`,
+      `Target element not found. Selector: ${config.autocompleteLoginFieldSelector}`
     );
   }
   const originalAutocompleteString =
     targetElement.getAttribute("autocomplete") || "";
   targetElement.setAttribute(
     "autocomplete",
-    originalAutocompleteString + " webauthn",
+    originalAutocompleteString + " webauthn"
   );
 }
 
-async function beginAuthentication(config: Config, conditional: boolean): Promise<PublicKeyCredential | null> {
-  const data = await tryFetchBeginAuthenticationResponseData(
-    config,
-  );
+async function beginAuthentication(
+  config: Config,
+  conditional: boolean
+): Promise<PublicKeyCredential | null> {
+  const data = await tryFetchBeginAuthenticationResponseData(config);
   if (!data) {
     return null;
   }
@@ -141,15 +162,16 @@ async function beginAuthentication(config: Config, conditional: boolean): Promis
   let allowCredentials = undefined;
 
   if ("allowCredentials" in data.publicKey) {
-    allowCredentials = await Promise.all(data.publicKey.allowCredentials.map(async (cred) => ({
-      ...cred,
-      id: await base64ToBuffer(cred.id),
-    })));
+    allowCredentials = await Promise.all(
+      data.publicKey.allowCredentials.map(async (cred) => ({
+        ...cred,
+        id: await base64ToBuffer(cred.id),
+      }))
+    );
   }
 
-
   try {
-    const credential = await navigator.credentials.get({
+    const credential = (await navigator.credentials.get({
       publicKey: {
         rpId: data.publicKey.rpId,
         challenge: challenge,
@@ -157,23 +179,20 @@ async function beginAuthentication(config: Config, conditional: boolean): Promis
         allowCredentials: allowCredentials,
       },
       mediation: conditional ? "conditional" : undefined,
-    }) as PublicKeyCredential;
+    })) as PublicKeyCredential;
 
     return credential;
-  }
-  catch (e: unknown) {
+  } catch (e: unknown) {
     if (e instanceof DOMException) {
       if (e.name === "NotAllowedError") {
         alert(config.messages.authentication.error.clientSideNotAllowedError);
-
-      }
-      else if (e.name === "SecurityError") {
-        alert(config.messages.authentication.error.clientSideInvalidDomainError);
-      }
-      else if (e.name === "InvalidStateError") {
+      } else if (e.name === "SecurityError") {
+        alert(
+          config.messages.authentication.error.clientSideInvalidDomainError
+        );
+      } else if (e.name === "InvalidStateError") {
         alert(config.messages.authentication.error.clientSideInvalidStateError);
-      }
-      else {
+      } else {
         alert(config.messages.authentication.error.clientSideUnknownError);
       }
     }
@@ -182,13 +201,19 @@ async function beginAuthentication(config: Config, conditional: boolean): Promis
   return null;
 }
 
-async function handleAuthentication(config: Config, conditional: boolean): Promise<void> {
+async function handleAuthentication(
+  config: Config,
+  conditional: boolean
+): Promise<void> {
   const credential = await beginAuthentication(config, conditional);
   if (!credential) {
     return;
   }
 
-  const response = await tryFetchCompleteAuthenticationResponseData(config, credential);
+  const response = await tryFetchCompleteAuthenticationResponseData(
+    config,
+    credential
+  );
   const responseJSON = await response.json();
   if (responseJSON.redirect_url) {
     window.location.href = responseJSON.redirect_url;
@@ -202,26 +227,28 @@ async function handleAuthentication(config: Config, conditional: boolean): Promi
  */
 async function setupPasskeyVerificationButton(config: Config): Promise<void> {
   const passkeyVerificationButton = document.getElementById(
-    "passkey-verification-button",
+    "passkey-verification-button"
   );
   if (!passkeyVerificationButton) {
     return;
   }
 
-  passkeyVerificationButton.addEventListener("click", async (_) => handleAuthentication(config, false));
+  passkeyVerificationButton.addEventListener("click", async (_) =>
+    handleAuthentication(config, false)
+  );
 }
 
 async function setPasskeyVerificationButtonVisible(
-  visible: boolean,
+  visible: boolean
 ): Promise<void> {
   const placeholderElement = document.getElementById(
-    "passkey-verification-placeholder",
+    "passkey-verification-placeholder"
   );
   const availableTemplate = document.getElementById(
-    "passkey-verification-available-template",
+    "passkey-verification-available-template"
   ) as HTMLTemplateElement;
   const fallbackTemplate = document.getElementById(
-    "passkey-verification-unavailable-template",
+    "passkey-verification-unavailable-template"
   ) as HTMLTemplateElement;
 
   if (!placeholderElement) {

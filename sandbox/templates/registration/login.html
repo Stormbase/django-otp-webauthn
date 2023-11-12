@@ -11,6 +11,19 @@
     {{ form.as_div }}
     <button type="submit">Login</button>
 
+    <div>
+        <span id="passkey-verification-placeholder"></span>
+    </div>
+
+    <template id="passkey-verification-available-template">
+        <div class="vertical-padding">
+            <span>Or:</span>
+            <button id="passkey-verification-button">Login using a Passkey</button>
+        </div>
+    </template>
+
+    <template id="passkey-verification-unavailable-template">Sorry, no passkey support</template>
+
     {% render_otp_passkeys_auth_scripts username_field_selector="input[name='username']" %}
 </form>
 
