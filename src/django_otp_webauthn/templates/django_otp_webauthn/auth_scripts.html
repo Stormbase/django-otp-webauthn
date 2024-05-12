@@ -1,0 +1,5 @@
+{% load static %}{% spaceless %}
+{{ configuration|json_script:"otp_webauthn_config"}}
+<script async defer src="{% url "otp_webauthn:js-i18n-catalog" %}"></script>
+<script type="module" src="{% static "django_otp_webauthn/otp_webauthn_auth.js" %}"></script>
+{% endspaceless %}

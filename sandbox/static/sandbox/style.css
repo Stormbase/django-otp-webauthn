@@ -1,0 +1,15 @@
+.verified {
+  color: green;
+}
+
+.not-verified {
+  color: red;
+}
+
+.vertical-padding-1 {
+  padding: 1em 0;
+}
+
+.vertical-padding-3 {
+  padding: 3em 0;
+}

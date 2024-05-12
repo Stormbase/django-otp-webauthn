@@ -1,0 +1,12 @@
+localhost {
+	reverse_proxy :8000 {
+		header_up Host {host}
+		header_up X-Real-IP {remote}
+		header_up X-Forwarded-For {remote}
+		header_up X-Forwarded-Port {port}
+		header_up X-Forwarded-Proto {scheme}
+	}
+	tls internal {
+		on_demand
+	}
+} 

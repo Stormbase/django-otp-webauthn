@@ -1,0 +1,100 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-11 17:52+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Verification failed. A server error occurred."
+msgstr "Verificatie mislukt. Er is een serverfout opgetreden."
+
+msgid "An error occurred during verification."
+msgstr "Er is een fout opgetreden tijdens de verificatie."
+
+msgid "Verify with Passkey"
+msgstr "Verifieren met Passkey"
+
+msgid "Verifying..."
+msgstr "Verifiëren..."
+
+msgid "Verification failed. Could not retrieve parameters from the server."
+msgstr ""
+"Verificatie mislukt. Kan geen verificatie parameters ophalen van de server."
+
+msgid "Verification aborted."
+msgstr "Verificatie afgebroken."
+
+msgid "Verification canceled or not allowed."
+msgstr "Verificatie geannuleerd of niet toegestaan."
+
+msgid "Verification failed. An unknown error occurred."
+msgstr "Verificatie mislukt. Er is een onbekende fout opgetreden."
+
+msgid "Finishing verification..."
+msgstr "Verificatie afronden..."
+
+msgid "Verification failed. An unknown server error occurred."
+msgstr "Verificatie mislukt. Er is een onbekende serverfout opgetreden."
+
+msgid "Verification successful!"
+msgstr "Verificatie voltooid!"
+
+msgid "Register a Passkey"
+msgstr "Registreer een Passkey"
+
+msgid "Registering..."
+msgstr "Registreren..."
+
+msgid "Registration failed. Unable to fetch registration options from server."
+msgstr "Registratie mislukt. Kan registratieopties niet ophalen van de server."
+
+msgid "Registration aborted."
+msgstr "Registratie afgebroken."
+
+msgid ""
+"Registration failed. You most likely already have a Passkey registered for "
+"this site."
+msgstr ""
+"Registratie mislukt. Je hebt waarschijnlijk al een Passkey geregistreerd "
+"voor deze website."
+
+msgid "Registration aborted or not allowed."
+msgstr "Registratie afgebroken of niet toegestaan."
+
+msgid ""
+"Registration failed. A technical problem occurred that prevents you from "
+"registering a Passkey for this site."
+msgstr ""
+"Registratie mislukt. Er is een technisch probleem opgetreden waardoor je "
+"geen Passkey voor deze website kan registeren."
+
+msgid "Registration failed. An unknown error occurred."
+msgstr "Registratie mislukt. Er is een onbekende fout opgetreden."
+
+msgid "Finishing registration..."
+msgstr "Registratie afronden..."
+
+msgid "Registration failed. The server was unable to verify this passkey."
+msgstr "Registratie mislukt. De server kon deze Passkey niet verifiëren."
+
+msgid "Registration failed. A server error occurred."
+msgstr "Registratie mislukt. Er is een serverfout opgetreden."
+
+msgid "Registration successful!"
+msgstr "Registratie voltooid!"
+
+msgid "An error occurred during registration."
+msgstr "Er is een fout opgetreden tijdens de registratie."

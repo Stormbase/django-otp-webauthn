@@ -1,0 +1,21 @@
+/* All values based on Django 5.0 admin CSS */
+#passkey-verification-button {
+  padding: 10px 15px;
+  appearance: none;
+  background: var(--button-bg);
+  border: none;
+  border-radius: 4px;
+  color: var(--button-fg);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+#passkey-verification-button:hover {
+  background: var(--button-hover-bg);
+}
+
+@media (max-width: 1024px) {
+  #passkey-verification-button {
+    padding: 7px;
+  }
+}

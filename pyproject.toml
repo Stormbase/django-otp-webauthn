@@ -1,0 +1,68 @@
+[tool.poetry]
+name = "django-otp-webauthn"
+version = "0.1.0"
+description = "FIDO2 WebAuthn support for django-otp: lets your users authenticate with Passkeys"
+authors = ["Storm B. Heg <storm@stormbase.digital>"]
+license = "BSD-3-Clause"
+readme = "README.md"
+include = [
+    # Include locale files that are gitignored and thus not included by default
+    "src/django_otp_webauthn/locale/**/*",
+    # Include static files that are gitignored and thus not included by default
+    "src/django_otp_webauthn/static/**/*"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Topic :: Security",
+    "Topic :: Communications :: FIDO",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Framework :: Django",
+    "Framework :: Django :: 4.2",
+    "Framework :: Django :: 5.0",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+django = ">=4.2,<6"
+django-otp = ">=1.2"
+djangorestframework = ">=3.14"
+webauthn = ">=2.1.0,<3"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.4.2"
+isort = "^5.13.2"
+
+[tool.ruff]
+target-version = "py39"  # minimum target version
+
+[tool.ruff.lint]
+# E501: Line too long
+ignore = ["E501"]
+select = [
+    "E", # pycodestyle errors
+    "F", # pyflakes
+    "I", # isort
+    "T20", # flake8-print
+    "BLE", # flake8-blind-except
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+
+[tool.isort]
+force_grid_wrap = 0
+include_trailing_comma = true
+line_length = 88
+multi_line_output = 3
+use_parentheses = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

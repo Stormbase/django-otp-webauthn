@@ -1,0 +1,169 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-12 13:16+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/django_otp_webauthn/admin.py:49
+msgid "credential ID"
+msgstr "credential ID"
+
+#: src/django_otp_webauthn/admin.py:50
+msgid "COSE public key"
+msgstr "Publieke COSE-sleutel"
+
+#: src/django_otp_webauthn/admin.py:70
+msgid "Identity"
+msgstr "Identiteit"
+
+#: src/django_otp_webauthn/admin.py:76
+msgid "Meta"
+msgstr "Meta-gegevens"
+
+#: src/django_otp_webauthn/admin.py:82
+msgid "WebAuthn credential data"
+msgstr "WebAuthn-gegevens"
+
+#: src/django_otp_webauthn/apps.py:11
+msgid "OTP WebAuthn"
+msgstr "OTP WebAuthn"
+
+#: src/django_otp_webauthn/exceptions.py:12
+msgid ""
+"State is missing or invalid. Please begin the operation first before trying "
+"to complete it."
+msgstr ""
+"Staat ontbreekt of is ongeldig. Begin de operatie eerst voordat u probeert "
+"deze te voltooien."
+
+#: src/django_otp_webauthn/exceptions.py:19
+msgid "Unprocessable Entity"
+msgstr "Onverwerkbare entiteit"
+
+#: src/django_otp_webauthn/exceptions.py:25
+msgid "Passwordless login is disabled."
+msgstr "Wachtwoordloze login is uitgeschakeld."
+
+#: src/django_otp_webauthn/exceptions.py:31
+msgid "Registration is disabled."
+msgstr "Registratie is uitgeschakeld."
+
+#: src/django_otp_webauthn/exceptions.py:37
+msgid "Authentication is disabled."
+msgstr "Authenticatie is uitgeschakeld."
+
+#: src/django_otp_webauthn/exceptions.py:43
+msgid "User is not logged in."
+msgstr "Gebruiker is niet ingelogd."
+
+#: src/django_otp_webauthn/exceptions.py:49
+msgid "This user account is marked as disabled."
+msgstr "Dit gebruikersaccount is gemarkeerd als uitgeschakeld."
+
+#: src/django_otp_webauthn/exceptions.py:55
+msgid "This Passkey has been marked as disabled."
+msgstr "Deze Passkey is gemarkeerd als uitgeschakeld."
+
+#: src/django_otp_webauthn/exceptions.py:62
+msgid "The Passkey you tried to use was not found. Perhaps it was removed?"
+msgstr ""
+"De Passkey die u probeert te gebruiken is niet gevonden. Misschien is deze "
+"verwijderd?"
+
+#: src/django_otp_webauthn/models.py:43
+msgid "credential"
+msgstr "credential"
+
+#: src/django_otp_webauthn/models.py:48
+msgid "format"
+msgstr "formaat"
+
+#: src/django_otp_webauthn/models.py:52
+msgid "data"
+msgstr "data"
+
+#: src/django_otp_webauthn/models.py:56
+msgid "client data JSON"
+msgstr "client data JSON"
+
+#: src/django_otp_webauthn/models.py:70
+msgid "WebAuthn attestation"
+msgstr "WebAuthn attestatie"
+
+#: src/django_otp_webauthn/models.py:71
+msgid "WebAuthn attestations"
+msgstr "WebAuthn attestaties"
+
+#: src/django_otp_webauthn/models.py:88
+msgid "WebAuthn credential"
+msgstr "WebAuthn credential"
+
+#: src/django_otp_webauthn/models.py:89
+msgid "WebAuthn credentials"
+msgstr "WebAuthn credentials"
+
+#: src/django_otp_webauthn/models.py:100
+msgid "Public Key"
+msgstr "Publieke Sleutel"
+
+#: src/django_otp_webauthn/models.py:105
+msgid "credential type"
+msgstr "type credential"
+
+#: src/django_otp_webauthn/models.py:118
+msgid "credential id data"
+msgstr "credential id data"
+
+#: src/django_otp_webauthn/models.py:135
+msgid "COSE public key data"
+msgstr "COSE publieke sleutel data"
+
+#: src/django_otp_webauthn/models.py:143
+msgid "transports"
+msgstr "transports"
+
+#: src/django_otp_webauthn/models.py:163
+msgid "sign count"
+msgstr "aantal ondertekeningen"
+
+#: src/django_otp_webauthn/models.py:178
+msgid "backup eligible"
+msgstr "kan worden geback-upt"
+
+#: src/django_otp_webauthn/models.py:186
+msgid "backup state"
+msgstr "back-up status"
+
+#: src/django_otp_webauthn/models.py:204
+msgid "created at"
+msgstr "aanmaakdatum"
+
+#: src/django_otp_webauthn/models.py:206
+msgid "last used at"
+msgstr "laatst gebruikt op"
+
+#: src/django_otp_webauthn/models.py:211
+msgid "AAGUID"
+msgstr "AAGUID"
+
+#: src/django_otp_webauthn/models.py:226
+msgid "hashed credential id"
+msgstr "gehashte credential id"
+
+#: src/django_otp_webauthn/models.py:235
+msgid "discoverable"
+msgstr "zichtbaar"

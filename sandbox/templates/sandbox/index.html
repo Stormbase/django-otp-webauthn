@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load i18n otp_webauthn %}
+
+{% block title %}Security index{% endblock title %}
+
+{% block content %}
+<h1>Security index</h1>
+
+
+{% if request.user.is_authenticated %}
+    <p>{% blocktrans with username=request.user.username trimmed %}Hi {{ username }}!{% endblocktrans %}</p>
+
+    <p>{% translate "2FA verification status:" %}
+
+    {% if 2fa_verified %}
+        <span class="verified">verified</span>
+    {% else %}
+        <span class="not-verified">not verified</span>
+        {% endif %}
+        <a href="{% url "second-factor-verification" %}">{% translate "Verify now" %}</a>
+    </p>
+
+    <template id="passkey-registration-available-template">
+        <div>
+            <button type="button" id="passkey-register-button">{% translate "Register Passkey" %}</button>
+            <div id="passkey-register-status-message"></div>
+        </div>
+    </template>
+
+    <template id="passkey-registration-unavailable-template">
+        <p>{% translate "Sorry, your browser has no Passkey support" %}</p>
+    </template>
+
+    <span id="passkey-registration-placeholder"></span>
+
+    {% render_otp_webauthn_register_scripts %}
+
+    <div class="vertical-padding-1">
+        <form action="{% url "auth:logout" %}" method="post">
+            {% csrf_token %}
+            <button type="submit">{% translate "Logout" %}</button>
+        </form>
+    </div>
+{% else %}
+    <a href="{% url "auth:login" %}">Login</a>
+{% endif %}
+
+{% endblock content %}

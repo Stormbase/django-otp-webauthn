@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load otp_webauthn i18n %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+<h1>Login</h1>
+
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button type="submit">Login</button>
+
+    <div>
+        <span id="passkey-verification-placeholder"></span>
+    </div>
+
+    <template id="passkey-verification-available-template">
+        <div class="vertical-padding-3">
+            <span>{% translate "Or:" %}</span>
+            <button type="button" id="passkey-verification-button">{% translate "Login using a Passkey" %}</button>
+            <div id="passkey-verification-status-message"></div>
+        </div>
+    </template>
+
+    <template id="passkey-verification-unavailable-template">
+        <p>{% translate "Sorry, your browser has no Passkey support" %}</p>
+    </template>
+
+    {% render_otp_webauthn_auth_scripts username_field_selector="input[name='username']" %}
+</form>
+
+{% endblock content %}

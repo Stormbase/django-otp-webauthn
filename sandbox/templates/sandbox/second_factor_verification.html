@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load i18n otp_webauthn %}
+
+
+{% block title %}{% translate "Security checkpoint" %}{% endblock title %}
+{% block content %}
+
+<h1>{% translate "Security checkpoint" %}</h1>
+
+<p>{% blocktrans with user=request.user trimmed %}Hello, {{ user }}{% endblocktrans %}</p>
+
+<p>{% translate "You must confirm your identify by using your Passkey." %}</p>
+
+
+<template id="passkey-verification-available-template">
+    <div>
+        <button type="button" id="passkey-verification-button">Confirm using Passkey</button>
+        <div id="passkey-verification-status-message"></div>
+    </div>
+</template>
+
+<template id="passkey-verification-unavailable-template">
+    <p>{% translate "Sorry, this browser does not support Passkeys. You cannot continue using this browser." %}</p>
+</template>
+
+<span id="passkey-verification-placeholder"></span>
+
+{% render_otp_webauthn_auth_scripts %}
+
+{% endblock content %}

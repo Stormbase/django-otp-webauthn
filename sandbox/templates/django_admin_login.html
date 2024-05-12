@@ -1,0 +1,99 @@
+{% extends "admin/base_site.html" %}
+{% comment %}
+Copied from django/contrib/admin/templates/admin/login.html
+
+Modified to add Passkey login support.
+
+{% endcomment %}
+{% load i18n static %}
+{% load otp_webauthn %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/login.css" %}">
+{{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block content %}
+{% if form.errors and not form.non_field_errors %}
+<p class="errornote">
+{% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
+</p>
+{% endif %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="errornote">
+    {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+
+<div id="content-main">
+
+{% if user.is_authenticated %}
+<p class="errornote">
+{% blocktranslate trimmed %}
+    You are authenticated as {{ username }}, but are not authorized to
+    access this page. Would you like to login to a different account?
+{% endblocktranslate %}
+</p>
+{% endif %}
+
+<form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    {{ form.username.errors }}
+    {{ form.username.label_tag }} {{ form.username }}
+  </div>
+  <div class="form-row">
+    {{ form.password.errors }}
+    {{ form.password.label_tag }} {{ form.password }}
+    <input type="hidden" name="next" value="{{ next }}">
+  </div>
+  {% url 'admin_password_reset' as password_reset_url %}
+  {% if password_reset_url %}
+  <div class="password-reset-link">
+    <a href="{{ password_reset_url }}">{% translate 'Forgotten your password or username?' %}</a>
+  </div>
+  {% endif %}
+  <div class="submit-row">
+    <input type="submit" value="{% translate 'Log in' %}">
+  </div>
+
+
+  {# START OF MODIFICATIONS #}
+  <link rel="stylesheet" href="{% static "sandbox/django_admin_login.css" %}">
+  <div>
+    <span id="passkey-verification-placeholder"></span>
+  </div>
+
+  <template id="passkey-verification-available-template">
+    <div class="submit-row">
+        <hr>
+    </div>
+    <div class="submit-row">
+        <button class="button" type="button" id="passkey-verification-button">{% translate "Login using a Passkey" %}</button>
+        <div id="passkey-verification-status-message"></div>
+      </div>
+  </template>
+
+  <template id="passkey-verification-unavailable-template">
+    <p>{% translate "Sorry, your browser has no Passkey support" %}</p>
+  </template>
+
+  {% render_otp_webauthn_auth_scripts username_field_selector="input[name='username']" %}
+  {# END OF MODIFICATIONS #}
+</form>
+
+</div>
+{% endblock %}
