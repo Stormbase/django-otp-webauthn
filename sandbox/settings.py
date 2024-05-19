@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     "django_otp",
     "django_otp.plugins.otp_totp",
     "django_otp.plugins.otp_static",
-    "rest_framework",
     "django_otp_webauthn",
     "sandbox",
 ]
@@ -155,15 +154,3 @@ OTP_WEBAUTHN_RP_NAME = "Passkey Sandbox"
 OTP_WEBAUTHN_RP_ID = "localhost"
 OTP_WEBAUTHN_ALLOWED_ORIGINS = ["https://localhost", "http://localhost:8000"]
 OTP_WEBAUTHN_EXCEPTION_LOGGER_NAME = "django_otp_webauthn.logger"
-
-
-# REST_FRAMEWORK = {
-#     "DEFAULT_RENDERER_CLASSES": [
-#         "rest_framework.renderers.JSONRenderer",
-#         "rest_framework.renderers.BrowsableAPIRenderer",
-#     ],
-#     "DEFAULT_AUTHENTICATION_CLASSES": [
-#         "rest_framework.authentication.BasicAuthentication",
-#         "rest_framework.authentication.SessionAuthentication",
-#     ],
-# }
