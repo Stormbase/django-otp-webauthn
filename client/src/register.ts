@@ -254,7 +254,7 @@ import {
         ) as HTMLElement;
 
         passkeyRegisterButton.disabled = state.buttonDisabled;
-        passkeyRegisterButton.innerText = state.buttonLabel;
+        passkeyRegisterButton.textContent = state.buttonLabel;
 
         if (passkeyStatusText) {
           if (state.status) {

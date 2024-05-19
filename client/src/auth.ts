@@ -205,7 +205,7 @@ import {
       }
 
       const buttonLabel =
-        passkeyVerifyButton.textContent || gettext("Verify with Passkey");
+        passkeyVerifyButton.innerText || gettext("Verify with Passkey");
 
       passkeyVerifyButton.addEventListener("click", async (_) => {
         passkeyVerifyButton.dispatchEvent(
