@@ -32,7 +32,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = ">=3.10"
 django = ">=4.2,<6"
-django-otp = ">=1.2"
+django-otp = ">=1.4"
 djangorestframework = ">=3.14"
 webauthn = ">=2.1.0,<3"
 

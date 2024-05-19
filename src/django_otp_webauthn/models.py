@@ -4,10 +4,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.http import HttpRequest
-from django.utils import timezone
 from django.utils.functional import cached_property
 from django.utils.translation import gettext_lazy as _
-from django_otp.models import Device
+from django_otp.models import Device, TimestampMixin
 from webauthn.helpers import parse_attestation_object
 from webauthn.helpers.structs import (
     AttestationObject,
@@ -71,7 +70,7 @@ class AbstractWebAuthnAttestation(models.Model):
         verbose_name_plural = _("WebAuthn attestations")
 
 
-class AbstractWebAuthnCredential(Device):
+class AbstractWebAuthnCredential(TimestampMixin, Device):
     """
     Abstract OTP device that validates against a user's WebAuthn credential.
 
@@ -198,13 +197,6 @@ class AbstractWebAuthnCredential(Device):
     # would work exactly and what benefit it would bring. Our implementation
     # does not use this field. And because it appears it could be added later
     # without too much difficulty, we do not implement it yet.
-
-    # The following fields are not required or recommended by the WebAuthn L3
-    # specification, but are meaningful in our implementation.
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
-    """When was this credential created."""
-    last_used_at = models.DateTimeField(null=True, verbose_name=_("last used at"))
-    """When was this credential last used successfully."""
 
     aaguid = models.CharField(
         max_length=36,
@@ -343,12 +335,6 @@ class AbstractWebAuthnCredential(Device):
         from django_otp_webauthn.helpers import PyWebAuthnProvider
 
         return PyWebAuthnProvider(request=request)
-
-    def update_last_used_at(self, commit=True):
-        """Update the last used timestamp for this device."""
-        self.last_used_at = timezone.now()
-        if commit:
-            self.save(update_fields=["last_used_at"])
 
 
 class WebAuthnCredential(AbstractWebAuthnCredential):

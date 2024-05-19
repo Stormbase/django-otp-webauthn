@@ -542,7 +542,7 @@ class PyWebAuthnProvider:
 
         device.sign_count = response.new_sign_count
         device.backup_state = response.credential_backed_up
-        device.update_last_used_at(commit=False)
+        device.set_last_used_timestamp(commit=False)
         device.save(update_fields=["sign_count", "last_used_at", "backup_state"])
 
         return device
