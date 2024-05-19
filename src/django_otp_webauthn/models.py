@@ -263,7 +263,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         super().save(*args, **kwargs)
 
     @classmethod
-    def get_by_credential_id(cls, credential_id) -> "WebAuthnCredential":
+    def get_by_credential_id(cls, credential_id: bytes) -> "WebAuthnCredential":
         """Return a WebAuthnCredential instance by its credential id.
 
         Will attempt to find a matching device by looking up the hash of the credential id.
