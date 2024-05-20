@@ -13,7 +13,7 @@ This package provides an implementation of [WebAuthn Passkeys](https://passkeys.
   - [What exactly is a Passkey?](#what-exactly-is-a-passkey)
     - [How Passkeys work (in a nutshell)](#how-passkeys-work-in-a-nutshell)
     - [Why use Passkeys?](#why-use-passkeys)
-      - [A note about security](#a-note-about-security)
+    - [A note about security](#a-note-about-security)
   - [Who uses Passkeys?](#who-uses-passkeys)
   - [Further reading](#further-reading)
   - [Development](#development)
@@ -196,7 +196,7 @@ Here is an (overly simplified) explanation of how Passkeys work. For a more deta
 - **Security.** Compared to passwords, Passkeys are resistant to phishing attacks, credential stuffing, and other common attacks.
 - **Convenience.** Passkeys are more convenient than passwords. Users don't have to choose and remember a password, they can use their phone, laptop, or security key to authenticate. Compared to other traditional forms of Multi Factor Authentication, there is no need to wait for an SMS code to arrive or copy a code from an authenticator app. Just click yes on the browser prompt.
 
-#### A note about security
+### A note about security
 
 Passkeys are sometimes claimed to be silver bullet for security. While they are more secure than passwords, they are not perfect.
 
