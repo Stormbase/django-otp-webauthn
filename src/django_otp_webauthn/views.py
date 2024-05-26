@@ -131,9 +131,7 @@ class BeginCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView):
         provider = WebAuthnCredential.get_provider(request=self.request)
         require_user_verification = not bool(user)
 
-        data, state = provider.authenticate_begin(
-            user=user, require_user_verification=require_user_verification
-        )
+        data, state = provider.authenticate_begin(user=user, require_user_verification=require_user_verification)
         self.request.session["otp_webauthn_authentication_state"] = state
 
         return Response(data=data, content_type="application/json")
@@ -178,9 +176,7 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
             device (AbstractWebAuthnCredential): The device the user is trying to log
             in with.
         """
-        disallow_passwordless_login = (
-            not app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN
-        )
+        disallow_passwordless_login = not app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN
         if not device.confirmed:
             raise exceptions.CredentialDisabled()
 

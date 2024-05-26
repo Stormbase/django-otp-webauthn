@@ -43,17 +43,13 @@ class AbstractWebAuthnAttestation(models.Model):
         editable=False,
     )
 
-    fmt = models.CharField(
-        max_length=255, verbose_name=_("format"), editable=False, choices=Format.choices
-    )
+    fmt = models.CharField(max_length=255, verbose_name=_("format"), editable=False, choices=Format.choices)
     """The attestation format used by the authenticator. Extracted from the attestation object for convenience."""
 
     data = models.BinaryField(verbose_name=_("data"), editable=False)
     """The raw attestation data"""
 
-    client_data_json = models.BinaryField(
-        verbose_name=_("client data JSON"), editable=False
-    )
+    client_data_json = models.BinaryField(verbose_name=_("client data JSON"), editable=False)
     """The raw client data JSON, as originally sent by the client."""
 
     @cached_property
@@ -130,9 +126,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
     """
 
     # https://www.w3.org/TR/webauthn-3/#abstract-opdef-credential-record-publickey
-    public_key = models.BinaryField(
-        max_length=1023, verbose_name=_("COSE public key data"), editable=False
-    )
+    public_key = models.BinaryField(max_length=1023, verbose_name=_("COSE public key data"), editable=False)
     """The public key of the credential, encoded in COSE_Key format (binary).
 
     Specification: https://www.rfc-editor.org/rfc/rfc9052#section-7
@@ -257,9 +251,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
 
     def save(self, *args, **kwargs):
         if not self.credential_id_sha256:
-            self.credential_id_sha256 = self.get_credential_id_sha256(
-                self.credential_id
-            )
+            self.credential_id_sha256 = self.get_credential_id_sha256(self.credential_id)
         super().save(*args, **kwargs)
 
     @classmethod
@@ -277,9 +269,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         return hashlib.sha256(credential_id).digest()
 
     @classmethod
-    def get_credential_descriptors_for_user(
-        cls, user: AbstractUser
-    ) -> list[PublicKeyCredentialDescriptor]:
+    def get_credential_descriptors_for_user(cls, user: AbstractUser) -> list[PublicKeyCredentialDescriptor]:
         """Return a list of PublicKeyCredentialDescriptor objects for the given user.
 
         Each PublicKeyCredentialDescriptor object represents a credential that the
@@ -300,9 +290,8 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
             # > The list is ordered in descending order of preference: the first
             # > item in the list is the most preferred credential, and the last
             # > is the least preferred.
-            .order_by(models.F("last_used_at").desc(nulls_last=True)).values_list(
-                "credential_id", "transports"
-            )
+            .order_by(models.F("last_used_at").desc(nulls_last=True))
+            .values_list("credential_id", "transports")
         )
 
         descriptors = []
@@ -323,9 +312,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
                 # > as the value of the transports member.
                 if t in AuthenticatorTransport:
                     transports.append(AuthenticatorTransport(t))
-            descriptors.append(
-                PublicKeyCredentialDescriptor(id=id, transports=transports)
-            )
+            descriptors.append(PublicKeyCredentialDescriptor(id=id, transports=transports))
         return descriptors
 
     @classmethod

@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
+
 from django_otp_webauthn.utils import get_exempt_urls
 
 

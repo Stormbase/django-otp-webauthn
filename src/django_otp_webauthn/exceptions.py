@@ -8,9 +8,7 @@ class OTPWebAuthnApiError(APIException):
 
 class InvalidState(OTPWebAuthnApiError):
     status_code = 400
-    default_detail = _(
-        "State is missing or invalid. Please begin the operation first before trying to complete it."
-    )
+    default_detail = _("State is missing or invalid. Please begin the operation first before trying to complete it.")
     default_code = "invalid_state"
 
 
@@ -58,7 +56,5 @@ class CredentialDisabled(OTPWebAuthnApiError):
 
 class CredentialNotFound(OTPWebAuthnApiError):
     status_code = 404
-    default_detail = _(
-        "The Passkey you tried to use was not found. Perhaps it was removed?"
-    )
+    default_detail = _("The Passkey you tried to use was not found. Perhaps it was removed?")
     default_code = "credential_not_found"

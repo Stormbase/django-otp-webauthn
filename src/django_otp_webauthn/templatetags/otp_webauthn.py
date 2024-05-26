@@ -9,22 +9,15 @@ register = template.Library()
 
 WebAuthnCredential = get_credential_model()
 
+
 def get_configuration(extra_options: dict = {}) -> dict:
     configuration = {
         "autocompleteLoginFieldSelector": None,
         "csrfCookieName": settings.CSRF_COOKIE_NAME,
-        "beginAuthenticationUrl": reverse(
-            "otp_webauthn:credential-authentication-begin"
-        ),
-        "completeAuthenticationUrl": reverse(
-            "otp_webauthn:credential-authentication-complete"
-        ),
-        "beginRegistrationUrl": reverse(
-            "otp_webauthn:credential-registration-begin"
-        ),
-        "completeRegistrationUrl": reverse(
-            "otp_webauthn:credential-registration-complete"
-        ),
+        "beginAuthenticationUrl": reverse("otp_webauthn:credential-authentication-begin"),
+        "completeAuthenticationUrl": reverse("otp_webauthn:credential-authentication-complete"),
+        "beginRegistrationUrl": reverse("otp_webauthn:credential-registration-begin"),
+        "completeRegistrationUrl": reverse("otp_webauthn:credential-registration-complete"),
     }
     configuration.update(extra_options)
 

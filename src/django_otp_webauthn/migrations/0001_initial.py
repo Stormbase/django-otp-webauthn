@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -35,9 +34,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "confirmed",
-                    models.BooleanField(
-                        default=True, help_text="Is this device ready for use?"
-                    ),
+                    models.BooleanField(default=True, help_text="Is this device ready for use?"),
                 ),
                 (
                     "credential_type",
@@ -51,39 +48,27 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "credential_id",
-                    models.BinaryField(
-                        max_length=1023, verbose_name="credential id data"
-                    ),
+                    models.BinaryField(max_length=1023, verbose_name="credential id data"),
                 ),
                 (
                     "public_key",
-                    models.BinaryField(
-                        max_length=1023, verbose_name="COSE public key data"
-                    ),
+                    models.BinaryField(max_length=1023, verbose_name="COSE public key data"),
                 ),
                 (
                     "transports",
-                    models.JSONField(
-                        default=list, editable=False, verbose_name="transports"
-                    ),
+                    models.JSONField(default=list, editable=False, verbose_name="transports"),
                 ),
                 (
                     "sign_count",
-                    models.PositiveIntegerField(
-                        default=0, editable=False, verbose_name="sign count"
-                    ),
+                    models.PositiveIntegerField(default=0, editable=False, verbose_name="sign count"),
                 ),
                 (
                     "backup_eligible",
-                    models.BooleanField(
-                        default=False, editable=False, verbose_name="backup eligible"
-                    ),
+                    models.BooleanField(default=False, editable=False, verbose_name="backup eligible"),
                 ),
                 (
                     "backup_state",
-                    models.BooleanField(
-                        default=False, editable=False, verbose_name="backup state"
-                    ),
+                    models.BooleanField(default=False, editable=False, verbose_name="backup state"),
                 ),
                 (
                     "created_at",
@@ -95,15 +80,11 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "aaguid",
-                    models.CharField(
-                        editable=False, max_length=36, verbose_name="AAGUID"
-                    ),
+                    models.CharField(editable=False, max_length=36, verbose_name="AAGUID"),
                 ),
                 (
                     "credential_id_sha256",
-                    models.BinaryField(
-                        max_length=32, unique=True, verbose_name="hashed credential id"
-                    ),
+                    models.BinaryField(max_length=32, unique=True, verbose_name="hashed credential id"),
                 ),
                 (
                     "discoverable",
@@ -181,8 +162,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddIndex(
             model_name="webauthncredential",
-            index=models.Index(
-                fields=["credential_id_sha256"], name="webauthncredential_sha256_idx"
-            ),
+            index=models.Index(fields=["credential_id_sha256"], name="webauthncredential_sha256_idx"),
         ),
     ]

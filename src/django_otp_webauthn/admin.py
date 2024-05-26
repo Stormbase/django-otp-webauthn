@@ -7,6 +7,7 @@ from django_otp_webauthn.settings import app_settings
 
 credential_model = app_settings.OTP_WEBAUTHN_CREDENTIAL_MODEL
 
+
 class WebAuthnCredentialAdmin(admin.ModelAdmin):
     list_display = [
         "user",

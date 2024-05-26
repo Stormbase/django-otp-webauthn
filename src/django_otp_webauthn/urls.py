@@ -35,5 +35,5 @@ urlpatterns = [
         "jsi18n/",
         JavaScriptCatalog.as_view(packages=["django_otp_webauthn"]),
         name="js-i18n-catalog",
-    )
+    ),
 ]
