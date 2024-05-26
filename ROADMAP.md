@@ -1,6 +1,6 @@
 # Roadmap
 
-- [ ] Publish to PyPI
+- [x] Publish to PyPI
 - [ ] Write tests
   - [ ] Tests to ensure a stable API
   - [ ] End to end tests to verify the default frontend implementation works as it should
