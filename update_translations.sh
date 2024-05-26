@@ -6,7 +6,7 @@
 # Update all languages:
 # ./update_translations.sh --all
 #
-# Create new language:
+# Create or update existing language:
 # ./update_translations.sh -l <language_code>
 
 set -e
