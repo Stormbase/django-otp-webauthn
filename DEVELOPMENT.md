@@ -4,8 +4,8 @@ A sandbox project is included in this repository to aid in development.
 
 ## Requirements
 
-- ...everything in the [compatibility section](../README.md#compatibility) on the main README.
-- [Poetry](https://python-poetry.org/)
+- ...everything in the [compatibility section](./README.md#compatibility) on the main README.
+- [Hatch](https://hatch.pypa.io/)
 - [Node.js](https://nodejs.org/) v20
 - [Yarn](https://yarnpkg.com/)
 - [Caddy](https://caddyserver.com/) (optional, but recommended for https testing)
@@ -26,9 +26,9 @@ Build the frontend
     # in the client directory
     yarn start
 
-Install the Python dependencies
+Let Hatch install the Python dependencies and create a virtual environment for you
 
-    poetry install
+    hatch shell
 
 Migrate the database
 

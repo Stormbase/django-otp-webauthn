@@ -1,59 +1,88 @@
-[tool.poetry]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
 name = "django-otp-webauthn"
-version = "0.1.0"
-description = "FIDO2 WebAuthn support for django-otp: lets your users authenticate with Passkeys"
-authors = ["Storm B. Heg <storm@stormbase.digital>"]
-license = "BSD-3-Clause"
+dynamic = ["version"]
 readme = "README.md"
-include = [
-    # Include locale files that are gitignored and thus not included by default
-    "src/django_otp_webauthn/locale/**/*",
-    # Include static files that are gitignored and thus not included by default
-    "src/django_otp_webauthn/static/**/*"
-]
+description = "FIDO2 WebAuthn support for django-otp: lets your users authenticate with Passkeys"
+requires-python = ">=3.9"
+license = "BSD-3-Clause"
+keywords = ["django", "django-otp", "webauthn", "fido2", "u2f", "security", "mfa", "authentication"]
+authors = [{ name = "Storm B. Heg", email = "storm@stormbase.digital" }]
 classifiers = [
-    "Development Status :: 4 - Beta",
-    "Environment :: Web Environment",
-    "Intended Audience :: Developers",
-    "License :: OSI Approved :: BSD License",
-    "Topic :: Security",
-    "Topic :: Communications :: FIDO",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Framework :: Django",
-    "Framework :: Django :: 4.2",
-    "Framework :: Django :: 5.0",
+  "Development Status :: 4 - Beta",
+  "Environment :: Web Environment",
+  "Operating System :: OS Independent",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: BSD License",
+  "Topic :: Security",
+  "Topic :: Communications :: FIDO",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Framework :: Django",
+  "Framework :: Django :: 4.2",
+  "Framework :: Django :: 5.0",
+]
+dependencies = [
+  "django>=4.2",
+  "django-otp>=1.4,<2.0",
+  "djangorestframework>=3.14",
+  "webauthn>=2.1.0,<3",
 ]
 
-[tool.poetry.dependencies]
-python = ">=3.10"
-django = ">=4.2,<6"
-django-otp = ">=1.4"
-djangorestframework = ">=3.14"
-webauthn = ">=2.1.0,<3"
+[project.urls]
+# TODO: documentation link
+# Documentation = "https://github.com/Stormbase/django-otp-webauthn/"
+Changelog = "https://github.com/Stormbase/django-otp-webauthn/blob/main/CHANGELOG.md"
+Issues = "https://github.com/Stormbase/django-otp-webauthn/issues"
+Source = "https://github.com/Stormbase/django-otp-webauthn"
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.4.2"
-isort = "^5.13.2"
+[tool.hatch.version]
+path = "src/django_otp_webauthn/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+artifacts = [
+  # Include built static files that are gitignored and thus not included by default
+  "src/django_otp_webauthn/static/django_otp_webauthn/*",
+  # Include compiled translations that are gitignored and thus not included by default
+  "src/django_otp_webauthn/locale/*/LC_MESSAGES/*.mo",
+]
+
+[tool.hatch.envs.default]
+dependencies = [
+  "django-debug-toolbar>4,<5",
+  "dj-database-url>=2.1.0,<3",
+  "psycopg>=2.9",
+  "django-csp>=3.8,<4",
+]
+
+[tool.hatch.envs.hatch-static-analysis]
+dependencies = [
+  # Update as necessary, prevent sudden breakage
+  "ruff>0.4,<0.5",
+  "isort>5,<6",
+]
 
 [tool.ruff]
-target-version = "py39"  # minimum target version
+target-version = "py39" # minimum target version
 
 [tool.ruff.lint]
 # E501: Line too long
 ignore = ["E501"]
 select = [
-    "E", # pycodestyle errors
-    "F", # pyflakes
-    "I", # isort
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
     "T20", # flake8-print
     "BLE", # flake8-blind-except
-    "C4", # flake8-comprehensions
-    "UP", # pyupgrade
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
 ]
 
 [tool.isort]
@@ -63,6 +92,11 @@ line_length = 88
 multi_line_output = 3
 use_parentheses = true
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.coverage.run]
+source_pkgs = ["django_otp_webauthn", "tests"]
+branch = true
+parallel = true
+omit = []
+
+[tool.coverage.report]
+exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
