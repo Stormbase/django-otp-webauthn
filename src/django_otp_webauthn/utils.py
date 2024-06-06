@@ -114,7 +114,6 @@ def get_credential_model() -> "AbstractWebAuthnCredential":
 
 def get_attestation_model() -> "AbstractWebAuthnAttestation":
     """Returns the WebAuthnAttestation model that is active in this project."""
-
     # Inspired by Django's django.contrib.auth.get_user_model
     try:
         return apps.get_model(app_settings.OTP_WEBAUTHN_ATTESTATION_MODEL, require_ready=False)

@@ -89,7 +89,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
 
         return super().__str__()
 
-    # The following fields are necessary of recommended by the WebAuthn L3 specification.
+    # The following fields are necessary or recommended by the WebAuthn L3 specification.
     # https://www.w3.org/TR/webauthn-3/#credential-record
     class CredentialType(models.TextChoices):
         PUBLIC_KEY = "public-key", _("Public Key")
