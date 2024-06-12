@@ -267,7 +267,7 @@ import {
             passkeyStatusText.classList.add(
               REGISTER_STATUS_MESSAGE_VISIBLE_CLASS,
             );
-            passkeyStatusText.innerText = state.status;
+            passkeyStatusText.textContent = state.status;
             passkeyStatusText.setAttribute("aria-live", "assertive");
 
             if (state.requestFocus) {

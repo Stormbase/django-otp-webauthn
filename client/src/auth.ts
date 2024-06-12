@@ -205,7 +205,7 @@ import {
       }
 
       const buttonLabel =
-        passkeyVerifyButton.innerText || gettext("Verify with Passkey");
+        passkeyVerifyButton.textContent || gettext("Verify with Passkey");
 
       passkeyVerifyButton.addEventListener("click", async (_) => {
         passkeyVerifyButton.dispatchEvent(
@@ -425,7 +425,7 @@ import {
       ) as HTMLElement;
 
       passkeyAuthButton.disabled = state.buttonDisabled;
-      passkeyAuthButton.innerText = state.buttonLabel;
+      passkeyAuthButton.textContent = state.buttonLabel;
 
       if (passkeyStatusText) {
         // If there is a status message, we want to make sure screen readers
@@ -438,7 +438,7 @@ import {
           passkeyStatusText.classList.add(
             VERIFICATION_STATUS_MESSAGE_VISIBLE_CLASS,
           );
-          passkeyStatusText.innerText = state.status;
+          passkeyStatusText.textContent = state.status;
           passkeyStatusText.setAttribute("aria-live", "assertive");
 
           if (state.requestFocus) {
