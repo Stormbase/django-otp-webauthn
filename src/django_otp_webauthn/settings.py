@@ -26,6 +26,10 @@ class AppSettings:
     """Format: 'app_label.model_name'. The model to use for webauthn
     attestation."""
 
+    OTP_WEBAUTHN_HELPER_CLASS = "django_otp_webauthn.helpers.WebAuthnHelper"
+    """The class to use for webauthn operations. This should be a class that subclasses
+    ``django_otp_webauthn.helpers.WebAuthnHelper``."""
+
     OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = True
     """If true, the default views will allow users to login with just a webauthn
     credential. No username or password required. The user will be marked as

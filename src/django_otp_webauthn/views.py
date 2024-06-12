@@ -77,8 +77,8 @@ class BeginCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
 
     def post(self, *args, **kwargs):
         user = self.user
-        provider = WebAuthnCredential.get_provider(request=self.request)
-        data, state = provider.register_begin(user=user)
+        helper = WebAuthnCredential.get_webauthn_helper(request=self.request)
+        data, state = helper.register_begin(user=user)
 
         self.request.session["otp_webauthn_register_state"] = state
 
@@ -108,11 +108,11 @@ class CompleteCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
         state = self.get_state()
         data = self.request.data
 
-        provider = WebAuthnCredential.get_provider(request=self.request)
+        helper = WebAuthnCredential.get_webauthn_helper(request=self.request)
 
         logger = _get_pywebauthn_logger()
         with rewrite_exceptions(logger=logger):
-            device = provider.register_complete(user=user, state=state, data=data)
+            device = helper.register_complete(user=user, state=state, data=data)
         return Response(data={"id": device.pk}, content_type="application/json")
 
 
@@ -128,10 +128,10 @@ class BeginCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView):
     def post(self, *args, **kwargs):
         user = self.user
 
-        provider = WebAuthnCredential.get_provider(request=self.request)
+        helper = WebAuthnCredential.get_webauthn_helper(request=self.request)
         require_user_verification = not bool(user)
 
-        data, state = provider.authenticate_begin(user=user, require_user_verification=require_user_verification)
+        data, state = helper.authenticate_begin(user=user, require_user_verification=require_user_verification)
         self.request.session["otp_webauthn_authentication_state"] = state
 
         return Response(data=data, content_type="application/json")
@@ -234,11 +234,11 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
         state = self.get_state()
         data = self.request.data
 
-        provider = WebAuthnCredential.get_provider(request=self.request)
+        helper = WebAuthnCredential.get_webauthn_helper(request=self.request)
 
         logger = _get_pywebauthn_logger()
         with rewrite_exceptions(logger=logger):
-            device = provider.authenticate_complete(user=user, state=state, data=data)
+            device = helper.authenticate_complete(user=user, state=state, data=data)
 
         self.check_login_allowed(device)
 

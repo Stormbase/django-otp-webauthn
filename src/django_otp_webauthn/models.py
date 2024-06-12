@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.http import HttpRequest
 from django.utils.functional import cached_property
+from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
 from django_otp.models import Device, TimestampMixin
 from webauthn.helpers import parse_attestation_object
@@ -14,6 +15,7 @@ from webauthn.helpers.structs import (
     PublicKeyCredentialDescriptor,
 )
 
+from django_otp_webauthn.settings import app_settings
 from django_otp_webauthn.utils import get_credential_model_string
 
 User = get_user_model()
@@ -316,12 +318,11 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         return descriptors
 
     @classmethod
-    def get_provider(cls, request: HttpRequest):
-        """Return the PyWebAuthnProvider instance for this device."""
-        # Avoid circular imports
-        from django_otp_webauthn.helpers import PyWebAuthnProvider
+    def get_webauthn_helper(cls, request: HttpRequest):
+        """Return the WebAuthnHelper class instance for this device."""
 
-        return PyWebAuthnProvider(request=request)
+        helper = import_string(app_settings.OTP_WEBAUTHN_HELPER_CLASS)
+        return helper(request=request)
 
 
 class WebAuthnCredential(AbstractWebAuthnCredential):

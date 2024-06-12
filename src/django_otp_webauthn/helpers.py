@@ -46,7 +46,7 @@ WebAuthnCredential = get_credential_model()
 WebAuthnAttestation = get_attestation_model()
 
 
-class PyWebAuthnProvider:
+class WebAuthnHelper:
     """A wrapper class around the PyWebAuthn library."""
 
     def __init__(self, request: HttpRequest):
