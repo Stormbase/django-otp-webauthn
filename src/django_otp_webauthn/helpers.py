@@ -131,6 +131,19 @@ class WebAuthnHelper:
          - https://www.w3.org/TR/webauthn-2/#client-side-discoverable-public-key-credential-source
          - https://developers.yubico.com/WebAuthn/WebAuthn_Developer_Guide/Resident_Keys.html
         """
+
+        # If passwordless login is allowed, we require discoverable credentials
+        # because non-discoverable credentials can't be used for
+        # passwordless login. Users expect to be able to log in without a
+        # password if we show them that option. Why some passkeys don't work
+        # will cause confusion. Don't allow these devices to be registered in
+        # the first place.
+        if app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN:
+            return ResidentKeyRequirement.REQUIRED
+
+        # What 'preferred' means depends entirely on the browser.
+        # Some browsers will prefer creating discoverable credentials and some
+        # just don't. Firefox is known to not create discoverable credentials.
         return ResidentKeyRequirement.PREFERRED
 
     def get_attestation_conveyance_preference(self) -> AttestationConveyancePreference:
