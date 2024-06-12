@@ -192,7 +192,11 @@ class WebAuthnHelper:
         The default implementation calls User.get_full_name() and falls back to
         User.get_username().
         """
-        return user.get_full_name() or user.get_username()
+
+        if user.get_full_name():
+            return f"{user.get_full_name()} ({user.get_username()})"
+
+        return user.get_username()
 
     def get_credential_name(self, user: AbstractUser) -> str:
         """Get the name for the credential.
@@ -239,8 +243,8 @@ class WebAuthnHelper:
         """Get information about the user account a credential is being registered for."""
         return PublicKeyCredentialUserEntity(
             id=self.get_unique_anonymous_user_id(user),
-            name=user.get_full_name() or user.get_username(),
-            display_name=user.get_full_name() or user.get_username(),
+            name=self.get_credential_name(user),
+            display_name=self.get_credential_display_name(user),
         )
 
     def get_supported_key_algorithms(self) -> list[COSEAlgorithmIdentifier] | None:
