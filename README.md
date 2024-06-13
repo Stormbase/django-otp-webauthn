@@ -86,10 +86,10 @@ To quickly start using Passkeys in your Django project, follow these steps:
    # The name of the relying party (RP). This is sometimes shown to the user when they register a Passkey.
    OTP_WEBAUTHN_RP_NAME = "My Website Inc."
    # This is necessary to bind the Passkey to a specific domain. This should be the domain of your website.
-   OTP_WEBAUTHN_RP_ID = "localhost"
+   OTP_WEBAUTHN_RP_ID = "your-domain.com"
    # This is used to check the origin of the request and is used for security. It is similar to Django's CSRF_TRUSTED_ORIGINS setting.
    # The origins must always be a subdomain of the RP ID or the RP ID itself.
-   OTP_WEBAUTHN_ALLOWED_ORIGINS = ["http://localhost"]
+   OTP_WEBAUTHN_ALLOWED_ORIGINS = ["https://your-domain.com", "https://subdomain.your-domain.com"]
 
    ```
 
