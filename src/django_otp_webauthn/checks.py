@@ -19,7 +19,7 @@ def check_settings_relying_party(app_configs, **kwargs):
         errors.append(
             Error(
                 "Relying party ID not configured.",
-                hint="Set the OTP_WEBAUTHN_RP_ID setting to the main domain of the web application, e.g. 'example.com'.",
+                hint="Set the OTP_WEBAUTHN_RP_ID setting to the main domain of the web application, like: 'example.com'.",
                 obj=None,
                 id=ERR_NO_RP_ID,
             )
@@ -29,7 +29,7 @@ def check_settings_relying_party(app_configs, **kwargs):
         errors.append(
             Error(
                 "Relying party name not configured.",
-                hint="Set the OTP_WEBAUTHN_RP_NAME setting to a human-readable name for the relying party, e.g. 'Acme Corp.'.",
+                hint="Set the OTP_WEBAUTHN_RP_NAME setting to a human-readable name for the relying party, like: 'Acme Corp.'.",
                 obj=None,
                 id=ERR_NO_RP_NAME,
             )

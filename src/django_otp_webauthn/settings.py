@@ -37,7 +37,7 @@ class AppSettings:
 
     OTP_WEBAUTHN_RP_ID: str = ""
     """The relying party ID for webauthn ceremonies. This should be the main
-    domain of the web application, e.g. 'example.com'.
+    domain of the web application, like: 'example.com'.
 
     **Important:** registered WebAuthn credentials will be scoped to this
     domain and its subdomains. Changing it will require users to re-register
