@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.3] - [UNRELEASED]
+
+### Changed
+
+- The `http://localhost:8000` default value for `OTP_WEBAUTHN_ALLOWED_ORIGINS` was removed.
+- Use more appropriate examples for the `OTP_WEBAUTHN_*` settings in the README.
+- Update admonition in the README to reflect the current state of the project. We have moved from don't use in production to use at your own risk.
+
 ## [0.1.2] - 2024-06-12
 
 ### Fixed
