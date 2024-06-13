@@ -17,7 +17,7 @@ const config: Configuration = {
   },
   output: {
     clean: true,
-  }
+  },
 };
 
 export default merge(baseConfig, config);
