@@ -2,8 +2,8 @@
 
 This package provides an implementation of [WebAuthn Passkeys](https://passkeys.dev/) for Django. It is written as a plugin for the [Django OTP framework](https://github.com/django-otp/django-otp) for multi-factor authentication. Under the hood, this package uses [py_webauth](https://github.com/duo-labs/py_webauthn/) to handle all cryptographic operations.
 
-> [!IMPORTANT]  
-> This package is still in development and is not yet ready for production use. The API is subject to change. If you are interested in using this package, please star this repository to show your interest. This will help me prioritize development. If you are interested in contributing, please see the [DEVELOPMENT.md](DEVELOPMENT.md) file.
+> [!IMPORTANT]
+> This package is in development not yet thoroughly tested and documented. The API is subject to change. If you are interested in using this package, please star this repository to show your interest. This will help me prioritize development. If you are interested in contributing, please see the [DEVELOPMENT.md](DEVELOPMENT.md) file.
 
 - [Django OTP WebAuthn](#django-otp-webauthn)
   - [Compatibility](#compatibility)
