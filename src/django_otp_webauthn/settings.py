@@ -69,7 +69,7 @@ class AppSettings:
     This takes precedence over the ``OTP_WEBAUTHN_RP_NAME`` setting.
     """
 
-    OTP_WEBAUTHN_ALLOWED_ORIGINS = ["http://localhost:8000"]
+    OTP_WEBAUTHN_ALLOWED_ORIGINS = []
     """A list of allowed origins for webauthn authentication. An origin should be
     in the format 'https://example.com'.
 
