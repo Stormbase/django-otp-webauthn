@@ -73,10 +73,14 @@ class AbstractWebAuthnAttestation(models.Model):
     """The attestation format used by the authenticator. Extracted from the attestation object for convenience."""
 
     data = models.BinaryField(verbose_name=_("data"), editable=False)
-    """The raw attestation data"""
+    """The raw attestation data."""
 
     client_data_json = models.BinaryField(verbose_name=_("client data JSON"), editable=False)
-    """The raw client data JSON, as originally sent by the client."""
+    """The raw client data JSON, as originally sent by the client.
+
+    This is in binary form to preserve exactly what the client sent. This is
+    important because it needs to be byte-for-byte identical in order to verify
+    the signature."""
 
     @cached_property
     def attestation_object(self) -> AttestationObject:
@@ -109,6 +113,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         indexes = [
             # Create an index on the credential_id_sha256 field to speed up lookups. Overridable if needed.
             # For example, this index could be replaced by a hash index on databases that support it. Saves index space.
+            # Example: django.contrib.postgres.indexes.HashIndex(fields=["credential_id_sha256"], name="%(class)s_sha256_idx"),
             models.Index(fields=["credential_id_sha256"], name="%(class)s_sha256_idx"),
         ]
         verbose_name = _("WebAuthn credential")
@@ -153,7 +158,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
     Some authenticators store a lot of data in this field, which means that the field can be quite large.
 
     Previous revisions of the WebAuthn spec did not mention a maximum size for this field.
-    The current L3 revision mentions a maximum size of 1023 bytes.
+    The L3 revision mentions a maximum size of 1023 bytes.
 
     See https://github.com/w3c/webauthn/pull/1664 for related discussion.
     """
@@ -190,31 +195,41 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         default=0,
         editable=False,
     )
-    """The number of times this credential has been used. This is used to detect cloning attacks."""
+    """The number of times this credential has been used. This is used to detect cloning attacks.
 
-    # The level 3 specification also recommends a backupEligible and backupState
-    # fields.
+    Note: in practice, this is zero for most cross-platform authenticators like Apple's iCloud Keychain.
+    """
+
+    # The level 3 specification also recommends a backupEligible and backupState fields.
     # https://www.w3.org/TR/webauthn-3/#abstract-opdef-credential-record-backupeligible
     # https://www.w3.org/TR/webauthn-3/#abstract-opdef-credential-record-backupstate
     # The idea the spec proposes is to use the backup fields to determine if a
     # credential is at risk of being lost. If there is no risk of loss, traditional
-    # password-based authentication could be disabled. Related discussion:
-    # https://github.com/w3c/webauthn/issues/1692
+    # password-based authentication could be disabled.
+    #
+    # Related discussion: https://github.com/w3c/webauthn/issues/1692
     backup_eligible = models.BooleanField(
         _("backup eligible"),
         default=False,
         editable=False,
     )
-    """Whether this credential is eligible for backup. This is a hint from the
-    client that the credential can be backed up. To a cloud account for example."""
+    """Whether this credential can be backed up.
+
+    This is a hint from the client that the credential implements some mechanism to prevent loss. For example, a cloud backup.
+    """
 
     backup_state = models.BooleanField(
         _("backup state"),
         default=False,
         editable=False,
     )
-    """Whether this credential is backed up. This is a hint from the client that
-    the credential is currently backed up. To a cloud account for example."""
+    """Whether this credential is currently backed up.
+
+    This is a hint from the client that the credential is currently backed up,
+    to a cloud account for example. It differs from `backup_eligible` in that
+    it indicates the current state of the backup, not just whether it is
+    possible.
+    """
 
     # The spec also recommends a uvInitialized field.
     # https://www.w3.org/TR/webauthn-3/#abstract-opdef-credential-record-uvinitialized
@@ -235,9 +250,11 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
     privacy.
 
     You may use this field to identify the authenticator, if you are able to.
+
     The FIDO Alliance maintains a metadata service that may be of use:
-    https://fidoalliance.org/metadata/ Check out this community-maintained list
-    of known AAGUIDs:
+    https://fidoalliance.org/metadata/
+
+    Check out this community-maintained list of known AAGUIDs:
     https://github.com/passkeydeveloper/passkey-authenticator-aaguids
     """
 
@@ -261,22 +278,24 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
     credential id back to the authenticator.
 
     Some authenticators, notably limited memory devices like security keys, will
-    encode data in the credential id field and need that data again to
-    authenticate. If this is the case, the authenticator cannot be used for
-    passwordless login because we'd need a username to look up the associated
-    credential ids. If we respond with credential ids, this leaks information
-    about the existence of said user account in our system.
+    encode data in the credential id field and need that data again to be able
+    to generate signatures. If this is the case, the authenticator cannot be
+    used for passwordless login because we'd need a username to look up the
+    associated credential ids. If we respond with credential ids, this leaks
+    information about the existence of said user account in our system.
 
     Non-discoverable authenticators can still be used as a second factor during
     MFA, as the client has already submitted some proof of identity so we can
     reasonably provide credential ids back to the client for the authenticator
     to use.
 
-    None = unknown, the client did not provide the hint. True = the client hints
-    that the authenticator is usable without providing the credential id. The
-    spec calls this a 'Client-side discoverable Credential Source' False = the
-    client hints that the authenticator cannot function without the credential
-    id. The spec calls this a 'Server-side Public Key Credential Source'
+    - `None` = unknown, the client did not provide the hint.
+    - `True` = the client hints that the authenticator is usable without
+      providing the credential id. The spec calls this a 'Client-side
+      discoverable Credential Source'
+    - `False` = the client hints that the authenticator cannot function without
+      the credential id. The spec calls this a 'Server-side Public Key
+      Credential Source'
 
     For more information see:
     https://www.w3.org/TR/webauthn-3/#client-side-discoverable-public-key-credential-source
