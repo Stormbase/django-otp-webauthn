@@ -1,3 +1,0 @@
-dj-database-url
-psycopg
-django-csp
