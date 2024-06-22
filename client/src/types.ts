@@ -1,7 +1,9 @@
 export type State = {
   buttonDisabled: boolean;
   buttonLabel: string;
+  /** Text to display in the status field. */
   status?: string;
+  /** Request the focus be returned to the button. */
   requestFocus?: boolean;
 };
 
