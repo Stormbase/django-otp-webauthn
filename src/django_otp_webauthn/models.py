@@ -3,6 +3,7 @@ import hashlib
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
@@ -19,6 +20,29 @@ from django_otp_webauthn.settings import app_settings
 from django_otp_webauthn.utils import get_credential_model_string
 
 User = get_user_model()
+
+
+def as_credential_descriptors(queryset: QuerySet["AbstractWebAuthnCredential"]) -> list[PublicKeyCredentialDescriptor]:
+    descriptors = []
+    for id, raw_transports in queryset:
+        transports = []
+        for t in raw_transports:
+            # Though the spec recommends we SHOULD NOT modify the transports
+            # in any way, py_webauthn requires we only pass values from the
+            # AuthenticatorTransport enum. We are therefore limited to only
+            # returning transports supported by AuthenticatorTransport.
+
+            # Relevant spec link:
+            # https://www.w3.org/TR/webauthn-3/#dom-publickeycredentialdescriptor-transports
+            # > When registering a new credential, the Relying Party SHOULD
+            # > store the value returned from getTransports(). When creating
+            # > a PublicKeyCredentialDescriptor for that credential, the
+            # > Relying Party SHOULD retrieve that stored value and set it
+            # > as the value of the transports member.
+            if t in AuthenticatorTransport:
+                transports.append(AuthenticatorTransport(t))
+        descriptors.append(PublicKeyCredentialDescriptor(id=id, transports=transports))
+    return descriptors
 
 
 class AbstractWebAuthnAttestation(models.Model):
@@ -68,6 +92,11 @@ class AbstractWebAuthnAttestation(models.Model):
         verbose_name_plural = _("WebAuthn attestations")
 
 
+class WebAuthnCredentialManager(models.Manager):
+    def as_credential_descriptors(self):
+        return as_credential_descriptors(self.values_list("credential_id", "transports"))
+
+
 class AbstractWebAuthnCredential(TimestampMixin, Device):
     """
     Abstract OTP device that validates against a user's WebAuthn credential.
@@ -90,6 +119,8 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
             return f"{self.aaguid} ({self.user})"
 
         return super().__str__()
+
+    objects = WebAuthnCredentialManager()
 
     # The following fields are necessary or recommended by the WebAuthn L3 specification.
     # https://www.w3.org/TR/webauthn-3/#credential-record
@@ -296,26 +327,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
             .values_list("credential_id", "transports")
         )
 
-        descriptors = []
-        for id, raw_transports in queryset:
-            transports = []
-            for t in raw_transports:
-                # Though the spec recommends we SHOULD NOT modify the transports
-                # in any way, py_webauthn requires we only pass values from the
-                # AuthenticatorTransport enum. We are therefore limited to only
-                # returning transports supported by AuthenticatorTransport.
-
-                # Relevant spec link:
-                # https://www.w3.org/TR/webauthn-3/#dom-publickeycredentialdescriptor-transports
-                # > When registering a new credential, the Relying Party SHOULD
-                # > store the value returned from getTransports(). When creating
-                # > a PublicKeyCredentialDescriptor for that credential, the
-                # > Relying Party SHOULD retrieve that stored value and set it
-                # > as the value of the transports member.
-                if t in AuthenticatorTransport:
-                    transports.append(AuthenticatorTransport(t))
-            descriptors.append(PublicKeyCredentialDescriptor(id=id, transports=transports))
-        return descriptors
+        return as_credential_descriptors(queryset)
 
     @classmethod
     def get_webauthn_helper(cls, request: HttpRequest):
