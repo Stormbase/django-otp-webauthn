@@ -39,8 +39,11 @@ def as_credential_descriptors(queryset: QuerySet["AbstractWebAuthnCredential"]) 
             # > a PublicKeyCredentialDescriptor for that credential, the
             # > Relying Party SHOULD retrieve that stored value and set it
             # > as the value of the transports member.
-            if t in AuthenticatorTransport:
+            try:
                 transports.append(AuthenticatorTransport(t))
+            except ValueError:
+                pass
+
         descriptors.append(PublicKeyCredentialDescriptor(id=id, transports=transports))
     return descriptors
 
