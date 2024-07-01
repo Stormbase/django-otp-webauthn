@@ -15,6 +15,7 @@
     "@babel/preset-typescript": "^7.24.1",
     "@babel/register": "^7.23.7",
     "@types/node": "^20.12.11",
+    "all-contributors-cli": "^6.26.1",
     "esbuild": "^0.21.1",
     "prettier": "3.x",
     "ts-loader": "^9.5.1",
