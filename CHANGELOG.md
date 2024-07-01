@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.3] - [UNRELEASED]
 
+### Added
+
+- The default manager for the `WebAuthnCredential` model now includes a `as_credential_descriptors` method to make it easier to format the credentials for use in custom implementations.
+
+### Fixed
+
+- A bug was fixed with Python 3.11 and older that caused an exception when authenticating with a WebAuthn credential. ([#6](https://github.com/Stormbase/django-otp-webauthn/pull/6) by [jmichalicek](https://github.com/jmichalicek))
+
 ### Changed
 
 - The `http://localhost:8000` default value for `OTP_WEBAUTHN_ALLOWED_ORIGINS` was removed.
