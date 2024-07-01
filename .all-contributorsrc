@@ -1,0 +1,27 @@
+{
+  "projectName": "django-otp-webauthn",
+  "projectOwner": "Stormbase",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "CONTRIBUTORS.md",
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "Stormheg",
+      "name": "Storm Heg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13856515?v=4",
+      "profile": "https://github.com/Stormheg",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "linkToUsage": true
+}
