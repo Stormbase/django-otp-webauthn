@@ -2,6 +2,7 @@ from functools import lru_cache
 from logging import getLogger
 
 from django.conf import settings
+from django.contrib.auth import authenticate as auth_authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.models import AbstractUser
@@ -195,8 +196,10 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
 
         You may override this method to implement custom logic.
         """
-        user = device.user
-        if not self.request.user.is_authenticated:
+        if self.request.user.is_authenticated:
+            user = device.user
+        else:
+            user = auth_authenticate(self.request, web_authn_credential=device)
             auth_login(self.request, user)
 
         # Mark the user as having passed verification
