@@ -199,7 +199,7 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
         if self.request.user.is_authenticated:
             user = device.user
         else:
-            user = auth_authenticate(self.request, web_authn_credential=device)
+            user = auth_authenticate(self.request, webauthn_credential=device)
             auth_login(self.request, user)
 
         # Mark the user as having passed verification

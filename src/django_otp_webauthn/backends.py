@@ -10,9 +10,9 @@ UserModel = get_user_model()
 class WebAuthnBackend:
     """A simple authentication backend used when django_otp_webauthn is used for passwordless authentication"""
 
-    def authenticate(self, request: HttpRequest, web_authn_credential: AbstractWebAuthnCredential | None = None, **kwargs: Any) -> AbstractBaseUser | None:
-        if web_authn_credential:
-            user = web_authn_credential.user
+    def authenticate(self, request: HttpRequest, webauthn_credential: AbstractWebAuthnCredential | None = None, **kwargs: Any) -> AbstractBaseUser | None:
+        if webauthn_credential:
+            user = webauthn_credential.user
             return user if self.user_can_authenticate(user) else None
         return None
     
