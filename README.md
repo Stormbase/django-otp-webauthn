@@ -96,7 +96,18 @@ To quickly start using Passkeys in your Django project, follow these steps:
 
    ```
 
-5. Add the registration code to your logged-in user template.
+5. Add `django_otp_webauthn.backends.WebAuthnBackend` to your `AUTHENTICATION_BACKENDS` in your Django settings. This is only required if you are using passkeys for
+passwordless authentication. If another authentication method is required first then this is not necessary.
+
+    ```python
+    AUTHENTICATION_BACKENDS = [
+        ...
+        "django_otp_webauthn.backends.WebAuthnBackend",
+        ...
+    ]
+    ```
+
+6. Add the registration code to your logged-in user template.
 
    ```html
    <!-- logged_in_template.html -->
@@ -131,7 +142,7 @@ To quickly start using Passkeys in your Django project, follow these steps:
    {% render_otp_webauthn_register_scripts %}
    ```
 
-6. On your login page, include the following to enable passwordless login:
+7. On your login page, include the following to enable passwordless login:
 
    ```html
    {% load otp_webauthn %}
@@ -172,13 +183,13 @@ To quickly start using Passkeys in your Django project, follow these steps:
    </form>
    ```
 
-7. Don't forget to run migrations:
+8. Don't forget to run migrations:
 
    ```sh
    python manage.py migrate
    ```
 
-8. That's it! You should now see a "Register Passkey" button on your logged-in user template. Clicking this button will start the registration process. After registration, you should see a "Login using a Passkey" button on your login page. Clicking this button will prompt you to use your Passkey to authenticate. Or if your browser supports it, you will be prompted to use your Passkey when you focus the username field.
+9. That's it! You should now see a "Register Passkey" button on your logged-in user template. Clicking this button will start the registration process. After registration, you should see a "Login using a Passkey" button on your login page. Clicking this button will prompt you to use your Passkey to authenticate. Or if your browser supports it, you will be prompted to use your Passkey when you focus the username field.
 
 ## What exactly is a Passkey?
 
