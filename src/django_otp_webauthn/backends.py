@@ -17,7 +17,10 @@ class WebAuthnBackend:
         return None
     
     def get_user(self, user_id) -> AbstractBaseUser | None:
-        user = UserModel._default_manager.get(pk=user_id)
+        try:
+            user = UserModel._default_manager.get(pk=user_id)
+        except UserModel.DoesNotExist:
+            return None
         return user if self.user_can_authenticate(user) else None
     
     def user_can_authenticate(self, user: AbstractBaseUser | None) -> bool:
