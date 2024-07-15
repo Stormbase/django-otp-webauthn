@@ -1,7 +1,7 @@
 import hashlib
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.db import models
 from django.db.models import QuerySet
 from django.http import HttpRequest
@@ -324,7 +324,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         return hashlib.sha256(credential_id).digest()
 
     @classmethod
-    def get_credential_descriptors_for_user(cls, user: AbstractUser) -> list[PublicKeyCredentialDescriptor]:
+    def get_credential_descriptors_for_user(cls, user: AbstractBaseUser) -> list[PublicKeyCredentialDescriptor]:
         """Return a list of PublicKeyCredentialDescriptor objects for the given user.
 
         Each PublicKeyCredentialDescriptor object represents a credential that the
