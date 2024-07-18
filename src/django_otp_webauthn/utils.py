@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from logging import Logger
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
@@ -23,7 +25,7 @@ class rewrite_exceptions:
 
     """
 
-    def __init__(self, logger: Optional[Logger] = None):
+    def __init__(self, logger: Logger | None = None):
         self.logger = logger
 
     def log_exception(self, exc: Exception):

@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-from typing import Optional
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -176,7 +175,7 @@ class WebAuthnHelper:
 
     def get_authenticator_attachment_preference(
         self,
-    ) -> Optional[AuthenticatorAttachment]:
+    ) -> AuthenticatorAttachment | None:
         """Get the authenticator attachment preference.
 
         By default, this is set to None, which means we don't have a preference.
@@ -379,7 +378,7 @@ class WebAuthnHelper:
         self.create_attestation(device, response.attestation_object, credential.response.client_data_json)
         return device
 
-    def _check_discoverable(self, original_data: dict) -> Optional[bool]:
+    def _check_discoverable(self, original_data: dict) -> bool | None:
         """Check the clientExtensionResults to determine if the credential was
         created as discoverable.
 
