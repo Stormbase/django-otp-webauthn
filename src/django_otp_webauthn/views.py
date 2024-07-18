@@ -66,9 +66,9 @@ class AuthenticationCeremonyMixin:
         return None
 
     def can_authenticate(self, user: AbstractBaseUser | AnonymousUser | None) -> bool:
-        if user and not user.is_active:
-            return False
-        return True
+        if user and user.is_active:
+            return True
+        return False
 
 
 @method_decorator(never_cache, name="dispatch")
