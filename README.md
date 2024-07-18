@@ -96,8 +96,9 @@ To quickly start using Passkeys in your Django project, follow these steps:
 
    ```
 
-5. Add `django_otp_webauthn.backends.WebAuthnBackend` to your `AUTHENTICATION_BACKENDS` in your Django settings. This is only required if you are using passkeys for
-passwordless authentication. If another authentication method is required first then this is not necessary.
+5. Add `django_otp_webauthn.backends.WebAuthnBackend` to `AUTHENTICATION_BACKENDS` in your Django settings. This step is required to make 'passwordless authentication' work.
+
+If you are exclusively using Passkeys as a secondary verification step, you don't have to add this backend.
 
     ```python
     AUTHENTICATION_BACKENDS = [
