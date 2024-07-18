@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.1.4] - [UNRELEASED]
 
-- Nothing yet.
+### Changed
+
+- Support for having multiple `AUTHENTICATION_BACKENDS` was added. ([#8](https://github.com/Stormbase/django-otp-webauthn/pull/8) by [jmichalicek](https://github.com/jmichalicek))
+  - **Action required:** add `django_otp_webauthn.backends.WebAuthnBackend` to your `AUTHENTICATION_BACKENDS` setting if you want to use passwordless login.
 
 ## [0.1.3] - 2024-07-01
 
