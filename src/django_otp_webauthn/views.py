@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from functools import lru_cache
 from logging import getLogger
 
@@ -5,7 +7,8 @@ from django.conf import settings
 from django.contrib.auth import authenticate as auth_authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import resolve_url
 from django.utils.decorators import method_decorator
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -40,12 +43,12 @@ class RegistrationCeremonyMixin:
             raise exceptions.RegistrationDisabled()
         return super().dispatch(request, *args, **kwargs)
 
-    def get_user(self) -> AbstractUser:
+    def get_user(self) -> AbstractBaseUser | None:
         if self.request.user.is_authenticated:
             return self.request.user
         return None
 
-    def can_register(self, user: AbstractUser) -> bool:
+    def can_register(self, user: AbstractBaseUser | AnonymousUser) -> bool:
         if not user.is_active:
             return False
         return True
@@ -58,15 +61,15 @@ class AuthenticationCeremonyMixin:
             raise exceptions.AuthenticationDisabled()
         return super().dispatch(request, *args, **kwargs)
 
-    def get_user(self) -> AbstractUser:
+    def get_user(self) -> AbstractBaseUser | None:
         if self.request.user.is_authenticated:
             return self.request.user
         return None
 
-    def can_authenticate(self, user: AbstractUser) -> bool:
-        if user and not user.is_active:
-            return False
-        return True
+    def can_authenticate(self, user: AbstractBaseUser | AnonymousUser | None) -> bool:
+        if user and user.is_active:
+            return True
+        return False
 
 
 @method_decorator(never_cache, name="dispatch")
@@ -187,7 +190,7 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
         if not device.user.is_active:
             raise exceptions.UserDisabled()
 
-    def complete_auth(self, device: AbstractWebAuthnCredential) -> AbstractUser:
+    def complete_auth(self, device: AbstractWebAuthnCredential) -> AbstractBaseUser:
         """Handle the completion of the authentication procedure.
 
         This method is called when a credential was successfully used and

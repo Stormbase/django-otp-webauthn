@@ -1,9 +1,10 @@
+from __future__ import annotations
+
 import hashlib
 import json
-from typing import Optional
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.http import HttpRequest
 from webauthn import (
     base64url_to_bytes,
@@ -174,7 +175,7 @@ class WebAuthnHelper:
 
     def get_authenticator_attachment_preference(
         self,
-    ) -> Optional[AuthenticatorAttachment]:
+    ) -> AuthenticatorAttachment | None:
         """Get the authenticator attachment preference.
 
         By default, this is set to None, which means we don't have a preference.
@@ -184,7 +185,7 @@ class WebAuthnHelper:
         """
         return None
 
-    def get_credential_display_name(self, user: AbstractUser) -> str:
+    def get_credential_display_name(self, user: AbstractBaseUser) -> str:
         """Get the display name for the credential.
 
         This is used to display a name during registration and authentication.
@@ -193,12 +194,12 @@ class WebAuthnHelper:
         User.get_username().
         """
 
-        if user.get_full_name():
+        if hasattr(user, "get_full_name"):
             return f"{user.get_full_name()} ({user.get_username()})"
 
         return user.get_username()
 
-    def get_credential_name(self, user: AbstractUser) -> str:
+    def get_credential_name(self, user: AbstractBaseUser) -> str:
         """Get the name for the credential.
 
         This is used to display the user's name during registration and
@@ -208,7 +209,7 @@ class WebAuthnHelper:
         """
         return user.get_username()
 
-    def get_unique_anonymous_user_id(self, user: AbstractUser) -> bytes:
+    def get_unique_anonymous_user_id(self, user: AbstractBaseUser) -> bytes:
         """Get a unique identifier for the user to use during WebAuthn
         ceremonies. It must be a unique byte sequence no longer than 64 bytes.
 
@@ -239,7 +240,7 @@ class WebAuthnHelper:
         # bytes instead.
         return hashlib.sha256(bytes(user.pk)).digest()
 
-    def get_user_entity(self, user: AbstractUser) -> PublicKeyCredentialUserEntity:
+    def get_user_entity(self, user: AbstractBaseUser) -> PublicKeyCredentialUserEntity:
         """Get information about the user account a credential is being registered for."""
         return PublicKeyCredentialUserEntity(
             id=self.get_unique_anonymous_user_id(user),
@@ -270,7 +271,7 @@ class WebAuthnHelper:
         algorithms = [COSEAlgorithmIdentifier(a) for a in raw_algorithms if a in COSEAlgorithmIdentifier]
         return algorithms
 
-    def get_generate_registration_options_kwargs(self, *, user: AbstractUser) -> dict:
+    def get_generate_registration_options_kwargs(self, *, user: AbstractBaseUser) -> dict:
         """Get the keyword arguments to pass to `webauthn.generate_registration_options`."""
         challenge = self.generate_challenge()
         rp = self.get_relying_party()
@@ -323,7 +324,7 @@ class WebAuthnHelper:
             == UserVerificationRequirement.REQUIRED.value,
         }
 
-    def register_begin(self, user: AbstractUser) -> tuple[dict, dict]:
+    def register_begin(self, user: AbstractBaseUser) -> tuple[dict, dict]:
         """Begin the registration process."""
 
         kwargs = self.get_generate_registration_options_kwargs(user=user)
@@ -349,7 +350,7 @@ class WebAuthnHelper:
         origins = app_settings.OTP_WEBAUTHN_ALLOWED_ORIGINS
         return origins
 
-    def register_complete(self, user: AbstractUser, state: dict, data: dict):
+    def register_complete(self, user: AbstractBaseUser, state: dict, data: dict):
         """Complete the registration process."""
         credential = parse_registration_credential_json(data)
 
@@ -377,7 +378,7 @@ class WebAuthnHelper:
         self.create_attestation(device, response.attestation_object, credential.response.client_data_json)
         return device
 
-    def _check_discoverable(self, original_data: dict) -> Optional[bool]:
+    def _check_discoverable(self, original_data: dict) -> bool | None:
         """Check the clientExtensionResults to determine if the credential was
         created as discoverable.
 
@@ -397,7 +398,7 @@ class WebAuthnHelper:
 
     def create_credential(
         self,
-        user: AbstractUser,
+        user: AbstractBaseUser,
         response: VerifiedRegistration,
         parsed_credential: RegistrationCredential,
         original_data: dict,
@@ -454,7 +455,7 @@ class WebAuthnHelper:
         return {}
 
     def get_generate_authentication_options_kwargs(
-        self, *, user: Optional[AbstractUser] = None, require_user_verification: bool
+        self, *, user: AbstractBaseUser | None = None, require_user_verification: bool
     ) -> dict:
         """Get the keyword arguments to pass to `webauth.generate_authentication_options`."""
 
@@ -484,7 +485,7 @@ class WebAuthnHelper:
 
     def authenticate_begin(
         self,
-        user: Optional[AbstractUser] = None,
+        user: AbstractBaseUser | None = None,
         require_user_verification: bool = True,
     ):
         """Begin the authentication process."""
@@ -507,7 +508,7 @@ class WebAuthnHelper:
         state = self.get_authentication_state(data)
         return data, state
 
-    def authenticate_complete(self, user: Optional[AbstractUser], state: dict, data: dict):
+    def authenticate_complete(self, user: AbstractBaseUser | None, state: dict, data: dict):
         """Complete the authentication process."""
 
         credential = parse_authentication_credential_json(data)
