@@ -67,6 +67,9 @@ class AuthenticationCeremonyMixin:
         return None
 
     def can_authenticate(self, user: AbstractBaseUser | AnonymousUser | None) -> bool:
+        # If there is no user, then we are working with an anonymous request
+        # and so the they can autenticate. Otherwise, we have a real user, so they can
+        # only authenticate if they are active.
         if user and user.is_active:
             return True
         return False
