@@ -8,7 +8,6 @@ from django.contrib.auth import authenticate as auth_authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.base_user import AbstractBaseUser
-from django.contrib.auth.models import AnonymousUser
 from django.shortcuts import resolve_url
 from django.utils.decorators import method_decorator
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -35,12 +34,7 @@ def _get_pywebauthn_logger():
 
 class RegistrationCeremonyMixin:
     def dispatch(self, request, *args, **kwargs):
-        self.user = self.get_user()
-        if not self.user:
-            raise exceptions.UserDisabled()
-
-        if not self.can_register(self.user):
-            raise exceptions.RegistrationDisabled()
+        self.check_can_register()
         return super().dispatch(request, *args, **kwargs)
 
     def get_user(self) -> AbstractBaseUser | None:
@@ -48,17 +42,17 @@ class RegistrationCeremonyMixin:
             return self.request.user
         return None
 
-    def can_register(self, user: AbstractBaseUser | AnonymousUser) -> bool:
-        if not user.is_active:
-            return False
-        return True
+    def check_can_register(self):
+        """Perform any necessary pre-checks to see if the registration ceremony can proceed."""
+        user = self.get_user()
+        # Only active users may attempt to register a new credential
+        if user and not user.is_active:
+            raise exceptions.UserDisabled()
 
 
 class AuthenticationCeremonyMixin:
     def dispatch(self, request, *args, **kwargs):
-        self.user = self.get_user()
-        if not self.can_authenticate(self.user):
-            raise exceptions.AuthenticationDisabled()
+        self.check_can_authenticate()
         return super().dispatch(request, *args, **kwargs)
 
     def get_user(self) -> AbstractBaseUser | None:
@@ -66,10 +60,18 @@ class AuthenticationCeremonyMixin:
             return self.request.user
         return None
 
-    def can_authenticate(self, user: AbstractBaseUser | AnonymousUser | None) -> bool:
+    def check_can_authenticate(self):
+        """Perform any necessary pre-checks to see if the authentication ceremony can proceed."""
+        user = self.get_user()
+        # In case we already have a user (scenario: webauthn used as a second factor only)
+        # we allow the ceremony to proceed, as long as the user is active
         if user and user.is_active:
-            return True
-        return False
+            return
+
+        # In case we don't have a user (scenario: webauthn used as for passwordless login, no user logged in yet)
+        disallow_passwordless_login = not app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN
+        if self.get_user() is None and disallow_passwordless_login:
+            raise exceptions.PasswordlessLoginDisabled()
 
 
 @method_decorator(never_cache, name="dispatch")
@@ -80,7 +82,7 @@ class BeginCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
     """
 
     def post(self, *args, **kwargs):
-        user = self.user
+        user = self.get_user()
         helper = WebAuthnCredential.get_webauthn_helper(request=self.request)
         data, state = helper.register_begin(user=user)
 
@@ -108,7 +110,7 @@ class CompleteCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
         return state
 
     def post(self, *args, **kwargs):
-        user = self.user
+        user = self.get_user()
         state = self.get_state()
         data = self.request.data
 
@@ -130,7 +132,7 @@ class BeginCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView):
     """
 
     def post(self, *args, **kwargs):
-        user = self.user
+        user = self.get_user()
 
         helper = WebAuthnCredential.get_webauthn_helper(request=self.request)
         require_user_verification = not bool(user)
@@ -164,28 +166,24 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
             raise exceptions.InvalidState()
         return state
 
-    def check_login_allowed(self, device: AbstractWebAuthnCredential) -> None:
-        """Check if the user is allowed to log in using the device.
+    def check_device_usable(self, device: AbstractWebAuthnCredential) -> None:
+        """Check if this device may be used to login.
 
         This will raise:
-         - ``PasswordlessLoginDisabled`` if there is no user logged in and
-           ``OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN`` is False.
+         - ``CredentialDisabled`` if `device.confirmed=False`.
          - ``UserDisabled`` if the user associated with the device is not
            active.
 
         You can override this method to implement your own custom logic. If you
-        do, you should raise an exception if the user is not allowed to log in.
+        do, you should raise an exception if this device may not be used to
+        login.
 
         Args:
             device (AbstractWebAuthnCredential): The device the user is trying to log
             in with.
         """
-        disallow_passwordless_login = not app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN
         if not device.confirmed:
             raise exceptions.CredentialDisabled()
-
-        if self.get_user() is None and disallow_passwordless_login:
-            raise exceptions.PasswordlessLoginDisabled()
 
         if not device.user.is_active:
             raise exceptions.UserDisabled()
@@ -236,7 +234,7 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
         return self.get_redirect_url() or resolve_url(settings.LOGIN_REDIRECT_URL)
 
     def post(self, *args, **kwargs):
-        user = self.user
+        user = self.get_user()
         state = self.get_state()
         data = self.request.data
 
@@ -246,7 +244,7 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
         with rewrite_exceptions(logger=logger):
             device = helper.authenticate_complete(user=user, state=state, data=data)
 
-        self.check_login_allowed(device)
+        self.check_device_usable(device)
 
         self.complete_auth(device)
 
