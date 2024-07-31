@@ -98,7 +98,7 @@ def check_settings_allowed_origins_misconfigured(app_configs, **kwargs):
         return errors
 
     for origin in allowed_origins:
-        if not origin.startswith("https://") and not origin.startswith("http://localhost"):
+        if not origin.startswith(("https://", "http://localhost", "http://127.0.0.1")):
             errors.append(
                 Error(
                     f"Allowed origin {origin!r} is not a secure origin.",
