@@ -18,10 +18,10 @@ export async function getConfig(): Promise<Config> {
 }
 
 /**
- * Retrieves the CSRF token from a the cookie.
+ * Retrieves the CSRF token from a the cookie or from <input> tag.
  */
 export async function getCSRFToken(config: Config): Promise<string> {
-  let cookieValue = "";
+  let csrfToken = "";
   const cookieName = config.csrfCookieName;
   if (document.cookie && document.cookie !== "") {
     const cookies = document.cookie.split(";");
@@ -29,12 +29,18 @@ export async function getCSRFToken(config: Config): Promise<string> {
       const cookie = cookies[i].trim();
       // Does this cookie string begin with the name we want?
       if (cookie.substring(0, cookieName.length + 1) === cookieName + "=") {
-        cookieValue = decodeURIComponent(
+        csrfToken = decodeURIComponent(
           cookie.substring(cookieName.length + 1),
         );
         break;
       }
     }
   }
-  return cookieValue;
+  if (csrfToken === "") {
+    const input = document.querySelector('input[name="csrfmiddlewaretoken"]');
+    if (input !== null) {
+      csrfToken = input.value;
+    }
+  }
+  return csrfToken;
 }
