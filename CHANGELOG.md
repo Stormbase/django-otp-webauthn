@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - [UNRELEASED]
+
+## Changed
+
+- The built-in Passkey registration and verification views error handling has been reworked. ([#12](https://github.com/Stormbase/django-otp-webauthn/pull/12) by [Stormheg](https://github.com/Stormheg))
+
+## Fixed
+
+- A regression in v0.2.0 was fixed were `AuthenticationDisabled` would incorrectly be raised. (Issue [#10](https://github.com/Stormbase/django-otp-webauthn/issues/10) by [jmichalicek](https://github.com/jmichalicek); fixed in [#12](https://github.com/Stormbase/django-otp-webauthn/pull/12) by [Stormheg](https://github.com/Stormheg))
+
+## Removed
+
+- The unused `RegistrationDisabled`, `AuthenticationDisabled`, and `LoginRequired` exceptions are removed. ([#12](https://github.com/Stormbase/django-otp-webauthn/pull/12) by [Stormheg](https://github.com/Stormheg))
+
 ## [0.2.0] - 2024-07-18
 
 ### Changed
