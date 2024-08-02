@@ -10,7 +10,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Stormheg"><img src="https://avatars.githubusercontent.com/u/13856515?v=4?s=100" width="100px;" alt="Storm Heg"/><br /><sub><b>Storm Heg</b></sub></a><br /><a href="https://github.com/Stormbase/django-otp-webauthn/commits?author=Stormheg" title="Code">💻</a> <a href="https://github.com/Stormbase/django-otp-webauthn/commits?author=Stormheg" title="Documentation">📖</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="http://bash-shell.net/"><img src="https://avatars.githubusercontent.com/u/1059070?v=4?s=100" width="100px;" alt="Justin Michalicek"/><br /><sub><b>Justin Michalicek</b></sub></a><br /><a href="https://github.com/Stormbase/django-otp-webauthn/commits?author=jmichalicek" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://bash-shell.net/"><img src="https://avatars.githubusercontent.com/u/1059070?v=4?s=100" width="100px;" alt="Justin Michalicek"/><br /><sub><b>Justin Michalicek</b></sub></a><br /><a href="https://github.com/Stormbase/django-otp-webauthn/commits?author=jmichalicek" title="Code">💻</a> <a href="https://github.com/Stormbase/django-otp-webauthn/issues?q=author%3Ajmichalicek" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
   <tfoot>
