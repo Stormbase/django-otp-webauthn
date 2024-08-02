@@ -30,6 +30,16 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "nijel",
+      "name": "Michal Čihař",
+      "avatar_url": "https://avatars.githubusercontent.com/u/212189?v=4",
+      "profile": "https://weblate.org/",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
