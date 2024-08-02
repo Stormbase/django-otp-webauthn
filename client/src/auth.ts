@@ -1,5 +1,5 @@
 import { State, Config } from "./types";
-import { getCSRFToken, getConfig } from "./utils";
+import { getConfig } from "./utils";
 import {
   browserSupportsWebAuthn,
   browserSupportsWebAuthnAutofill,
@@ -64,7 +64,7 @@ import {
         method: "POST",
         credentials: "same-origin",
         headers: {
-          "X-CSRFToken": await getCSRFToken(config),
+          "X-CSRFToken": config.csrfToken,
           Accept: "application/json",
         },
       });
@@ -119,7 +119,7 @@ import {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRFToken": await getCSRFToken(config),
+          "X-CSRFToken": config.csrfToken,
         },
         credentials: "same-origin",
         body: JSON.stringify(attResp),
@@ -226,7 +226,7 @@ import {
           method: "POST",
           credentials: "same-origin",
           headers: {
-            "X-CSRFToken": await getCSRFToken(config),
+            "X-CSRFToken": config.csrfToken,
             Accept: "application/json",
           },
         });
@@ -320,7 +320,7 @@ import {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-CSRFToken": await getCSRFToken(config),
+            "X-CSRFToken": config.csrfToken,
           },
           credentials: "same-origin",
           body: JSON.stringify(attResp),
