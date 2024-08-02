@@ -24,24 +24,6 @@ class PasswordlessLoginDisabled(OTPWebAuthnApiError):
     default_code = "passwordless_login_disabled"
 
 
-class RegistrationDisabled(OTPWebAuthnApiError):
-    status_code = 403
-    default_detail = _("Registration is disabled.")
-    default_code = "registration_disabled"
-
-
-class AuthenticationDisabled(OTPWebAuthnApiError):
-    status_code = 403
-    default_detail = _("Authentication is disabled.")
-    default_code = "authentication_disabled"
-
-
-class LoginRequired(OTPWebAuthnApiError):
-    status_code = 403
-    default_detail = _("User is not logged in.")
-    default_code = "login_required"
-
-
 class UserDisabled(OTPWebAuthnApiError):
     status_code = 403
     default_detail = _("This user account is marked as disabled.")
