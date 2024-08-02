@@ -16,7 +16,5 @@ export type Config = {
   // The selector for the field that will is supposed to trigger the autofill UI.
   autocompleteLoginFieldSelector?: string;
 
-  // The name of the cookie that contains the CSRF token.
-  // This is configurable because Django has a setting to change it.
-  csrfCookieName: string;
+  csrfToken: string;
 };
