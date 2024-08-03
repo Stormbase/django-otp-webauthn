@@ -286,7 +286,6 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         editable=False,
         unique=True,
     )
-
     """SHA256 hash of the credential ID. It is used to speed up lookups for a
     given credential ID only and has no purpose beyond that."""
 
@@ -354,7 +353,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         Each PublicKeyCredentialDescriptor object represents a credential that the
         user has registered.
 
-        These descriptors are intended to inform the client about credential the
+        These descriptors are intended to inform the client about credentials the
         user has registered with the server.
         """
 
@@ -363,8 +362,8 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
             # The ordering caries significance. Clients MAY use the order of the
             # list to determine the order in which to display suggested options
             # to the user. We don't explicitly keep track of preferred devices,
-            # but we can make the assumption that the most recently used device
-            # is most likely to be a preferred device.
+            # but we can make the assumption that recently used devices
+            # are more likely to be preferred devices.
             # Source: https://www.w3.org/TR/webauthn-3/#dom-publickeycredentialrequestoptions-allowcredentials
             # > The list is ordered in descending order of preference: the first
             # > item in the list is the most preferred credential, and the last

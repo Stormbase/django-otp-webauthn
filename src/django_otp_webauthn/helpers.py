@@ -220,7 +220,7 @@ class WebAuthnHelper:
         Clients can use this to identify if they already have a credential
         stored for this user account and act accordingly.
 
-        For more information, see: -
+        For more information, see:
         https://www.w3.org/TR/webauthn-2/#dom-publickeycredentialuserentity-id
         """
         # Because we lack a dedicated field to store random bytes in on the user
@@ -236,7 +236,7 @@ class WebAuthnHelper:
         # specific user, they can obtain the suspected user's primary key and
         # hash it to see if it matches the user ID stored on the authenticator.
         # Random bytes never shared with anyone don't have this issue.
-        # TODO: document the need to override this method  and to use random
+        # TODO: document the need to override this method and to use random
         # bytes instead.
         return hashlib.sha256(bytes(user.pk)).digest()
 
