@@ -12,7 +12,7 @@ class WebAuthnCredentialAdmin(admin.ModelAdmin):
     list_display = [
         "user",
         "name",
-        "credential_id_hex_display",
+        "credential_id_sha256",
         "aaguid",
         "last_used_at",
         "created_at",
@@ -21,7 +21,7 @@ class WebAuthnCredentialAdmin(admin.ModelAdmin):
     raw_id_fields = ["user"]
     readonly_fields = [
         "aaguid",
-        "credential_id_hex",
+        "credential_id_sha256",
         "public_key_hex",
         "last_used_at",
         "created_at",
@@ -36,18 +36,9 @@ class WebAuthnCredentialAdmin(admin.ModelAdmin):
     def has_add_permission(self, request, obj=None):
         return False
 
-    def credential_id_hex(self, obj):
-        return obj.credential_id.hex()
-
-    def credential_id_hex_display(self, obj):
-        """Truncate the credential ID to 64 characters for display in listing."""
-        return obj.credential_id.hex()[:64]
-
     def public_key_hex(self, obj):
         return obj.public_key.hex()
 
-    credential_id_hex_display.admin_order_field = "credential_id"
-    credential_id_hex_display.short_description = _("credential ID")
     public_key_hex.short_description = _("COSE public key")
 
     def get_fieldsets(self, request, obj=None):
@@ -58,7 +49,7 @@ class WebAuthnCredentialAdmin(admin.ModelAdmin):
 
         configuration_fields = [
             "aaguid",
-            "credential_id_hex",
+            "credential_id_sha256",
             "transports",
             "discoverable",
             "backup_eligible",

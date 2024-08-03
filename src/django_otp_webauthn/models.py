@@ -261,12 +261,13 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
     https://github.com/passkeydeveloper/passkey-authenticator-aaguids
     """
 
-    credential_id_sha256 = models.BinaryField(
+    credential_id_sha256 = models.CharField(
         _("hashed credential id"),
-        max_length=32,
+        max_length=64,
         editable=False,
         unique=True,
     )
+
     """SHA256 hash of the credential ID. It is used to speed up lookups for a
     given credential ID only and has no purpose beyond that."""
 
@@ -319,9 +320,9 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         return cls.objects.get(credential_id_sha256=hashed_credential_id)
 
     @classmethod
-    def get_credential_id_sha256(cls, credential_id: bytes) -> bytes:
+    def get_credential_id_sha256(cls, credential_id: bytes) -> str:
         """Return the SHA256 hash of the given credential id."""
-        return hashlib.sha256(credential_id).digest()
+        return hashlib.sha256(credential_id).hexdigest()
 
     @classmethod
     def get_credential_descriptors_for_user(cls, user: AbstractBaseUser) -> list[PublicKeyCredentialDescriptor]:
