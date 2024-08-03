@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-26 18:48+0000\n"
+"POT-Creation-Date: 2024-08-03 13:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/django_otp_webauthn/admin.py:50
-msgid "credential ID"
-msgstr "credential ID"
-
-#: src/django_otp_webauthn/admin.py:51
+#: src/django_otp_webauthn/admin.py:42
 msgid "COSE public key"
 msgstr "Publieke COSE-sleutel"
 
-#: src/django_otp_webauthn/admin.py:71
+#: src/django_otp_webauthn/admin.py:62
 msgid "Identity"
 msgstr "Identiteit"
 
-#: src/django_otp_webauthn/admin.py:77
+#: src/django_otp_webauthn/admin.py:68
 msgid "Meta"
 msgstr "Meta-gegevens"
 
-#: src/django_otp_webauthn/admin.py:83
+#: src/django_otp_webauthn/admin.py:74
 msgid "WebAuthn credential data"
 msgstr "WebAuthn-gegevens"
 
@@ -59,103 +55,91 @@ msgid "Passwordless login is disabled."
 msgstr "Wachtwoordloze login is uitgeschakeld."
 
 #: src/django_otp_webauthn/exceptions.py:29
-msgid "Registration is disabled."
-msgstr "Registratie is uitgeschakeld."
-
-#: src/django_otp_webauthn/exceptions.py:35
-msgid "Authentication is disabled."
-msgstr "Authenticatie is uitgeschakeld."
-
-#: src/django_otp_webauthn/exceptions.py:41
-msgid "User is not logged in."
-msgstr "Gebruiker is niet ingelogd."
-
-#: src/django_otp_webauthn/exceptions.py:47
 msgid "This user account is marked as disabled."
 msgstr "Dit gebruikersaccount is gemarkeerd als uitgeschakeld."
 
-#: src/django_otp_webauthn/exceptions.py:53
+#: src/django_otp_webauthn/exceptions.py:35
 msgid "This Passkey has been marked as disabled."
 msgstr "Deze Passkey is gemarkeerd als uitgeschakeld."
 
-#: src/django_otp_webauthn/exceptions.py:59
+#: src/django_otp_webauthn/exceptions.py:41
 msgid "The Passkey you tried to use was not found. Perhaps it was removed?"
 msgstr ""
 "De Passkey die u probeert te gebruiken is niet gevonden. Misschien is deze "
 "verwijderd?"
 
-#: src/django_otp_webauthn/models.py:42
+#: src/django_otp_webauthn/models.py:71
 msgid "credential"
 msgstr "credential"
 
-#: src/django_otp_webauthn/models.py:46
+#: src/django_otp_webauthn/models.py:75
 msgid "format"
 msgstr "formaat"
 
-#: src/django_otp_webauthn/models.py:49
+#: src/django_otp_webauthn/models.py:78
 msgid "data"
 msgstr "data"
 
-#: src/django_otp_webauthn/models.py:52
+#: src/django_otp_webauthn/models.py:81
 msgid "client data JSON"
 msgstr "client data JSON"
 
-#: src/django_otp_webauthn/models.py:65
+#: src/django_otp_webauthn/models.py:98
 msgid "WebAuthn attestation"
 msgstr "WebAuthn attestatie"
 
-#: src/django_otp_webauthn/models.py:66
+#: src/django_otp_webauthn/models.py:99
 msgid "WebAuthn attestations"
 msgstr "WebAuthn attestaties"
 
-#: src/django_otp_webauthn/models.py:83
+#: src/django_otp_webauthn/models.py:122
 msgid "WebAuthn credential"
 msgstr "WebAuthn credential"
 
-#: src/django_otp_webauthn/models.py:84
+#: src/django_otp_webauthn/models.py:123
 msgid "WebAuthn credentials"
 msgstr "WebAuthn credentials"
 
-#: src/django_otp_webauthn/models.py:95
+#: src/django_otp_webauthn/models.py:136
 msgid "Public Key"
 msgstr "Publieke Sleutel"
 
-#: src/django_otp_webauthn/models.py:100
+#: src/django_otp_webauthn/models.py:141
 msgid "credential type"
 msgstr "type credential"
 
-#: src/django_otp_webauthn/models.py:113
+#: src/django_otp_webauthn/models.py:154
 msgid "credential id data"
 msgstr "credential id data"
 
-#: src/django_otp_webauthn/models.py:129
+#: src/django_otp_webauthn/models.py:170
 msgid "COSE public key data"
 msgstr "COSE publieke sleutel data"
 
-#: src/django_otp_webauthn/models.py:136
+#: src/django_otp_webauthn/models.py:177
 msgid "transports"
 msgstr "transports"
 
-#: src/django_otp_webauthn/models.py:156
+#: src/django_otp_webauthn/models.py:197
 msgid "sign count"
 msgstr "aantal ondertekeningen"
 
-#: src/django_otp_webauthn/models.py:171
+#: src/django_otp_webauthn/models.py:215
 msgid "backup eligible"
 msgstr "kan worden geback-upt"
 
-#: src/django_otp_webauthn/models.py:179
+#: src/django_otp_webauthn/models.py:225
 msgid "backup state"
 msgstr "back-up status"
 
-#: src/django_otp_webauthn/models.py:197
+#: src/django_otp_webauthn/models.py:248
 msgid "AAGUID"
 msgstr "AAGUID"
 
-#: src/django_otp_webauthn/models.py:212
+#: src/django_otp_webauthn/models.py:265
 msgid "hashed credential id"
 msgstr "gehashte credential id"
 
-#: src/django_otp_webauthn/models.py:221
+#: src/django_otp_webauthn/models.py:275
 msgid "discoverable"
 msgstr "zichtbaar"
