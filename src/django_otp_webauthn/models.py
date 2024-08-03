@@ -28,7 +28,7 @@ def as_credential_descriptors(
     queryset: QuerySet["AbstractWebAuthnCredential"],
 ) -> list[PublicKeyCredentialDescriptor]:
     descriptors = []
-    for id, raw_transports in queryset:
+    for id, raw_transports in queryset.values_list("credential_id", "transports"):
         transports = []
         for t in raw_transports:
             # Though the spec recommends we SHOULD NOT modify the transports
@@ -369,7 +369,6 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
             # > item in the list is the most preferred credential, and the last
             # > is the least preferred.
             .order_by(models.F("last_used_at").desc(nulls_last=True))
-            .values_list("credential_id", "transports")
         )
 
         return as_credential_descriptors(queryset)
