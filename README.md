@@ -1,4 +1,8 @@
 # Django OTP WebAuthn
+
+[![Version](https://img.shields.io/pypi/v/django-otp-webauthn.svg?style=flat-square)](https://pypi.python.org/pypi/django-otp-webauthn/)
+[![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD-blue.svg?style=flat-square)](https://opensource.org/licenses/BSD-3-Clause)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
