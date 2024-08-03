@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - A regression in v0.2.0 was fixed were `AuthenticationDisabled` would incorrectly be raised. (Issue [#10](https://github.com/Stormbase/django-otp-webauthn/issues/10) by [jmichalicek](https://github.com/jmichalicek); fixed in [#12](https://github.com/Stormbase/django-otp-webauthn/pull/12) by [Stormheg](https://github.com/Stormheg))
 - Support for `CSRF_USE_SESSIONS = True` was added. (Issue [#14](https://github.com/Stormbase/django-otp-webauthn/issues/14) by [nijel](https://github.com/nijel); fixed in [#15](https://github.com/Stormbase/django-otp-webauthn/issues/15) by [nijel](https://github.com/nijel) and [Stormheg](https://github.com/Stormheg))
+- An issue that prevented MySQL from being used as the database backend was fixed. (Issue [#17](https://github.com/Stormbase/django-otp-webauthn/issues/17) by [nijel](https://github.com/nijel); fixed in [#18](https://github.com/Stormbase/django-otp-webauthn/issues/18) by [Stormheg](https://github.com/Stormheg))
 
 ## Removed
 
