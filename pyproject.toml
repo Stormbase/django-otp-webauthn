@@ -54,6 +54,30 @@ artifacts = [
   "src/django_otp_webauthn/locale/*/LC_MESSAGES/*.mo",
 ]
 
+[tool.hatch.build.targets.sdist]
+artifacts = [
+  # Include built static files that are gitignored and thus not included by default
+  "src/django_otp_webauthn/static/django_otp_webauthn/*",
+  # Include compiled translations that are gitignored and thus not included by default
+  "src/django_otp_webauthn/locale/*/LC_MESSAGES/*.mo",
+  "sandbox/locale/*/LC_MESSAGES/*.mo",
+]
+# Manually specify what to include, otherwise it becomes a mess
+include = [
+  "src/django_otp_webauthn",
+  "sandbox/",
+  "client/",
+  "tests/",
+  "update_translations.sh",
+  "compile_translations.sh",
+  "README.md",
+  "LICENSE",
+  "CHANGELOG.md",
+  "CONTRIBUTORS.md",
+  "SECURITY.md",
+  "pyproject.toml",
+]
+
 [tool.hatch.envs.default]
 dependencies = [
   "django-debug-toolbar>4,<5",
