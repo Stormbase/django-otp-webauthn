@@ -61,14 +61,6 @@ def test_attestation_str():
 
 
 @pytest.mark.django_db
-def test_attestation_natural_key():
-    """Test that the natural key of an attestation is the credential."""
-    attestation = WebAuthnAttestationFactory()
-
-    assert attestation.natural_key() == (attestation.credential.credential_id_sha256,)
-
-
-@pytest.mark.django_db
 def test_attestation_parse_attestation_object():
     """Test that the parse_attestation_object method works."""
 
@@ -88,13 +80,6 @@ def test_attestation_parse_attestation_object():
 @pytest.mark.django_db
 def test_attestation_manager():
     assert isinstance(WebAuthnAttestation.objects, WebAuthnAttestationManager)
-    attestation = WebAuthnAttestationFactory()
-    assert (
-        WebAuthnAttestation.objects.get_by_natural_key(
-            attestation.credential.credential_id_sha256
-        )
-        == attestation
-    )
 
 
 @pytest.mark.django_db
@@ -151,16 +136,6 @@ def test_get_credential_id_sha256():
 
 
 @pytest.mark.django_db
-def test_credential_natural_key():
-    """Test that the natural key of a credential is the credential_id."""
-    credential_id = b"credential_id"
-
-    cred = WebAuthnCredentialFactory(credential_id=credential_id)
-
-    assert cred.natural_key() == (cred.credential_id_sha256,)
-
-
-@pytest.mark.django_db
 def test_credential_get_credential_descriptors_for_user(user):
     """Test that the get_credential_descriptors_for_user method works."""
     other_user = UserFactory()
@@ -198,16 +173,6 @@ def test_credential_get_credential_descriptors_for_user(user):
 def test_credential_manager():
     """Default manager should be the custom manager."""
     assert isinstance(WebAuthnCredential.objects, WebAuthnCredentialManager)
-
-
-@pytest.mark.django_db
-def test_credential_manager_get_by_natural_key():
-    credential_id = b"credential_id"
-    credential_id_sha256 = hashlib.sha256(credential_id).hexdigest()
-
-    cred = WebAuthnCredentialFactory(credential_id=credential_id)
-
-    assert WebAuthnCredential.objects.get_by_natural_key(credential_id_sha256) == cred
 
 
 @pytest.mark.django_db
