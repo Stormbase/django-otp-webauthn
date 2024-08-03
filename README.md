@@ -215,7 +215,7 @@ Here is an (overly simplified) explanation of how Passkeys work. For a more deta
 
 Passkeys are sometimes claimed to be silver bullet for security. While they are more secure than passwords, they are not perfect.
 
-You put trust in the user's device and its manufacturer. Most devices support some form is syncing Passkeys between devices, like through an iCloud or Google account. This means that if someone gains access to the users' iCloud or Google account, they could potentially access their Passkeys. Users that have poorly secured their account and devices are at risk. However, this is not unique to Passkeys. The same risks exists for password managers and other forms of Multi Factor Authentication that support syncing between devices. Passkeys improve over other methods by their resistance to phishing attacks, credential stuffing and their convenience.
+You put trust in the user's device and its manufacturer. Most devices support some form of syncing Passkeys between devices, like through an iCloud or Google account. This means that if someone gains access to the users' iCloud or Google account, they could potentially access their Passkeys. Users that have poorly secured their account and devices are at risk. However, this is not unique to Passkeys. The same risks exists for password managers and other forms of Multi Factor Authentication that support syncing between devices. Passkeys improve over other methods by their resistance to phishing attacks, credential stuffing and their convenience.
 
 It is the author's opinion that the benefits of Passkeys outweigh the risks. This section is here for your own consideration.
 
