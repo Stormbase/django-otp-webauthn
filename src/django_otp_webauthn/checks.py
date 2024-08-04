@@ -50,7 +50,7 @@ def check_settings_supported_cose_algorithms(app_configs, **kwargs):
     algorithms = app_settings.OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS
 
     # No need to check - no explicit algorithms provided
-    if algorithms == "all":
+    if algorithms is None:
         return []
 
     unsupported_algorithms = []

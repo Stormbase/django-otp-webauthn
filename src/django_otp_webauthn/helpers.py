@@ -264,8 +264,8 @@ class WebAuthnHelper:
         """
 
         raw_algorithms = app_settings.OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS
-        if raw_algorithms == "all":
-            # Indicates all py_webauthn supported algorithms
+        if raw_algorithms is None:
+            # Indicates the default py_webauthn supported algorithms
             return None
 
         algorithms = [
