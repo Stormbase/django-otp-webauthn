@@ -275,6 +275,11 @@ class WebAuthnHelper:
         ]
         return algorithms
 
+    def get_allowed_origins(self) -> list[str]:
+        """Get the expected origins."""
+        origins = app_settings.OTP_WEBAUTHN_ALLOWED_ORIGINS
+        return origins
+
     def get_generate_registration_options_kwargs(
         self, *, user: AbstractBaseUser
     ) -> dict:
@@ -354,11 +359,6 @@ class WebAuthnHelper:
         state = self.get_registration_state(data)
 
         return data, state
-
-    def get_allowed_origins(self) -> list[str]:
-        """Get the expected origins."""
-        origins = app_settings.OTP_WEBAUTHN_ALLOWED_ORIGINS
-        return origins
 
     def register_complete(self, user: AbstractBaseUser, state: dict, data: dict):
         """Complete the registration process."""
