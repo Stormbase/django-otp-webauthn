@@ -38,7 +38,17 @@ class WebAuthnCredentialFactory(factory.django.DjangoModelFactory):
     discoverable = factory.fuzzy.FuzzyChoice([True, False, None])
     aaguid = factory.Faker("uuid4")
     public_key = b"\00"
-    transports = []
+    transports = factory.fuzzy.FuzzyChoice(
+        [
+            ["usb"],
+            ["nfc"],
+            ["ble"],
+            ["usb", "nfc"],
+            ["usb", "ble"],
+            ["nfc", "ble"],
+            ["usb", "nfc", "ble"],
+        ]
+    )
     backup_eligible = factory.fuzzy.FuzzyChoice([True, False])
 
     @factory.lazy_attribute
