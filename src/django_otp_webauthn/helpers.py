@@ -543,11 +543,6 @@ class WebAuthnHelper:
         expected_origins = self.get_allowed_origins()
         require_user_verification = state["require_user_verification"]
         expected_rp_id = self.get_relying_party_domain()
-        supported_algorithms = self.get_supported_key_algorithms()
-
-        kwargs = {}
-        if supported_algorithms:
-            kwargs["supported_algorithms"] = supported_algorithms
 
         response = verify_authentication_response(
             credential=credential,
@@ -557,7 +552,6 @@ class WebAuthnHelper:
             expected_rp_id=expected_rp_id,
             expected_origin=expected_origins,
             require_user_verification=require_user_verification,
-            **kwargs,
         )
 
         device.sign_count = response.new_sign_count
