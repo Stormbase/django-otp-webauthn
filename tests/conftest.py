@@ -22,3 +22,8 @@ def credential():
 @pytest.fixture
 def user():
     return UserFactory()
+
+
+@pytest.fixture
+def user_in_memory():
+    return UserFactory.build()
