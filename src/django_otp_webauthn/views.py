@@ -13,6 +13,7 @@ from django.utils.decorators import method_decorator
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.cache import never_cache
 from django_otp import login as otp_login
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -33,6 +34,8 @@ def _get_pywebauthn_logger():
 
 
 class RegistrationCeremonyMixin:
+    permission_classes = [IsAuthenticated]
+
     def dispatch(self, request, *args, **kwargs):
         self.check_can_register()
         return super().dispatch(request, *args, **kwargs)
@@ -51,6 +54,8 @@ class RegistrationCeremonyMixin:
 
 
 class AuthenticationCeremonyMixin:
+    permission_classes = [AllowAny]
+
     def dispatch(self, request, *args, **kwargs):
         self.check_can_authenticate()
         return super().dispatch(request, *args, **kwargs)
