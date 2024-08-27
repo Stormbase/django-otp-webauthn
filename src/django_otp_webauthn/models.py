@@ -8,7 +8,7 @@ from django.http import HttpRequest
 from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
-from django_otp.models import Device, TimestampMixin
+from django_otp.models import Device, DeviceManager, TimestampMixin
 from webauthn.helpers import parse_attestation_object
 from webauthn.helpers.structs import (
     AttestationObject,
@@ -99,7 +99,7 @@ class AbstractWebAuthnAttestation(models.Model):
         verbose_name_plural = _("WebAuthn attestations")
 
 
-class WebAuthnCredentialManager(models.Manager):
+class WebAuthnCredentialManager(DeviceManager):
     def as_credential_descriptors(self):
         return as_credential_descriptors(self.values_list("credential_id", "transports"))
 
