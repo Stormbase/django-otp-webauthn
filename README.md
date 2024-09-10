@@ -183,8 +183,10 @@ If you are exclusively using Passkeys as a secondary verification step, you don'
 
        To make browsers automatically suggest a Passkey when you focus the username
        field, make sure `username_field_selector` is a valid CSS selector.
+
+       The username_field_selector parameter is only required to make 'passwordless authentication' work.
        {% endcomment %}
-       {% render_otp_webauthn_auth_scripts username_field_selector="input[name='username'] %}
+       {% render_otp_webauthn_auth_scripts username_field_selector="input[name='username']" %}
    </form>
    ```
 
