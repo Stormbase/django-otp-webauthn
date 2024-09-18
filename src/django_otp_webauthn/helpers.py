@@ -268,11 +268,9 @@ class WebAuthnHelper:
             # Indicates the default py_webauthn supported algorithms
             return None
 
-        algorithms = [
-            COSEAlgorithmIdentifier(a)
-            for a in raw_algorithms
-            if a in COSEAlgorithmIdentifier
-        ]
+        algorithms = []
+        for a in raw_algorithms:
+            algorithms.append(COSEAlgorithmIdentifier(a))
         return algorithms
 
     def get_allowed_origins(self) -> list[str]:

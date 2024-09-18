@@ -67,7 +67,7 @@ def check_settings_supported_cose_algorithms(app_configs, **kwargs):
 
     unsupported_algorithms = []
     for algorithm in algorithms:
-        if algorithm not in COSEAlgorithmIdentifier:
+        if algorithm not in COSEAlgorithmIdentifier.__members__.values():
             unsupported_algorithms.append(algorithm)
 
     if unsupported_algorithms:
