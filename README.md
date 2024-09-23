@@ -206,16 +206,11 @@ Django OTP WebAuthn provides its own models for credentials and attestations for
 Two abstract base models exist with all of the required fields and methods implemented, `django_otp_webauthn.models.AbstractWebAuthnCredential` and `django_otp_webauthn.models.AbstractWebAuthnAttestation`. Your custom attestation will need to override the `credential` field to related back to your own credential model.
 
 ```python
-from django.contrib.sites.models import Site
 from django.db import models
 from django_otp_webauthn.models import AbstractWebAuthnAttestation, AbstractWebAuthnCredential
 
 class MyCredential(AbstractWebAuthnCredential):
-    """
-    A WebAuthn credential associated with a specific site.
-    """
-
-    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    pass
 
 
 class MyAttestation(AbstractWebAuthnAttestation):
@@ -226,7 +221,7 @@ The `AbstractWebAuthnCredential` model creates an index with a name which includ
 
 
 ```python
-class MyCredentiialModelWithALongName(AbstractWebAuthnCredential):
+class MyCredentialModelWithALongName(AbstractWebAuthnCredential):
 
     class Meta:
         indexes = [
@@ -234,14 +229,13 @@ class MyCredentiialModelWithALongName(AbstractWebAuthnCredential):
         ]
 ```
 
-You can also override only the attestation model without any changes to the credential model. When doing so you will still need to override the `credential` field with a `related_name` other than `attestation` to avoid a conflict with the `related_name` property of the default model.
+You can also override only the attestation model without any changes to the credential model. When doing so you will still need to implement the `credential` field to use a `related_name` other than `attestation` to avoid a conflict with the `related_name` property of the default model.
 
 ```python
 from django.db import models
 from django_otp_webauthn.models import AbstractWebAuthnAttestation
 
 class MyAttestation(AbstractWebAuthnAttestation):
-    my_property = models.CharField()
     credential=models.OneToOneField("otp_webauthn.WebAuthnCredential", on_delete=models.CASCADE, related_name="swapped_attestation", editable=False)
 
 ```
