@@ -17,6 +17,7 @@ This package provides an implementation of [WebAuthn Passkeys](https://passkeys.
     - [Browser compatibility](#browser-compatibility)
   - [Features](#features)
   - [Quick start guide - how to use Passkeys in your Django project](#quick-start-guide---how-to-use-passkeys-in-your-django-project)
+  - [Using custom credential and attestation models](#using-custom-credential-and-attestation-models)
   - [What exactly is a Passkey?](#what-exactly-is-a-passkey)
     - [How Passkeys work (in a nutshell)](#how-passkeys-work-in-a-nutshell)
     - [Why use Passkeys?](#why-use-passkeys)
@@ -197,6 +198,48 @@ If you are exclusively using Passkeys as a secondary verification step, you don'
    ```
 
 9. That's it! You should now see a "Register Passkey" button on your logged-in user template. Clicking this button will start the registration process. After registration, you should see a "Login using a Passkey" button on your login page. Clicking this button will prompt you to use your Passkey to authenticate. Or if your browser supports it, you will be prompted to use your Passkey when you focus the username field.
+
+## Using custom credential and attestation models.
+
+Django OTP WebAuthn provides its own models for credentials and attestations for those credentials. If these do not suit your needs you can also provide your own models. When using a custom credential model them you *must* use a custom attestation model as well.
+
+Two abstract base models exist with all of the required fields and methods implemented, `django_otp_webauthn.models.AbstractWebAuthnCredential` and `django_otp_webauthn.models.AbstractWebAuthnAttestation`. Your custom attestation will need to override the `credential` field to related back to your own credential model.
+
+```python
+from django.db import models
+from django_otp_webauthn.models import AbstractWebAuthnAttestation, AbstractWebAuthnCredential
+
+class MyCredential(AbstractWebAuthnCredential):
+    pass
+
+
+class MyAttestation(AbstractWebAuthnAttestation):
+    credential=models.OneToOneField(MyCredential, on_delete=models.CASCADE, related_name="attestation", editable=False)
+```
+
+The `AbstractWebAuthnCredential` model creates an index with a name which includes the concrete model's name with `_sha256_idx` appended to the end. If this combination is longer than 30 characters then you will also need to override the index on your credential model to ensure an appropriate length for the index name.
+
+
+```python
+class MyCredentialModelWithALongName(AbstractWebAuthnCredential):
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["credential_id_sha256"], name="mycredential_id_sha256_idx"),
+        ]
+```
+
+You can also override only the attestation model without any changes to the credential model. When doing so you will still need to implement the `credential` field to use a `related_name` other than `attestation` to avoid a conflict with the `related_name` property of the default model.
+
+```python
+from django.db import models
+from django_otp_webauthn.models import AbstractWebAuthnAttestation
+
+class MyAttestation(AbstractWebAuthnAttestation):
+    credential=models.OneToOneField("otp_webauthn.WebAuthnCredential", on_delete=models.CASCADE, related_name="swapped_attestation", editable=False)
+
+```
+
 
 ## What exactly is a Passkey?
 

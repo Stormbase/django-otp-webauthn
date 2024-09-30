@@ -2,6 +2,7 @@ import hashlib
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.core import checks
 from django.db import models
 from django.db.models import QuerySet
 from django.http import HttpRequest
@@ -16,6 +17,7 @@ from webauthn.helpers.structs import (
     PublicKeyCredentialDescriptor,
 )
 
+from django_otp_webauthn import checks as otp_webauthn_checks
 from django_otp_webauthn.settings import app_settings
 from django_otp_webauthn.utils import get_credential_model_string
 
@@ -64,14 +66,6 @@ class AbstractWebAuthnAttestation(models.Model):
         FIDO_U2F = "fido-u2f", "fido-u2f"
         NONE = "none", "none"
 
-    credential = models.OneToOneField(
-        to=get_credential_model_string(),
-        on_delete=models.CASCADE,
-        related_name="attestation",
-        verbose_name=_("credential"),
-        editable=False,
-    )
-
     fmt = models.CharField(max_length=255, verbose_name=_("format"), editable=False, choices=Format.choices)
     """The attestation format used by the authenticator. Extracted from the attestation object for convenience."""
 
@@ -84,6 +78,21 @@ class AbstractWebAuthnAttestation(models.Model):
     This is in binary form to preserve exactly what the client sent. This is
     important because it needs to be byte-for-byte identical in order to verify
     the signature."""
+
+    @classmethod
+    def check(cls, **kwargs):
+        errors = super().check(**kwargs)
+
+        if not hasattr(cls, 'credential'):
+            errors.append(
+                checks.Error(
+                        "missing 'credential' field",
+                        hint=f"Add a field named 'credential' as a OneToOneField relating to {get_credential_model_string()}.",
+                        obj=cls,
+                        id=otp_webauthn_checks.ERR_ATTESTATION_MISSING_CREDENTIAL_FIELD,
+                )
+            )
+        return errors
 
     @cached_property
     def attestation_object(self) -> AttestationObject:
@@ -373,4 +382,10 @@ class WebAuthnCredential(AbstractWebAuthnCredential):
 class WebAuthnAttestation(AbstractWebAuthnAttestation):
     """Model to store attestation for registered credentials for future reference"""
 
-    pass
+    credential = models.OneToOneField(
+        to="django_otp_webauthn.WebAuthnCredential",
+        on_delete=models.CASCADE,
+        related_name="attestation",
+        verbose_name=_("credential"),
+        editable=False,
+    )

@@ -10,6 +10,7 @@ ERR_UNSUPPORTED_COSE_ALGORITHM = "otp_webauthn.E020"
 ERR_NO_ALLOWED_ORIGINS = "otp_webauthn.E030"
 ERR_ALLOWED_ORIGINS_MALFORMED = "otp_webauthn.E031"
 ERR_DANGEROUS_SESSION_BACKEND = "otp_webauthn.E040"
+ERR_ATTESTATION_MISSING_CREDENTIAL_FIELD = "otp_webauthn.E050"
 
 
 def check_settings_relying_party(app_configs, **kwargs):
