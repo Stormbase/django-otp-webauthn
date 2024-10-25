@@ -1,0 +1,73 @@
+name: Publish to Test PyPI
+on:
+  release:
+    # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release
+    types: [prereleased]
+jobs:
+  # Before a release, run the test suite
+  test:
+    uses: ./.github/workflows/test.yml
+
+  build:
+    needs: ["test"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install Node dependencies
+        run: |
+          npm ci
+
+      - name: Compile JavaScript
+        run: |
+          npm run build
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+          cache: pip
+
+      - name: Install additional system packages
+        run: |
+          sudo apt-get update -y
+          # Need `gettext` to compile translations
+          sudo apt-get install gettext
+
+      - name: Install Python dependencies
+        run: pip install .[testing] build
+
+      - name: Compile translations
+        run: |
+          /bin/sh ./compile_translations.sh
+
+      - name: Build package distributions
+        run: python -m build
+
+      - uses: actions/upload-artifact@v4
+        with:
+          path: ./dist
+
+  # https://docs.pypi.org/trusted-publishers/using-a-publisher/
+  pypi-publish:
+    needs: ["build"]
+    environment: "publish"
+
+    name: Upload release to PyPI
+    runs-on: ubuntu-latest
+    permissions:
+      # Mandatory for trusted publishing
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: artifact/
+          print-hash: true
+          repository-url: https://test.pypi.org/legacy/
