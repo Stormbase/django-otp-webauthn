@@ -1,0 +1,25 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-yaml
+      - id: debug-statements
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: "v0.7.1" # Keep in sync with pyproject.toml
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+  - repo: https://github.com/pycontribs/mirrors-prettier
+    rev: v3.3.3 # Keep in sync with package.json
+    hooks:
+      - id: prettier
+        types_or:
+          [css, javascript, ts, json, yaml, markdown, bash, editorconfig, toml]
