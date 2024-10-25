@@ -28,12 +28,29 @@ classifiers = [
   "Framework :: Django",
   "Framework :: Django :: 4.2",
   "Framework :: Django :: 5.0",
+  "Framework :: Django :: 5.1",
 ]
 dependencies = [
   "django>=4.2",
   "django-otp>=1.4,<2.0",
   "djangorestframework>=3.14",
   "webauthn>=2.1.0,<3",
+]
+
+[project.optional-dependencies]
+testing =  [
+  "django-debug-toolbar>4,<5",
+  "dj-database-url>=2.1.0,<3",
+  # To test functionality with a strict Content Security Policy
+  "django-csp>=3.8,<4",
+  # Update as necessary, prevent sudden breakage
+  "pytest>8,<9",
+  "coverage[toml]>=7,<8",
+  "pytest-django>4.5,<5",
+  "pytest-factoryboy>=2,<3",
+  "pytest-env>=1,<2",
+  "pytest-randomly>=3.15,<4",
+  "pytest-mock>=3.14,<4",
 ]
 
 [project.urls]
@@ -80,28 +97,19 @@ include = [
 
 [tool.hatch.envs.default]
 dependencies = [
-  "django-debug-toolbar>4,<5",
-  "dj-database-url>=2.1.0,<3",
-  "psycopg>=2.9",
-  # To test functionality with a strict Content Security Policy
-  "django-csp>=3.8,<4",
-  # Update as necessary, prevent sudden breakage
-  "tox>=4.14,<5",
-  "pytest>8,<9",
-  "pytest-cov>=5,<6",
-  "pytest-django>4.5,<5",
-  "pytest-factoryboy>=2,<3",
-  "pytest-env>=1,<2",
-  "pytest-randomly>=3.15,<4",
-  "pytest-mock>=3.14,<4",
+  "django-otp-webauthn[testing]",
 ]
 
 [tool.hatch.envs.hatch-static-analysis]
+# Do not use Hatch default configuration
+config-path = "pyproject.toml"
 dependencies = [
   # Update as necessary, prevent sudden breakage
-  "ruff>0.4,<0.5",
-  "isort>5,<6",
+  "ruff==0.6.5",
 ]
+
+[tool.hatch.envs.hatch-test]
+command = "foobar"
 
 [tool.ruff]
 target-version = "py39" # minimum target version
@@ -119,12 +127,8 @@ select = [
     "UP",  # pyupgrade
 ]
 
-[tool.isort]
-force_grid_wrap = 0
-include_trailing_comma = true
-line_length = 88
-multi_line_output = 3
-use_parentheses = true
+[tool.ruff.lint.isort]
+known-first-party = ["django_otp_webauthn", "sandbox", "tests"]
 
 [tool.pytest.ini_options]
 pythonpath = "sandbox"
@@ -139,7 +143,6 @@ parallel = true
 omit = []
 
 [tool.coverage.report]
-show_missing = true
 exclude_lines = [
     # Have to re-enable the standard pragma
     "pragma: no cover",

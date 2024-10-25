@@ -19,6 +19,7 @@ __pycache__
 !.gitignore
 
 .coverage
+.coverage.*
 
 
 db.sqlite3

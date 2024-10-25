@@ -11,12 +11,14 @@
 
 set -e
 
+IGNORE_PATHS="--ignore venv --ignore client --ignore .tox --ignore dist"
+
 echo "Updating djangojs.po files..."
 # Update JavaScript translations
 # Note: static must be compiled before running this command: `cd client && yarn build`
 # Note: source locations are omitted because they refer to the compiled files, not the source files
-python manage.py makemessages --ignore venv --ignore client -d djangojs --no-location --no-obsolete $@
+python manage.py makemessages $IGNORE_PATHS -d djangojs --no-location --no-obsolete $@
 
 echo "\nUpdating django.po files..."
 # Update Django translations
-python manage.py makemessages --ignore venv --ignore client -d django --no-obsolete $@
+python manage.py makemessages $IGNORE_PATHS --no-obsolete $@
