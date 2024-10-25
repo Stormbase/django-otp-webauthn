@@ -74,7 +74,9 @@ class AuthenticationCeremonyMixin:
             return
 
         # In case we don't have a user (scenario: webauthn used as for passwordless login, no user logged in yet)
-        disallow_passwordless_login = not app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN
+        disallow_passwordless_login = (
+            not app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN
+        )
         if self.get_user() is None and disallow_passwordless_login:
             raise exceptions.PasswordlessLoginDisabled()
 
@@ -142,7 +144,9 @@ class BeginCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView):
         helper = WebAuthnCredential.get_webauthn_helper(request=self.request)
         require_user_verification = not bool(user)
 
-        data, state = helper.authenticate_begin(user=user, require_user_verification=require_user_verification)
+        data, state = helper.authenticate_begin(
+            user=user, require_user_verification=require_user_verification
+        )
         self.request.session["otp_webauthn_authentication_state"] = state
 
         return Response(data=data, content_type="application/json")

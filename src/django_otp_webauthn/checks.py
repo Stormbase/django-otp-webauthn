@@ -16,7 +16,10 @@ ERR_ATTESTATION_MISSING_CREDENTIAL_FIELD = "otp_webauthn.E050"
 def check_settings_relying_party(app_configs, **kwargs):
     errors = []
 
-    if not app_settings.OTP_WEBAUTHN_RP_ID_CALLABLE and not app_settings.OTP_WEBAUTHN_RP_ID:
+    if (
+        not app_settings.OTP_WEBAUTHN_RP_ID_CALLABLE
+        and not app_settings.OTP_WEBAUTHN_RP_ID
+    ):
         errors.append(
             Error(
                 "Relying party ID not configured.",
@@ -26,7 +29,10 @@ def check_settings_relying_party(app_configs, **kwargs):
             )
         )
 
-    if not app_settings.OTP_WEBAUTHN_RP_NAME_CALLABLE and not app_settings.OTP_WEBAUTHN_RP_NAME:
+    if (
+        not app_settings.OTP_WEBAUTHN_RP_NAME_CALLABLE
+        and not app_settings.OTP_WEBAUTHN_RP_NAME
+    ):
         errors.append(
             Error(
                 "Relying party name not configured.",
@@ -99,7 +105,9 @@ def check_settings_allowed_origins_misconfigured(app_configs, **kwargs):
         return errors
 
     for origin in allowed_origins:
-        if not origin.startswith("https://") and not origin.startswith("http://localhost"):
+        if not origin.startswith("https://") and not origin.startswith(
+            "http://localhost"
+        ):
             errors.append(
                 Error(
                     f"Allowed origin {origin!r} is not a secure origin.",

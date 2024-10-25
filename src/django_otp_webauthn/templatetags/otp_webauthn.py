@@ -15,10 +15,16 @@ def get_configuration(request: HttpRequest, extra_options: dict = {}) -> dict:
     configuration = {
         "autocompleteLoginFieldSelector": None,
         "csrfToken": csrf.get_token(request),
-        "beginAuthenticationUrl": reverse("otp_webauthn:credential-authentication-begin"),
-        "completeAuthenticationUrl": reverse("otp_webauthn:credential-authentication-complete"),
+        "beginAuthenticationUrl": reverse(
+            "otp_webauthn:credential-authentication-begin"
+        ),
+        "completeAuthenticationUrl": reverse(
+            "otp_webauthn:credential-authentication-complete"
+        ),
         "beginRegistrationUrl": reverse("otp_webauthn:credential-registration-begin"),
-        "completeRegistrationUrl": reverse("otp_webauthn:credential-registration-complete"),
+        "completeRegistrationUrl": reverse(
+            "otp_webauthn:credential-registration-complete"
+        ),
     }
     configuration.update(extra_options)
 

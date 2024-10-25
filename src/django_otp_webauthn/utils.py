@@ -38,7 +38,9 @@ class rewrite_exceptions:
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.log_exception(exc_val)
         if exc_type is pywebauthn_exceptions.InvalidCBORData:
-            raise exceptions.UnprocessableEntity(code="invalid_cbor", detail="Invalid CBOR data provided.") from exc_val
+            raise exceptions.UnprocessableEntity(
+                code="invalid_cbor", detail="Invalid CBOR data provided."
+            ) from exc_val
         elif exc_type is pywebauthn_exceptions.InvalidRegistrationResponse:
             raise exceptions.UnprocessableEntity(
                 code="invalid_registration_response",
@@ -105,9 +107,13 @@ def get_credential_model() -> AbstractWebAuthnCredential:
     """Returns the WebAuthnCredential model that is active in this project."""
     # Inspired by Django's django.contrib.auth.get_user_model
     try:
-        return apps.get_model(app_settings.OTP_WEBAUTHN_CREDENTIAL_MODEL, require_ready=False)
+        return apps.get_model(
+            app_settings.OTP_WEBAUTHN_CREDENTIAL_MODEL, require_ready=False
+        )
     except ValueError:
-        raise ImproperlyConfigured("OTP_WEBAUTHN_CREDENTIAL_MODEL must be of the form 'app_label.model_name'")
+        raise ImproperlyConfigured(
+            "OTP_WEBAUTHN_CREDENTIAL_MODEL must be of the form 'app_label.model_name'"
+        )
     except LookupError:
         raise ImproperlyConfigured(
             f"OTP_WEBAUTHN_CREDENTIAL_MODEL refers to model '{app_settings.OTP_WEBAUTHN_CREDENTIAL_MODEL}' that has not been installed"
@@ -118,9 +124,13 @@ def get_attestation_model() -> AbstractWebAuthnAttestation:
     """Returns the WebAuthnAttestation model that is active in this project."""
     # Inspired by Django's django.contrib.auth.get_user_model
     try:
-        return apps.get_model(app_settings.OTP_WEBAUTHN_ATTESTATION_MODEL, require_ready=False)
+        return apps.get_model(
+            app_settings.OTP_WEBAUTHN_ATTESTATION_MODEL, require_ready=False
+        )
     except ValueError:
-        raise ImproperlyConfigured("OTP_WEBAUTHN_ATTESTATION_MODEL must be of the form 'app_label.model_name'")
+        raise ImproperlyConfigured(
+            "OTP_WEBAUTHN_ATTESTATION_MODEL must be of the form 'app_label.model_name'"
+        )
     except LookupError:
         raise ImproperlyConfigured(
             f"OTP_WEBAUTHN_ATTESTATION_MODEL refers to model '{app_settings.OTP_WEBAUTHN_ATTESTATION_MODEL}' that has not been installed"

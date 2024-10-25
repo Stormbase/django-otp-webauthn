@@ -43,7 +43,9 @@ class WebAuthnCredentialAdmin(admin.ModelAdmin):
 
     def get_fieldsets(self, request, obj=None):
         extra_fields = []
-        hide_sensitive_data = getattr(django_settings, "OTP_ADMIN_HIDE_SENSITIVE_DATA", False)
+        hide_sensitive_data = getattr(
+            django_settings, "OTP_ADMIN_HIDE_SENSITIVE_DATA", False
+        )
         if not hide_sensitive_data and obj:
             extra_fields = ["public_key_hex"]
 

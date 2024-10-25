@@ -268,10 +268,16 @@ class WebAuthnHelper:
             # Indicates all py_webauthn supported algorithms
             return None
 
-        algorithms = [COSEAlgorithmIdentifier(a) for a in raw_algorithms if a in COSEAlgorithmIdentifier]
+        algorithms = [
+            COSEAlgorithmIdentifier(a)
+            for a in raw_algorithms
+            if a in COSEAlgorithmIdentifier
+        ]
         return algorithms
 
-    def get_generate_registration_options_kwargs(self, *, user: AbstractBaseUser) -> dict:
+    def get_generate_registration_options_kwargs(
+        self, *, user: AbstractBaseUser
+    ) -> dict:
         """Get the keyword arguments to pass to `webauthn.generate_registration_options`."""
         challenge = self.generate_challenge()
         rp = self.get_relying_party()
@@ -279,7 +285,9 @@ class WebAuthnHelper:
         attestation_preference = self.get_attestation_conveyance_preference()
         discoverable_credentials = self.get_discoverable_credentials_preference()
         user_verification = UserVerificationRequirement.PREFERRED
-        exclude_credentials = WebAuthnCredential.get_credential_descriptors_for_user(user)
+        exclude_credentials = WebAuthnCredential.get_credential_descriptors_for_user(
+            user
+        )
         supported_algorithms = self.get_supported_key_algorithms()
         authenticator_selection = AuthenticatorSelectionCriteria(
             user_verification=user_verification, resident_key=discoverable_credentials
@@ -320,7 +328,9 @@ class WebAuthnHelper:
 
         return {
             "challenge": creation_options["challenge"],
-            "require_user_verification": creation_options["authenticatorSelection"]["userVerification"]
+            "require_user_verification": creation_options["authenticatorSelection"][
+                "userVerification"
+            ]
             == UserVerificationRequirement.REQUIRED.value,
         }
 
@@ -375,7 +385,9 @@ class WebAuthnHelper:
 
         device = self.create_credential(user, response, credential, data)
         device.save()
-        self.create_attestation(device, response.attestation_object, credential.response.client_data_json)
+        self.create_attestation(
+            device, response.attestation_object, credential.response.client_data_json
+        )
         return device
 
     def _check_discoverable(self, original_data: dict) -> bool | None:
@@ -406,14 +418,18 @@ class WebAuthnHelper:
         """Save the credential to the database."""
         discoverable = self._check_discoverable(original_data)
         transports = (
-            [x.value for x in parsed_credential.response.transports] if parsed_credential.response.transports else []
+            [x.value for x in parsed_credential.response.transports]
+            if parsed_credential.response.transports
+            else []
         )
 
         # We can't use the backup_eligible flag directly because it's not
         # exposed in the py_webauthn API. We can however infer it from the
         # credential device type. If it's a multi-device credential, it's backup
         # eligible.
-        backup_eligible = response.credential_device_type == CredentialDeviceType.MULTI_DEVICE
+        backup_eligible = (
+            response.credential_device_type == CredentialDeviceType.MULTI_DEVICE
+        )
         backup_state = response.credential_backed_up
 
         device = WebAuthnCredential(
@@ -471,7 +487,9 @@ class WebAuthnHelper:
         }
 
         if user:
-            kwargs["allow_credentials"] = WebAuthnCredential.get_credential_descriptors_for_user(user)
+            kwargs["allow_credentials"] = (
+                WebAuthnCredential.get_credential_descriptors_for_user(user)
+            )
 
         return kwargs
 
@@ -480,7 +498,8 @@ class WebAuthnHelper:
         to verify the authentication later on."""
         return {
             "challenge": options["challenge"],
-            "require_user_verification": options["userVerification"] == UserVerificationRequirement.REQUIRED.value,
+            "require_user_verification": options["userVerification"]
+            == UserVerificationRequirement.REQUIRED.value,
         }
 
     def authenticate_begin(
@@ -508,7 +527,9 @@ class WebAuthnHelper:
         state = self.get_authentication_state(data)
         return data, state
 
-    def authenticate_complete(self, user: AbstractBaseUser | None, state: dict, data: dict):
+    def authenticate_complete(
+        self, user: AbstractBaseUser | None, state: dict, data: dict
+    ):
         """Complete the authentication process."""
 
         credential = parse_authentication_credential_json(data)

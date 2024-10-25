@@ -24,7 +24,9 @@ from django_otp_webauthn.utils import get_credential_model_string
 User = get_user_model()
 
 
-def as_credential_descriptors(queryset: QuerySet["AbstractWebAuthnCredential"]) -> list[PublicKeyCredentialDescriptor]:
+def as_credential_descriptors(
+    queryset: QuerySet["AbstractWebAuthnCredential"],
+) -> list[PublicKeyCredentialDescriptor]:
     descriptors = []
     for id, raw_transports in queryset:
         transports = []
@@ -66,13 +68,17 @@ class AbstractWebAuthnAttestation(models.Model):
         FIDO_U2F = "fido-u2f", "fido-u2f"
         NONE = "none", "none"
 
-    fmt = models.CharField(max_length=255, verbose_name=_("format"), editable=False, choices=Format.choices)
+    fmt = models.CharField(
+        max_length=255, verbose_name=_("format"), editable=False, choices=Format.choices
+    )
     """The attestation format used by the authenticator. Extracted from the attestation object for convenience."""
 
     data = models.BinaryField(verbose_name=_("data"), editable=False)
     """The raw attestation data."""
 
-    client_data_json = models.BinaryField(verbose_name=_("client data JSON"), editable=False)
+    client_data_json = models.BinaryField(
+        verbose_name=_("client data JSON"), editable=False
+    )
     """The raw client data JSON, as originally sent by the client.
 
     This is in binary form to preserve exactly what the client sent. This is
@@ -83,13 +89,13 @@ class AbstractWebAuthnAttestation(models.Model):
     def check(cls, **kwargs):
         errors = super().check(**kwargs)
 
-        if not hasattr(cls, 'credential'):
+        if not hasattr(cls, "credential"):
             errors.append(
                 checks.Error(
-                        "missing 'credential' field",
-                        hint=f"Add a field named 'credential' as a OneToOneField relating to {get_credential_model_string()}.",
-                        obj=cls,
-                        id=otp_webauthn_checks.ERR_ATTESTATION_MISSING_CREDENTIAL_FIELD,
+                    "missing 'credential' field",
+                    hint=f"Add a field named 'credential' as a OneToOneField relating to {get_credential_model_string()}.",
+                    obj=cls,
+                    id=otp_webauthn_checks.ERR_ATTESTATION_MISSING_CREDENTIAL_FIELD,
                 )
             )
         return errors
@@ -110,7 +116,9 @@ class AbstractWebAuthnAttestation(models.Model):
 
 class WebAuthnCredentialManager(DeviceManager):
     def as_credential_descriptors(self):
-        return as_credential_descriptors(self.values_list("credential_id", "transports"))
+        return as_credential_descriptors(
+            self.values_list("credential_id", "transports")
+        )
 
 
 class AbstractWebAuthnCredential(TimestampMixin, Device):
@@ -176,7 +184,9 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
     """
 
     # https://www.w3.org/TR/webauthn-3/#abstract-opdef-credential-record-publickey
-    public_key = models.BinaryField(max_length=1023, verbose_name=_("COSE public key data"), editable=False)
+    public_key = models.BinaryField(
+        max_length=1023, verbose_name=_("COSE public key data"), editable=False
+    )
     """The public key of the credential, encoded in COSE_Key format (binary).
 
     Specification: https://www.rfc-editor.org/rfc/rfc9052#section-7
@@ -316,7 +326,9 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
 
     def save(self, *args, **kwargs):
         if not self.credential_id_sha256:
-            self.credential_id_sha256 = self.get_credential_id_sha256(self.credential_id)
+            self.credential_id_sha256 = self.get_credential_id_sha256(
+                self.credential_id
+            )
         super().save(*args, **kwargs)
 
     @classmethod
@@ -334,7 +346,9 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         return hashlib.sha256(credential_id).hexdigest()
 
     @classmethod
-    def get_credential_descriptors_for_user(cls, user: AbstractBaseUser) -> list[PublicKeyCredentialDescriptor]:
+    def get_credential_descriptors_for_user(
+        cls, user: AbstractBaseUser
+    ) -> list[PublicKeyCredentialDescriptor]:
         """Return a list of PublicKeyCredentialDescriptor objects for the given user.
 
         Each PublicKeyCredentialDescriptor object represents a credential that the

@@ -14,5 +14,7 @@ class OtpWebauthnConfig(AppConfig):
         register(checks.check_settings_supported_cose_algorithms, Tags.security)
         register(checks.check_settings_dangerous_session_backend_used, Tags.security)
         register(checks.check_settings_allowed_origins_missing, Tags.compatibility)
-        register(checks.check_settings_allowed_origins_misconfigured, Tags.compatibility)
+        register(
+            checks.check_settings_allowed_origins_misconfigured, Tags.compatibility
+        )
         register(checks.check_settings_relying_party, Tags.models)

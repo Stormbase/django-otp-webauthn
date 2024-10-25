@@ -17,7 +17,9 @@ def forwards(apps, schema_editor):
 def backwards(apps, schema_editor):
     WebAuthnCredential = apps.get_model("django_otp_webauthn", "WebAuthnCredential")
     for credential in WebAuthnCredential.objects.all():
-        credential.credential_id_sha256 = bytes.fromhex(credential.credential_id_sha256_txt)
+        credential.credential_id_sha256 = bytes.fromhex(
+            credential.credential_id_sha256_txt
+        )
         credential.save()
 
 
@@ -27,7 +29,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveIndex(model_name="webauthncredential", name="webauthncredential_sha256_idx"),
+        migrations.RemoveIndex(
+            model_name="webauthncredential", name="webauthncredential_sha256_idx"
+        ),
         migrations.AddField(
             model_name="webauthncredential",
             name="credential_id_sha256_txt",
@@ -40,7 +44,9 @@ class Migration(migrations.Migration):
             preserve_default=False,
         ),
         migrations.RunPython(forwards, backwards, elidable=True),
-        migrations.RemoveField(model_name="webauthncredential", name="credential_id_sha256"),
+        migrations.RemoveField(
+            model_name="webauthncredential", name="credential_id_sha256"
+        ),
         migrations.RenameField(
             model_name="webauthncredential",
             old_name="credential_id_sha256_txt",
@@ -58,6 +64,8 @@ class Migration(migrations.Migration):
         ),
         migrations.AddIndex(
             model_name="webauthncredential",
-            index=models.Index(fields=["credential_id_sha256"], name="webauthncredential_sha256_idx"),
+            index=models.Index(
+                fields=["credential_id_sha256"], name="webauthncredential_sha256_idx"
+            ),
         ),
     ]

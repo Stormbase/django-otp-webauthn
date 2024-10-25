@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("otp_webauthn.register_complete", function (event) {
     console.log(
       "[sandbox] otp_webauthn.register_complete event received",
-      event
+      event,
     );
   });
   document.addEventListener("otp_webauthn.register_failed", function (event) {
@@ -23,26 +23,26 @@ document.addEventListener("DOMContentLoaded", function () {
     function (event) {
       console.log(
         "[sandbox] otp_webauthn.verification_start event received",
-        event
+        event,
       );
-    }
+    },
   );
   document.addEventListener(
     "otp_webauthn.verification_complete",
     function (event) {
       console.log(
         "[sandbox] otp_webauthn.verification_complete event received",
-        event
+        event,
       );
-    }
+    },
   );
   document.addEventListener(
     "otp_webauthn.verification_failed",
     function (event) {
       console.log(
         "[sandbox] otp_webauthn.verification_failed event received",
-        event
+        event,
       );
-    }
+    },
   );
 });

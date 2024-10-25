@@ -4,7 +4,9 @@
 [![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD-blue.svg?style=flat-square)](https://opensource.org/licenses/BSD-3-Clause)
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 This package provides an implementation of [WebAuthn Passkeys](https://passkeys.dev/) for Django. It is written as a plugin for the [Django OTP framework](https://github.com/django-otp/django-otp) for multi-factor authentication. Under the hood, this package uses [py_webauth](https://github.com/duo-labs/py_webauthn/) to handle all cryptographic operations.
@@ -201,7 +203,7 @@ If you are exclusively using Passkeys as a secondary verification step, you don'
 
 ## Using custom credential and attestation models.
 
-Django OTP WebAuthn provides its own models for credentials and attestations for those credentials. If these do not suit your needs you can also provide your own models. When using a custom credential model them you *must* use a custom attestation model as well.
+Django OTP WebAuthn provides its own models for credentials and attestations for those credentials. If these do not suit your needs you can also provide your own models. When using a custom credential model them you _must_ use a custom attestation model as well.
 
 Two abstract base models exist with all of the required fields and methods implemented, `django_otp_webauthn.models.AbstractWebAuthnCredential` and `django_otp_webauthn.models.AbstractWebAuthnAttestation`. Your custom attestation will need to override the `credential` field to related back to your own credential model.
 
@@ -218,7 +220,6 @@ class MyAttestation(AbstractWebAuthnAttestation):
 ```
 
 The `AbstractWebAuthnCredential` model creates an index with a name which includes the concrete model's name with `_sha256_idx` appended to the end. If this combination is longer than 30 characters then you will also need to override the index on your credential model to ensure an appropriate length for the index name.
-
 
 ```python
 class MyCredentialModelWithALongName(AbstractWebAuthnCredential):
@@ -239,7 +240,6 @@ class MyAttestation(AbstractWebAuthnAttestation):
     credential=models.OneToOneField("otp_webauthn.WebAuthnCredential", on_delete=models.CASCADE, related_name="swapped_attestation", editable=False)
 
 ```
-
 
 ## What exactly is a Passkey?
 

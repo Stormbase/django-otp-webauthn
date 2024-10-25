@@ -13,7 +13,10 @@ class WebAuthnBackend:
     """A simple authentication backend used when django_otp_webauthn is used for passwordless authentication."""
 
     def authenticate(
-        self, request: HttpRequest, webauthn_credential: AbstractWebAuthnCredential | None = None, **kwargs: Any
+        self,
+        request: HttpRequest,
+        webauthn_credential: AbstractWebAuthnCredential | None = None,
+        **kwargs: Any,
     ) -> AbstractBaseUser | None:
         if webauthn_credential:
             user = webauthn_credential.user
