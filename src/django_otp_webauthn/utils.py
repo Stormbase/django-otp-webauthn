@@ -36,6 +36,8 @@ class rewrite_exceptions:
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_val is None:
+            return
         self.log_exception(exc_val)
         if exc_type is pywebauthn_exceptions.InvalidCBORData:
             raise exceptions.UnprocessableEntity(
