@@ -20,10 +20,12 @@ jobs:
           node-version: 20
 
       - name: Install Node dependencies
+        working-directory: ./client
         run: |
           npm ci
 
       - name: Compile JavaScript
+        working-directory: ./client
         run: |
           npm run build
 
