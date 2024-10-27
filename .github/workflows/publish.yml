@@ -17,14 +17,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: yarn
 
       - name: Install Node dependencies
-        working-directory: ./client
         run: |
           yarn install --frozen-lockfile
 
       - name: Compile JavaScript
-        working-directory: ./client
         run: |
           yarn build
 
