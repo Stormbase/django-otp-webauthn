@@ -3,7 +3,6 @@ on:
   release:
     # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#release
     types: [released]
-  workflow_dispatch:
 jobs:
   # Before a release, run the test suite
   test:
