@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Make `WebAuthnCredentialManager` inherit from `DeviceManager` ([#23](https://github.com/Stormbase/django-otp-webauthn/pull/23) by [nijel](https://github.com/nijel))
 - Clarify `username_field_selector` example in README ([#20](https://github.com/Stormbase/django-otp-webauthn/pull/20) by [nijel](https://github.com/nijel))
 - Clarify custom credential model usage instructions ([#26](https://github.com/Stormbase/django-otp-webauthn/pull/26) by [jmichalicek](https://github.com/jmichalicek))
-- Avoid logging None as exception in the py_webauthn exception rewriter ([#29](https://github.com/Stormbase/django-otp-webauthn/pull/29) by [nijel](https://github.com/nijel))
+- Avoid logging None as exception in the py_webauthn exception rewriter ([#28](https://github.com/Stormbase/django-otp-webauthn/pull/28) by [nijel](https://github.com/nijel))
 - A crash during Passkey registration was fixed when custom list of supported algorithms was used ([#27](https://github.com/Stormbase/django-otp-webauthn/pull/27) by [Stormheg](https://github.com/Stormheg))
 - You can now call `as_credential_descriptors` on a queryset of `WebAuthnCredential` objects ([#27](https://github.com/Stormbase/django-otp-webauthn/pull/27) by [Stormheg](https://github.com/Stormheg))
 
