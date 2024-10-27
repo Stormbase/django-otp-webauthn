@@ -25,16 +25,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          # Disabled because there is an issue caching dependencies, probably related to this action.
-          # Possibly related: https://github.com/actions/setup-node/issues/1137
-          # cache: "yarn"
-          # cache-dependency-path: client/yarn.lock
+          cache: "yarn"
       - name: Install dependencies
-        working-directory: client
         run: |
           yarn install --frozen-lockfile
       - name: Compile JavaScript
-        working-directory: client
         run: |
           yarn build
 

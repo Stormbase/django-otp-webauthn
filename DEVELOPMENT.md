@@ -19,12 +19,10 @@ Clone the repository
 
 Install the Node.js dependencies
 
-    # in the client directory
     yarn install
 
 Build the frontend
 
-    # in the client directory
     yarn start
 
 Let Hatch install the Python dependencies and create a virtual environment for you

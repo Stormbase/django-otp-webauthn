@@ -4,8 +4,8 @@ import { Configuration } from "webpack";
 const config: Configuration = {
   stats: "minimal",
   entry: {
-    auth: "./src/auth.ts",
-    register: "./src/register.ts",
+    auth: "./client/src/auth.ts",
+    register: "./client/src/register.ts",
   },
   module: {
     rules: [
@@ -21,7 +21,7 @@ const config: Configuration = {
   },
   output: {
     filename: "otp_webauthn_[name].js",
-    path: path.resolve("../src/django_otp_webauthn/static/django_otp_webauthn"),
+    path: path.resolve("./src/django_otp_webauthn/static/django_otp_webauthn"),
   },
 };
 
