@@ -105,9 +105,6 @@ dependencies = [
 config-path = "pyproject.toml"
 dependencies = []
 
-[tool.hatch.envs.hatch-test]
-command = "foobar"
-
 [tool.ruff]
 target-version = "py39" # minimum target version
 
