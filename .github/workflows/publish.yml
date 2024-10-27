@@ -19,12 +19,10 @@ jobs:
           node-version: 20
 
       - name: Install Node dependencies
-        working-directory: ./client
         run: |
           yarn install --frozen-lockfile
 
       - name: Compile JavaScript
-        working-directory: ./client
         run: |
           yarn build
 
