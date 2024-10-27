@@ -7,12 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.4.0] - [UNRELEASED]
 
+### Added
+
+- An extra system check was added to prevent misconfiguration of `OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS` ([#27](https://github.com/Stormbase/django-otp-webauthn/pull/27) by [Stormheg](https://github.com/Stormheg))
+
 ### Fixed
 
-- Define permission class for API views ([#19](https://github.com/Stormbase/django-otp-webauthn/pull/19) by [nijel](https://github.com/nijel))
-- Make WebAuthnCredentialManager inherit from DeviceManager ([#23](https://github.com/Stormbase/django-otp-webauthn/pull/23) by [nijel](https://github.com/nijel))
+- Explicitly define `AllowAny` permission class for API views ([#19](https://github.com/Stormbase/django-otp-webauthn/pull/19) by [nijel](https://github.com/nijel))
+- Make `WebAuthnCredentialManager` inherit from `DeviceManager` ([#23](https://github.com/Stormbase/django-otp-webauthn/pull/23) by [nijel](https://github.com/nijel))
 - Clarify `username_field_selector` example in README ([#20](https://github.com/Stormbase/django-otp-webauthn/pull/20) by [nijel](https://github.com/nijel))
-- Clarify custom credential model usage ([#26](https://github.com/Stormbase/django-otp-webauthn/pull/26) by [jmichalicek](https://github.com/jmichalicek))
+- Clarify custom credential model usage instructions ([#26](https://github.com/Stormbase/django-otp-webauthn/pull/26) by [jmichalicek](https://github.com/jmichalicek))
+- Avoid logging None as exception in the py_webauthn exception rewriter ([#29](https://github.com/Stormbase/django-otp-webauthn/pull/29) by [nijel](https://github.com/nijel))
+- A crash during Passkey registration was fixed when custom list of supported algorithms was used ([#27](https://github.com/Stormbase/django-otp-webauthn/pull/27) by [Stormheg](https://github.com/Stormheg))
+- You can now call `as_credential_descriptors` on a queryset of `WebAuthnCredential` objects ([#27](https://github.com/Stormbase/django-otp-webauthn/pull/27) by [Stormheg](https://github.com/Stormheg))
+
+### Changed
+
+- The custom `__str__` representation for `WebAuthnCredential` is removed because displaying a AAGUID is not a friendly representation. It now defaults back to the django-otp default: `name + (username)`([#27](https://github.com/Stormbase/django-otp-webauthn/pull/27) by [Stormheg](https://github.com/Stormheg))
+- The default `ModelAdmin` for `WebAuthnCredential` credential is no longer automatically registered. ([#27](https://github.com/Stormbase/django-otp-webauthn/pull/27) by [Stormheg](https://github.com/Stormheg))
+
+  - You can instead register it manually in your `admin.py` file
+
+    ```python
+    # admin.py
+    from django.contrib import admin
+    from django_otp_webauthn.admin import WebAuthnCredentialAdmin
+    from django_otp_webauthn.models import WebAuthnCredential
+
+    admin.site.register(WebAuthnCredential, WebAuthnCredentialAdmin)
+    ```
 
 ## [0.3.0] - 2024-08-03
 

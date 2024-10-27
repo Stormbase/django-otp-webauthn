@@ -77,11 +77,11 @@ class AppSettings:
     - Origins must be secure (https://).
     """
 
-    OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS = "all"
+    OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS = None
     """A list of COSE algorithms supported by the server. Must be an integer
-    value from https://www.iana.org/assignments/cose/cose.xhtml#algorithms. If
-    set to the string 'all', the default algorithms from py_webauthn will be
-    used."""
+    value from https://www.iana.org/assignments/cose/cose.xhtml#algorithms.
+
+    Defaults to None, which defers to whatever the PyWebAuthn library defaults are."""
 
     OTP_WEBAUTHN_TIMEOUT_SECONDS = 60 * 5  # 5 minutes
     """The timeout in seconds to request for client-side browser webauthn operations. Default is 5 minutes to

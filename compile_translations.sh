@@ -7,4 +7,4 @@
 
 set -e
 
-python manage.py compilemessages --ignore venv --ignore client --ignore dist $@
+python manage.py compilemessages --ignore venv --ignore client --ignore .tox --ignore dist $@

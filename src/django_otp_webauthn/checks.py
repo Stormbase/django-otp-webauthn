@@ -7,6 +7,7 @@ from django_otp_webauthn.settings import app_settings
 ERR_NO_RP_ID = "otp_webauthn.E010"
 ERR_NO_RP_NAME = "otp_webauthn.E011"
 ERR_UNSUPPORTED_COSE_ALGORITHM = "otp_webauthn.E020"
+ERR_NO_COSE_ALGORITHMS_CONFIGURED = "otp_webauthn.E021"
 ERR_NO_ALLOWED_ORIGINS = "otp_webauthn.E030"
 ERR_ALLOWED_ORIGINS_MALFORMED = "otp_webauthn.E031"
 ERR_DANGEROUS_SESSION_BACKEND = "otp_webauthn.E040"
@@ -50,12 +51,23 @@ def check_settings_supported_cose_algorithms(app_configs, **kwargs):
     algorithms = app_settings.OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS
 
     # No need to check - no explicit algorithms provided
-    if algorithms == "all":
+    if algorithms is None:
         return []
+
+    if len(algorithms) == 0:
+        errors.append(
+            Error(
+                "No COSE algorithms configured.",
+                hint="Set the OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS setting to a list of supported COSE algorithm identifiers.",
+                obj=None,
+                id=ERR_NO_COSE_ALGORITHMS_CONFIGURED,
+            )
+        )
+        return errors
 
     unsupported_algorithms = []
     for algorithm in algorithms:
-        if algorithm not in COSEAlgorithmIdentifier:
+        if algorithm not in COSEAlgorithmIdentifier.__members__.values():
             unsupported_algorithms.append(algorithm)
 
     if unsupported_algorithms:
@@ -96,7 +108,7 @@ def check_settings_allowed_origins_misconfigured(app_configs, **kwargs):
     if not isinstance(allowed_origins, list):
         errors.append(
             Error(
-                "Allowed origins are not a list.",
+                "Allowed origins must be a list.",
                 hint="Allowed origins should be a list of strings. Check the OTP_WEBAUTHN_ALLOWED_ORIGINS setting.",
                 obj=None,
                 id=ERR_ALLOWED_ORIGINS_MALFORMED,
@@ -111,7 +123,7 @@ def check_settings_allowed_origins_misconfigured(app_configs, **kwargs):
             errors.append(
                 Error(
                     f"Allowed origin {origin!r} is not a secure origin.",
-                    hint="Expected origins should start with 'https://'. Check the OTP_WEBAUTHN_ALLOWED_ORIGINS setting.",
+                    hint="Allowed origins should start with 'https://'. Check the OTP_WEBAUTHN_ALLOWED_ORIGINS setting.",
                     obj=None,
                     id=ERR_ALLOWED_ORIGINS_MALFORMED,
                 )

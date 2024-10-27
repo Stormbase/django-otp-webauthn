@@ -25,15 +25,33 @@ classifiers = [
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Framework :: Django",
   "Framework :: Django :: 4.2",
   "Framework :: Django :: 5.0",
+  "Framework :: Django :: 5.1",
 ]
 dependencies = [
   "django>=4.2",
   "django-otp>=1.4,<2.0",
   "djangorestframework>=3.14",
   "webauthn>=2.1.0,<3",
+]
+
+[project.optional-dependencies]
+testing =  [
+  "django-debug-toolbar>4,<5",
+  "dj-database-url>=2.1.0,<3",
+  # To test functionality with a strict Content Security Policy
+  "django-csp>=3.8,<4",
+  # Update as necessary, prevent sudden breakage
+  "pytest>8,<9",
+  "coverage[toml]>=7,<8",
+  "pytest-django>4.5,<5",
+  "pytest-factoryboy>=2,<3",
+  "pytest-env>=1,<2",
+  "pytest-randomly>=3.15,<4",
+  "pytest-mock>=3.14,<4",
 ]
 
 [project.urls]
@@ -80,18 +98,13 @@ include = [
 
 [tool.hatch.envs.default]
 dependencies = [
-  "django-debug-toolbar>4,<5",
-  "dj-database-url>=2.1.0,<3",
-  "psycopg>=2.9",
-  "django-csp>=3.8,<4",
+  "django-otp-webauthn[testing]",
 ]
 
 [tool.hatch.envs.hatch-static-analysis]
-dependencies = [
-  # Update as necessary, prevent sudden breakage
-  "ruff>0.4,<0.5",
-  "isort>5,<6",
-]
+# Do not use Hatch default configuration
+config-path = "pyproject.toml"
+dependencies = []
 
 [tool.ruff]
 target-version = "py39" # minimum target version
@@ -109,18 +122,40 @@ select = [
     "UP",  # pyupgrade
 ]
 
-[tool.isort]
-force_grid_wrap = 0
-include_trailing_comma = true
-line_length = 88
-multi_line_output = 3
-use_parentheses = true
+[tool.ruff.lint.isort]
+known-first-party = ["django_otp_webauthn", "sandbox", "tests"]
+
+[tool.pytest.ini_options]
+pythonpath = "sandbox"
+DJANGO_SETTINGS_MODULE = "settings"
+testpaths = "tests/"
+addopts = "--reuse-db"
 
 [tool.coverage.run]
-source_pkgs = ["django_otp_webauthn", "tests"]
+source_pkgs = ["django_otp_webauthn"]
 branch = true
-parallel = true
-omit = []
+omit = ["*/migrations/*", "*/tests/*"]
 
 [tool.coverage.report]
-exclude_lines = ["no cov", "if __name__ == .__main__.:", "if TYPE_CHECKING:"]
+exclude_lines = [
+    # Have to re-enable the standard pragma
+    "pragma: no cover",
+
+    # Don't complain about missing debug-only code:
+    "def __repr__",
+    "if self.debug",
+
+    # Don't complain if tests don't hit defensive assertion code:
+    "raise AssertionError",
+    "raise NotImplementedError",
+
+    # Don't complain if non-runnable code isn't run:
+    "if 0:",
+    "if __name__ == .__main__.:",
+
+    # Don't complain about abstract methods, they aren't run:
+    "@(abc.)?abstractmethod",
+
+    # Nor complain about type checking
+    "if TYPE_CHECKING:",
+]

@@ -1,13 +1,10 @@
 # Django OTP WebAuthn
 
-[![Version](https://img.shields.io/pypi/v/django-otp-webauthn.svg?style=flat-square)](https://pypi.python.org/pypi/django-otp-webauthn/)
-[![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD-blue.svg?style=flat-square)](https://opensource.org/licenses/BSD-3-Clause)
-
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
-
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+[![Version](https://img.shields.io/pypi/v/django-otp-webauthn.svg)](https://pypi.python.org/pypi/django-otp-webauthn/)
+[![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![Build Status](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/test.yml/badge.svg)](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/Stormheg/django-otp-webauthn/graph/badge.svg?token=CCUC1LZBNQ)](https://codecov.io/gh/Stormheg/django-otp-webauthn)
+[![All Contributors](https://img.shields.io/github/all-contributors/Stormbase/django-otp-webauthn?color=ee8449)](#contributors)
 
 This package provides an implementation of [WebAuthn Passkeys](https://passkeys.dev/) for Django. It is written as a plugin for the [Django OTP framework](https://github.com/django-otp/django-otp) for multi-factor authentication. Under the hood, this package uses [py_webauth](https://github.com/duo-labs/py_webauthn/) to handle all cryptographic operations.
 
@@ -33,7 +30,7 @@ This package provides an implementation of [WebAuthn Passkeys](https://passkeys.
 
 - Django >= 4.2
 - Python >= 3.9
-- django-otp >= 1.2.0
+- django-otp >= 1.4.0
 
 ### Browser compatibility
 

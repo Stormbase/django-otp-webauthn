@@ -52,6 +52,17 @@ def as_credential_descriptors(
     return descriptors
 
 
+class WebAuthnAttestationManager(models.Manager): ...
+
+
+class WebAuthnCredentialManager(DeviceManager): ...
+
+
+class WebAuthnCredentialQuerySet(models.QuerySet):
+    def as_credential_descriptors(self):
+        return as_credential_descriptors(self)
+
+
 class AbstractWebAuthnAttestation(models.Model):
     """Abstract model to store attestation for registered credentials for future reference.
 
@@ -59,6 +70,16 @@ class AbstractWebAuthnAttestation(models.Model):
 
     See https://www.w3.org/TR/webauthn-3/#sctn-attestation for more information about attestation.
     """
+
+    class Meta:
+        abstract = True
+        verbose_name = _("WebAuthn attestation")
+        verbose_name_plural = _("WebAuthn attestations")
+
+    objects = WebAuthnAttestationManager()
+
+    def __str__(self):
+        return f"{self.credential} (fmt={self.fmt})"
 
     class Format(models.TextChoices):
         PACKED = "packed", "packed"
@@ -105,21 +126,6 @@ class AbstractWebAuthnAttestation(models.Model):
         """Return the parsed attestation object."""
         return parse_attestation_object(self.data)
 
-    def __str__(self):
-        return f"{self.credential} (fmt={self.fmt})"
-
-    class Meta:
-        abstract = True
-        verbose_name = _("WebAuthn attestation")
-        verbose_name_plural = _("WebAuthn attestations")
-
-
-class WebAuthnCredentialManager(DeviceManager):
-    def as_credential_descriptors(self):
-        return as_credential_descriptors(
-            self.values_list("credential_id", "transports")
-        )
-
 
 class AbstractWebAuthnCredential(TimestampMixin, Device):
     """
@@ -139,13 +145,7 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         verbose_name = _("WebAuthn credential")
         verbose_name_plural = _("WebAuthn credentials")
 
-    def __str__(self):
-        if not self.name:
-            return f"{self.aaguid} ({self.user})"
-
-        return super().__str__()
-
-    objects = WebAuthnCredentialManager()
+    objects = WebAuthnCredentialManager.from_queryset(WebAuthnCredentialQuerySet)()
 
     # The following fields are necessary or recommended by the WebAuthn L3 specification.
     # https://www.w3.org/TR/webauthn-3/#credential-record

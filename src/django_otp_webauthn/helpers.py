@@ -264,16 +264,19 @@ class WebAuthnHelper:
         """
 
         raw_algorithms = app_settings.OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS
-        if raw_algorithms == "all":
-            # Indicates all py_webauthn supported algorithms
+        if raw_algorithms is None:
+            # Indicates the default py_webauthn supported algorithms
             return None
 
-        algorithms = [
-            COSEAlgorithmIdentifier(a)
-            for a in raw_algorithms
-            if a in COSEAlgorithmIdentifier
-        ]
+        algorithms = []
+        for a in raw_algorithms:
+            algorithms.append(COSEAlgorithmIdentifier(a))
         return algorithms
+
+    def get_allowed_origins(self) -> list[str]:
+        """Get the expected origins."""
+        origins = app_settings.OTP_WEBAUTHN_ALLOWED_ORIGINS
+        return origins
 
     def get_generate_registration_options_kwargs(
         self, *, user: AbstractBaseUser
@@ -354,11 +357,6 @@ class WebAuthnHelper:
         state = self.get_registration_state(data)
 
         return data, state
-
-    def get_allowed_origins(self) -> list[str]:
-        """Get the expected origins."""
-        origins = app_settings.OTP_WEBAUTHN_ALLOWED_ORIGINS
-        return origins
 
     def register_complete(self, user: AbstractBaseUser, state: dict, data: dict):
         """Complete the registration process."""
@@ -543,11 +541,6 @@ class WebAuthnHelper:
         expected_origins = self.get_allowed_origins()
         require_user_verification = state["require_user_verification"]
         expected_rp_id = self.get_relying_party_domain()
-        supported_algorithms = self.get_supported_key_algorithms()
-
-        kwargs = {}
-        if supported_algorithms:
-            kwargs["supported_algorithms"] = supported_algorithms
 
         response = verify_authentication_response(
             credential=credential,
@@ -557,7 +550,6 @@ class WebAuthnHelper:
             expected_rp_id=expected_rp_id,
             expected_origin=expected_origins,
             require_user_verification=require_user_verification,
-            **kwargs,
         )
 
         device.sign_count = response.new_sign_count

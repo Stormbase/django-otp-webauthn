@@ -2,7 +2,6 @@ from django.conf import settings as django_settings
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 
-from django_otp_webauthn.models import WebAuthnCredential
 from django_otp_webauthn.settings import app_settings
 
 credential_model = app_settings.OTP_WEBAUTHN_CREDENTIAL_MODEL
@@ -86,9 +85,3 @@ class WebAuthnCredentialAdmin(admin.ModelAdmin):
         queryset = queryset.select_related("user")
 
         return queryset
-
-
-# Only register our ModelAdmin if the default model is the active WebAuthnCredential model.
-# Otherwise, it is up to the developer to register their own ModelAdmin for their custom model.
-if credential_model == "django_otp_webauthn.WebAuthnCredential":
-    admin.site.register(WebAuthnCredential, WebAuthnCredentialAdmin)
