@@ -4,10 +4,10 @@
   "type": "module",
   "scripts": {
     "start": "yarn watch",
-    "watch": "webpack --watch --config webpack.dev.config.ts",
-    "build": "webpack --config webpack.prod.config.ts",
-    "format": "prettier --write '**/*.{ts,js,jsx,css,scss}'",
-    "lint": "prettier --check '**/*.{ts,js,jsx,css,scss}'"
+    "watch": "webpack --watch --config client/webpack.dev.config.ts",
+    "build": "webpack --config client/webpack.prod.config.ts",
+    "format": "prettier --write 'client/**/*.{ts,js,jsx,css,scss}'",
+    "lint": "prettier --check 'client/**/*.{ts,js,jsx,css,scss}'"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",

@@ -17,15 +17,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
+          cache: "yarn"
 
       - name: Install Node dependencies
         run: |
-          npm ci
+          yarn install --frozen-lockfile
 
       - name: Compile JavaScript
         run: |
-          npm run build
+          yarn build
 
       - uses: actions/setup-python@v5
         with:
