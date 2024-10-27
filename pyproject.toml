@@ -134,7 +134,6 @@ addopts = "--reuse-db"
 [tool.coverage.run]
 source_pkgs = ["django_otp_webauthn"]
 branch = true
-parallel = true
 omit = ["*/migrations/*", "*/tests/*"]
 
 [tool.coverage.report]
