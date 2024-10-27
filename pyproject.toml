@@ -103,10 +103,7 @@ dependencies = [
 [tool.hatch.envs.hatch-static-analysis]
 # Do not use Hatch default configuration
 config-path = "pyproject.toml"
-dependencies = [
-  # Update as necessary, prevent sudden breakage
-  "ruff==0.6.5",
-]
+dependencies = []
 
 [tool.hatch.envs.hatch-test]
 command = "foobar"
