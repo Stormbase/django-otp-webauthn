@@ -55,11 +55,7 @@ def as_credential_descriptors(
 class WebAuthnAttestationManager(models.Manager): ...
 
 
-class WebAuthnCredentialManager(DeviceManager):
-    def as_credential_descriptors(self):
-        return as_credential_descriptors(
-            self.values_list("credential_id", "transports")
-        )
+class WebAuthnCredentialManager(DeviceManager): ...
 
 
 class WebAuthnCredentialQuerySet(models.QuerySet):
