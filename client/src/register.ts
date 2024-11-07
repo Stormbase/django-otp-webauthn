@@ -78,7 +78,9 @@ import {
         let attResp;
 
         try {
-          attResp = await startRegistration(await response.json());
+          attResp = await startRegistration({
+            optionsJSON: await response.json(),
+          });
         } catch (error: unknown) {
           console.error(error);
           if (error instanceof Error || error instanceof WebAuthnError) {

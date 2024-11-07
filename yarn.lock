@@ -1013,17 +1013,17 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@simplewebauthn/browser@^10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@simplewebauthn/browser/-/browser-10.0.0.tgz#8305a57dacb35ab6a71a8b670c699ee7ef1c11c4"
-  integrity sha512-hG0JMZD+LiLUbpQcAjS4d+t4gbprE/dLYop/CkE01ugU/9sKXflxV5s0DRjdz3uNMFecatRfb4ZLG3XvF8m5zg==
+"@simplewebauthn/browser@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@simplewebauthn/browser/-/browser-11.0.0.tgz#270b47039b4561199bc16f25197431c8f10dbfb5"
+  integrity sha512-KEGCStrl08QC2I561BzxqGiwoknblP6O1YW7jApdXLPtIqZ+vgJYAv8ssLCdm1wD8HGAHd49CJLkUF8X70x/pg==
   dependencies:
-    "@simplewebauthn/types" "^10.0.0"
+    "@simplewebauthn/types" "^11.0.0"
 
-"@simplewebauthn/types@^10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@simplewebauthn/types/-/types-10.0.0.tgz#a07259d42fbdff7a014473f78401d262b298ed8e"
-  integrity sha512-SFXke7xkgPRowY2E+8djKbdEznTVnD5R6GO7GPTthpHrokLvNKw8C3lFZypTxLI7KkCfGPfhtqB3d7OVGGa9jQ==
+"@simplewebauthn/types@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@simplewebauthn/types/-/types-11.0.0.tgz#f329abc4c1bc3b18d6c7a4346af9fdec90d8a67e"
+  integrity sha512-b2o0wC5u2rWts31dTgBkAtSNKGX0cvL6h8QedNsKmj8O4QoLFQFR3DBVBUlpyVEhYKA+mXGUaXbcOc4JdQ3HzA==
 
 "@types/eslint-scope@^3.7.7":
   version "3.7.7"

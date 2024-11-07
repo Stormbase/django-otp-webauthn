@@ -87,8 +87,10 @@ import {
 
       let attResp;
       try {
-        // Important: the second argument to startAuthentication is to call for the browser autofill UI
-        attResp = await startAuthentication(await response.json(), true);
+        attResp = await startAuthentication({
+          optionsJSON: await response.json(),
+          useBrowserAutofill: true,
+        });
       } catch (error: unknown) {
         console.error(
           "Got error during the webauthn credential autofill call",
@@ -255,7 +257,10 @@ import {
         let attResp;
 
         try {
-          attResp = await startAuthentication(await response.json());
+          attResp = await startAuthentication({
+            optionsJSON: await response.json(),
+            useBrowserAutofill: false,
+          });
         } catch (error: unknown) {
           if (error instanceof Error || error instanceof WebAuthnError) {
             console.error(error);
