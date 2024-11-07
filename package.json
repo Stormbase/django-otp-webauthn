@@ -14,15 +14,15 @@
     "@babel/preset-env": "^7.24.5",
     "@babel/preset-typescript": "^7.24.1",
     "@babel/register": "^7.23.7",
-    "@types/node": "^20.12.11",
+    "@types/node": "^22.9.0",
     "all-contributors-cli": "^6.26.1",
-    "esbuild": "^0.21.1",
-    "prettier": "3.x",
+    "esbuild": "^0.24.0",
+    "prettier": "3.3.3",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.5",
     "webpack": "^5.94.0",
     "webpack-cli": "^5.1.4",
-    "webpack-merge": "^5.10.0"
+    "webpack-merge": "^6.0.0"
   },
   "dependencies": {
     "@simplewebauthn/browser": "^10.0.0"
