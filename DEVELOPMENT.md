@@ -90,27 +90,27 @@ To build the documentation, follow these steps:
 
 1. Clone the repository:
 
-    ```
-    git clone git@github.com:Stormbase/django-otp-webauthn.git
-    ```
+   ```
+   git clone git@github.com:Stormbase/django-otp-webauthn.git
+   ```
 
 2. Navigate to the docs folder:
 
-    ```
-    cd docs
-    ```
+   ```
+   cd docs
+   ```
 
 3. Build the documentation:
 
-    ```
-    make html
-    ```
+   ```
+   make html
+   ```
 
 4. Serve it, and watch for changes:
 
-    ```
-    make run
-    ```
+   ```
+   make run
+   ```
 
 ## Releasing
 
