@@ -82,6 +82,36 @@ The pre-commit hooks will now run automatically when you try to commit changes. 
 
     pre-commit run --all-files
 
+## Documentation
+
+This project's documentation uses the [Sphinx](https://www.sphinx-doc.org) [Alabaster](https://alabaster.readthedocs.io/) theme.
+
+To build the documentation, follow these steps:
+
+1. Clone the repository:
+
+    ```
+    git clone git@github.com:Stormbase/django-otp-webauthn.git
+    ```
+
+2. Navigate to the docs folder:
+
+    ```
+    cd docs
+    ```
+
+3. Build the documentation:
+
+    ```
+    make html
+    ```
+
+4. Serve it, and watch for changes:
+
+    ```
+    make run
+    ```
+
 ## Releasing
 
 Releasing a new version is semi-automated. The following steps should be taken:
