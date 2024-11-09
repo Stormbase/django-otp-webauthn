@@ -19,7 +19,7 @@ help:
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-# Start a local development server to automatically rebuild and serve the HTML documentation 
+# Start a local development server to automatically rebuild and serve the HTML documentation
 # whenever changes are made to the source files.
 run:
 	sphinx-autobuild "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)

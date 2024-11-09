@@ -9,7 +9,7 @@ Django OTP WebAuthn
 .. toctree::
    :maxdepth: 2
    :hidden:
-   
+
    test-content/build-packages
    test-content/download-new-upstream-version
    test-content/get-package-source
