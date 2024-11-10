@@ -11,8 +11,8 @@
   - [ ] How to customize the frontend
   - [ ] How to customize the backend, custom models, views etc.
   - [ ] Settings reference
-- [ ] Setup CI/CD
-  - [ ] Automated tests
-  - [ ] Automated deployment to PyPI
-  - [ ] Nightly builds
+- [x] Setup CI/CD
+  - [x] Automated tests
+  - [x] Automated deployment to PyPI
+  - [x] Nightly builds
 - [ ] Test drive on a real project
