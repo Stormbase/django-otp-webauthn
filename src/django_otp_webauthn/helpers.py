@@ -223,7 +223,7 @@ class WebAuthnHelper:
         For more information, see:
         https://www.w3.org/TR/webauthn-2/#dom-publickeycredentialuserentity-id
         """
-        # Because we lack a dedicated field to store random bytes in on the user
+        # Because we lack a dedicated field to store random bytes on the user
         # model, we'll instead resort to hashing the user's primary key as that
         # is unique too and will never change. Since this value doesn't have to
         # be unique across different relying parties, we don't need to salt it.

@@ -45,12 +45,12 @@ class RegistrationCeremonyMixin:
             return self.request.user
         return None
 
+    def get_helper(self):
+        return WebAuthnCredential.get_webauthn_helper(request=self.request)
+
     def check_can_register(self):
         """Perform any necessary pre-checks to see if the registration ceremony can proceed."""
-        user = self.get_user()
-        # Only active users may attempt to register a new credential
-        if user and not user.is_active:
-            raise exceptions.UserDisabled()
+        pass
 
 
 class AuthenticationCeremonyMixin:
@@ -64,6 +64,9 @@ class AuthenticationCeremonyMixin:
         if self.request.user.is_authenticated:
             return self.request.user
         return None
+
+    def get_helper(self):
+        return WebAuthnCredential.get_webauthn_helper(request=self.request)
 
     def check_can_authenticate(self):
         """Perform any necessary pre-checks to see if the authentication ceremony can proceed."""
@@ -90,7 +93,7 @@ class BeginCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
 
     def post(self, *args, **kwargs):
         user = self.get_user()
-        helper = WebAuthnCredential.get_webauthn_helper(request=self.request)
+        helper = self.get_helper()
         data, state = helper.register_begin(user=user)
 
         self.request.session["otp_webauthn_register_state"] = state
@@ -121,7 +124,7 @@ class CompleteCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
         state = self.get_state()
         data = self.request.data
 
-        helper = WebAuthnCredential.get_webauthn_helper(request=self.request)
+        helper = self.get_helper()
 
         logger = _get_pywebauthn_logger()
         with rewrite_exceptions(logger=logger):
@@ -140,8 +143,8 @@ class BeginCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView):
 
     def post(self, *args, **kwargs):
         user = self.get_user()
+        helper = self.get_helper()
 
-        helper = WebAuthnCredential.get_webauthn_helper(request=self.request)
         require_user_verification = not bool(user)
 
         data, state = helper.authenticate_begin(
@@ -245,9 +248,8 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
     def post(self, *args, **kwargs):
         user = self.get_user()
         state = self.get_state()
+        helper = self.get_helper()
         data = self.request.data
-
-        helper = WebAuthnCredential.get_webauthn_helper(request=self.request)
 
         logger = _get_pywebauthn_logger()
         with rewrite_exceptions(logger=logger):
