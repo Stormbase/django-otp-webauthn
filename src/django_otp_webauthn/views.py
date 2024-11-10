@@ -47,10 +47,7 @@ class RegistrationCeremonyMixin:
 
     def check_can_register(self):
         """Perform any necessary pre-checks to see if the registration ceremony can proceed."""
-        user = self.get_user()
-        # Only active users may attempt to register a new credential
-        if user and not user.is_active:
-            raise exceptions.UserDisabled()
+        pass
 
 
 class AuthenticationCeremonyMixin:
