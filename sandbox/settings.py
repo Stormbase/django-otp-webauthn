@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 
 import dj_database_url
+from csp.constants import SELF
 
 PROJECT_DIR = Path(__file__).resolve().parent
 
@@ -153,6 +154,16 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Sandbox setting
 # ENFORCE_2FA_VERIFICATION = True
+
+
+CONTENT_SECURITY_POLICY = {
+    "EXCLUDE_URL_PREFIXES": ["/admin/"],
+    "DIRECTIVES": {
+        "default-src": [SELF],
+        "frame-ancestors": [SELF],
+        "form-action": [SELF],
+    },
+}
 
 # OTP webauthn settings
 OTP_WEBAUTHN_RP_NAME = "Passkey Sandbox"
