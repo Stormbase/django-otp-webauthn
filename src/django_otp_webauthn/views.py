@@ -36,9 +36,9 @@ def _get_pywebauthn_logger():
 class RegistrationCeremonyMixin:
     permission_classes = [IsAuthenticated]
 
-    def dispatch(self, request, *args, **kwargs):
+    def initial(self, request, *args, **kwargs):
+        super().initial(request, *args, **kwargs)
         self.check_can_register()
-        return super().dispatch(request, *args, **kwargs)
 
     def get_user(self) -> AbstractBaseUser | None:
         if self.request.user.is_authenticated:
@@ -56,9 +56,9 @@ class RegistrationCeremonyMixin:
 class AuthenticationCeremonyMixin:
     permission_classes = [AllowAny]
 
-    def dispatch(self, request, *args, **kwargs):
+    def initial(self, request, *args, **kwargs):
+        super().initial(request, *args, **kwargs)
         self.check_can_authenticate()
-        return super().dispatch(request, *args, **kwargs)
 
     def get_user(self) -> AbstractBaseUser | None:
         if self.request.user.is_authenticated:
