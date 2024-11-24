@@ -22,6 +22,13 @@ def begin_registration_response_schema():
 
 
 @pytest.fixture
+def begin_authentication_response_schema():
+    return _load_json_schema(
+        "tests/fixtures/schemas/begin_authentication_response.json"
+    )
+
+
+@pytest.fixture
 def api_client():
     return APIClient()
 

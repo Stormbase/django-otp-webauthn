@@ -36,9 +36,9 @@ def _get_pywebauthn_logger():
 class RegistrationCeremonyMixin:
     permission_classes = [IsAuthenticated]
 
-    def dispatch(self, request, *args, **kwargs):
+    def initial(self, request, *args, **kwargs):
+        super().initial(request, *args, **kwargs)
         self.check_can_register()
-        return super().dispatch(request, *args, **kwargs)
 
     def get_user(self) -> AbstractBaseUser | None:
         if self.request.user.is_authenticated:
@@ -56,9 +56,9 @@ class RegistrationCeremonyMixin:
 class AuthenticationCeremonyMixin:
     permission_classes = [AllowAny]
 
-    def dispatch(self, request, *args, **kwargs):
+    def initial(self, request, *args, **kwargs):
+        super().initial(request, *args, **kwargs)
         self.check_can_authenticate()
-        return super().dispatch(request, *args, **kwargs)
 
     def get_user(self) -> AbstractBaseUser | None:
         if self.request.user.is_authenticated:
@@ -77,10 +77,8 @@ class AuthenticationCeremonyMixin:
             return
 
         # In case we don't have a user (scenario: webauthn used as for passwordless login, no user logged in yet)
-        disallow_passwordless_login = (
-            not app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN
-        )
-        if self.get_user() is None and disallow_passwordless_login:
+        allow_passwordless_login = app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN
+        if not user and not allow_passwordless_login:
             raise exceptions.PasswordlessLoginDisabled()
 
 
@@ -256,7 +254,6 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
             device = helper.authenticate_complete(user=user, state=state, data=data)
 
         self.check_device_usable(device)
-
         self.complete_auth(device)
 
         return Response(self.get_success_data(device))

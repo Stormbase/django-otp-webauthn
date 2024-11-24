@@ -159,3 +159,7 @@ OTP_WEBAUTHN_RP_NAME = "Passkey Sandbox"
 OTP_WEBAUTHN_RP_ID = "localhost"
 OTP_WEBAUTHN_ALLOWED_ORIGINS = ["https://localhost", "http://localhost:8000"]
 OTP_WEBAUTHN_EXCEPTION_LOGGER_NAME = "django_otp_webauthn.logger"
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"]
+}
