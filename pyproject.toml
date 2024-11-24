@@ -40,6 +40,7 @@ dependencies = [
 
 [project.optional-dependencies]
 testing =  [
+  "beautifulsoup4>=4,<5",
   "django-debug-toolbar>4,<5",
   "dj-database-url>=2.1.0,<3",
   # To test functionality with a strict Content Security Policy

@@ -4,11 +4,8 @@ from django.middleware import csrf
 from django.urls import reverse
 
 from django_otp_webauthn.settings import app_settings
-from django_otp_webauthn.utils import get_credential_model
 
 register = template.Library()
-
-WebAuthnCredential = get_credential_model()
 
 
 def get_configuration(request: HttpRequest, extra_options: dict = {}) -> dict:
