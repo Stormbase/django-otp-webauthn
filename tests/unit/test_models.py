@@ -4,6 +4,7 @@ from datetime import timedelta
 
 import pytest
 from django.db import IntegrityError
+from django.test.utils import isolate_apps
 from django.utils import timezone
 from webauthn.helpers.structs import (
     AttestationObject,
@@ -11,8 +12,10 @@ from webauthn.helpers.structs import (
     PublicKeyCredentialDescriptor,
 )
 
+from django_otp_webauthn.checks import ERR_ATTESTATION_MISSING_CREDENTIAL_FIELD
 from django_otp_webauthn.helpers import WebAuthnHelper
 from django_otp_webauthn.models import (
+    AbstractWebAuthnAttestation,
     WebAuthnAttestation,
     WebAuthnAttestationManager,
     WebAuthnCredential,
@@ -80,6 +83,20 @@ def test_attestation_parse_attestation_object():
 @pytest.mark.django_db
 def test_attestation_manager():
     assert isinstance(WebAuthnAttestation.objects, WebAuthnAttestationManager)
+
+
+def test_attestation_custom_model_missing_credential_field():
+    """Test that the custom model check fails when the credential field is missing."""
+    with isolate_apps("django_otp_webauthn"):
+
+        class MyAttestation(AbstractWebAuthnAttestation):
+            # Missing the credential field
+            class Meta:
+                app_label = "django_otp_webauthn"
+
+        errors = MyAttestation.check()
+        assert len(errors) == 1
+        assert errors[0].id == ERR_ATTESTATION_MISSING_CREDENTIAL_FIELD
 
 
 @pytest.mark.django_db
