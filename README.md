@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/pypi/v/django-otp-webauthn.svg)](https://pypi.python.org/pypi/django-otp-webauthn/)
 [![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Build Status](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/test.yml/badge.svg)](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/Stormbase/django-otp-webauthn/graph/badge.svg?token=09ZH5DHPMK)](https://codecov.io/gh/Stormheg/django-otp-webauthn)
+[![codecov](https://codecov.io/gh/Stormbase/django-otp-webauthn/graph/badge.svg?token=09ZH5DHPMK)](https://codecov.io/gh/Stormbase/django-otp-webauthn)
 [![All Contributors](https://img.shields.io/github/all-contributors/Stormbase/django-otp-webauthn?color=ee8449)](#contributors)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 
