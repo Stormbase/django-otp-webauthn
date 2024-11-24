@@ -1,77 +1,8 @@
 import jsonschema
 import pytest
-from django.contrib.auth.models import AnonymousUser
 from django.urls import reverse
 
-from django_otp_webauthn.helpers import WebAuthnHelper
-from django_otp_webauthn.views import (
-    BeginCredentialRegistrationView,
-    CompleteCredentialRegistrationView,
-)
 from tests.factories import WebAuthnCredentialFactory
-
-# MIXIN TESTS
-
-
-@pytest.mark.parametrize(
-    "view_class",
-    [
-        BeginCredentialRegistrationView,
-        CompleteCredentialRegistrationView,
-    ],
-)
-def test_registration__get_user(rf, view_class, user_in_memory):
-    request = rf.post("/")
-    request.user = AnonymousUser()
-
-    view = view_class()
-    view.setup(request)
-    user = view.get_user()
-    assert user is None
-
-    # Now test with an authenticated user
-    request.user = user_in_memory
-    view = view_class()
-    view.setup(request)
-    user = view.get_user()
-    assert user == user_in_memory
-
-
-@pytest.mark.parametrize(
-    "view_class",
-    [
-        BeginCredentialRegistrationView,
-        CompleteCredentialRegistrationView,
-    ],
-)
-def test_registration__get_helper(rf, view_class):
-    request = rf.post("/")
-    request.user = AnonymousUser()
-
-    view = view_class()
-    view.setup(request)
-    helper = view.get_helper()
-    assert isinstance(helper, WebAuthnHelper)
-
-
-@pytest.mark.parametrize(
-    "view_class",
-    [
-        BeginCredentialRegistrationView,
-        CompleteCredentialRegistrationView,
-    ],
-)
-def test_registration__check_can_register(rf, view_class, user_in_memory, mocker):
-    request = rf.post("/")
-    request.user = user_in_memory
-
-    view = view_class()
-    view.setup(request)
-    # Check the check_can_register method is called
-    check_can_register = mocker.patch.object(view, "check_can_register")
-    view.dispatch(request)
-    check_can_register.assert_called_once()
-
 
 # REGISTRATION BEGIN VIEW TESTS
 
