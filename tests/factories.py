@@ -32,6 +32,7 @@ class WebAuthnCredentialFactory(factory.django.DjangoModelFactory):
     def name(self):
         return f"{self.user.username}'s credential"
 
+    confirmed = True
     user = factory.SubFactory("tests.factories.UserFactory")
     credential_id = FuzzyBytes()
     sign_count = 0
