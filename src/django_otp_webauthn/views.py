@@ -77,10 +77,8 @@ class AuthenticationCeremonyMixin:
             return
 
         # In case we don't have a user (scenario: webauthn used as for passwordless login, no user logged in yet)
-        disallow_passwordless_login = (
-            not app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN
-        )
-        if self.get_user() is None and disallow_passwordless_login:
+        allow_passwordless_login = app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN
+        if not user and not allow_passwordless_login:
             raise exceptions.PasswordlessLoginDisabled()
 
 
@@ -256,7 +254,6 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
             device = helper.authenticate_complete(user=user, state=state, data=data)
 
         self.check_device_usable(device)
-
         self.complete_auth(device)
 
         return Response(self.get_success_data(device))
