@@ -1,6 +1,7 @@
 import pytest
 from django.contrib.auth.models import AnonymousUser
 
+from django_otp_webauthn import exceptions
 from django_otp_webauthn.helpers import WebAuthnHelper
 from django_otp_webauthn.views import (
     BeginCredentialAuthenticationView,
@@ -133,3 +134,68 @@ def test_authentication__get_user(rf, view_class, user_in_memory):
     view.setup(request)
     user = view.get_user()
     assert user == user_in_memory
+
+
+@pytest.mark.parametrize(
+    "view_class",
+    [
+        BeginCredentialAuthenticationView,
+        CompleteCredentialAuthenticationView,
+    ],
+)
+def test_authentication__get_helper(rf, view_class):
+    request = rf.post("/")
+    request.user = AnonymousUser()
+
+    view = view_class()
+    view.setup(request)
+    helper = view.get_helper()
+    assert isinstance(helper, WebAuthnHelper)
+
+
+@pytest.mark.parametrize(
+    "view_class",
+    [
+        BeginCredentialAuthenticationView,
+        CompleteCredentialAuthenticationView,
+    ],
+)
+def test_authentication__check_can_authenticate__user_logged_in(
+    rf, view_class, user_in_memory, settings
+):
+    """Verify that we allow the authentication ceremonies to proceed if the user is logged in and passwordless login is disabled."""
+    settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = False
+    request = rf.post("/")
+    request.user = user_in_memory
+
+    view = view_class()
+    view.setup(request)
+
+    # This should not raise an exception
+    view.check_can_authenticate()
+
+
+@pytest.mark.parametrize(
+    "view_class",
+    [
+        BeginCredentialAuthenticationView,
+        CompleteCredentialAuthenticationView,
+    ],
+)
+@pytest.mark.parametrize("allow_passwordless", [True, False])
+def test_authentication__check_can_authenticate__passwordless(
+    rf, view_class, allow_passwordless, settings
+):
+    """Verify that we allow the authentication ceremonies to proceed if the user is logged in and passwordless login is disabled."""
+    settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = allow_passwordless
+    request = rf.post("/")
+    request.user = AnonymousUser()
+
+    view = view_class()
+    view.setup(request)
+
+    if allow_passwordless:
+        view.check_can_authenticate()
+    else:
+        with pytest.raises(exceptions.PasswordlessLoginDisabled):
+            view.check_can_authenticate()
