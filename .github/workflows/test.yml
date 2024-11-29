@@ -60,7 +60,7 @@ jobs:
           python -m pip install .[testing] tox coverage
 
       - name: Compile translations
-        run: /bin/sh ./compile_translations.sh
+        run: /bin/sh ./scripts/compile_translations.sh
 
         # This step runs only for jobs NOT in the include matrix
       - name: Run tox targets for Python ${{ matrix.python }}
@@ -77,3 +77,7 @@ jobs:
         uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  e2e_tests:
+    name: End-to-End Tests
+    uses: ./.github/workflows/playwright-tests.yml

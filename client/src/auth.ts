@@ -1,4 +1,4 @@
-import { State, Config } from "./types";
+import { State, Config, StatusEnum } from "./types";
 import { getConfig } from "./utils";
 import {
   browserSupportsWebAuthn,
@@ -220,6 +220,7 @@ import {
         );
         await setPasskeyVerifyState({
           buttonDisabled: true,
+          statusEnum: StatusEnum.BUSY,
           buttonLabel: gettext("Verifying..."),
         });
 
@@ -238,6 +239,7 @@ import {
             buttonDisabled: false,
             buttonLabel,
             requestFocus: true,
+            statusEnum: StatusEnum.GET_OPTIONS_FAILED,
             status: gettext(
               "Verification failed. Could not retrieve parameters from the server.",
             ),
@@ -271,6 +273,7 @@ import {
                   buttonDisabled: false,
                   buttonLabel,
                   requestFocus: true,
+                  statusEnum: StatusEnum.ABORTED,
                   status: gettext("Verification aborted."),
                 });
                 break;
@@ -279,6 +282,7 @@ import {
                   buttonDisabled: false,
                   buttonLabel,
                   requestFocus: true,
+                  statusEnum: StatusEnum.NOT_ALLOWED_OR_ABORTED,
                   status: gettext("Verification canceled or not allowed."),
                 });
                 break;
@@ -287,6 +291,7 @@ import {
                   buttonDisabled: false,
                   buttonLabel,
                   requestFocus: true,
+                  statusEnum: StatusEnum.UNKNOWN_ERROR,
                   status: gettext(
                     "Verification failed. An unknown error occurred.",
                   ),
@@ -308,6 +313,7 @@ import {
 
         await setPasskeyVerifyState({
           buttonDisabled: true,
+          statusEnum: StatusEnum.BUSY,
           buttonLabel: gettext("Finishing verification..."),
         });
 
@@ -340,6 +346,7 @@ import {
             buttonDisabled: false,
             buttonLabel,
             requestFocus: true,
+            statusEnum: StatusEnum.SERVER_ERROR,
             status: gettext(
               "Verification failed. An unknown server error occurred.",
             ),
@@ -366,6 +373,7 @@ import {
           await setPasskeyVerifyState({
             buttonDisabled: false,
             buttonLabel,
+            statusEnum: StatusEnum.SERVER_ERROR,
             requestFocus: true,
             status: msg,
           });
@@ -386,6 +394,7 @@ import {
           await setPasskeyVerifyState({
             buttonDisabled: false,
             buttonLabel,
+            statusEnum: StatusEnum.SUCCESS,
             status: gettext("Verification successful!"),
           });
 
@@ -411,6 +420,7 @@ import {
           await setPasskeyVerifyState({
             buttonDisabled: false,
             buttonLabel,
+            statusEnum: StatusEnum.SERVER_ERROR,
             requestFocus: true,
             status: msg,
           });
@@ -431,6 +441,12 @@ import {
 
       passkeyAuthButton.disabled = state.buttonDisabled;
       passkeyAuthButton.textContent = state.buttonLabel;
+
+      if (state.statusEnum) {
+        passkeyStatusText.setAttribute("data-status-enum", state.statusEnum);
+      } else {
+        passkeyStatusText.removeAttribute("data-status-enum");
+      }
 
       if (passkeyStatusText) {
         // If there is a status message, we want to make sure screen readers

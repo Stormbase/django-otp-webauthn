@@ -1,8 +1,21 @@
+export enum StatusEnum {
+  UNKNOWN_ERROR = "unknown-error",
+  STATE_ERROR = "state-error",
+  SECURITY_ERROR = "security-error",
+  GET_OPTIONS_FAILED = "get-options-failed",
+  ABORTED = "aborted",
+  NOT_ALLOWED_OR_ABORTED = "not-allowed-or-aborted",
+  SERVER_ERROR = "server-error",
+  SUCCESS = "success",
+  BUSY = "busy",
+}
+
 export type State = {
   buttonDisabled: boolean;
   buttonLabel: string;
   /** Text to display in the status field. */
   status?: string;
+  statusEnum?: StatusEnum;
   /** Request the focus be returned to the button. */
   requestFocus?: boolean;
 };

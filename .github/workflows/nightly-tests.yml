@@ -10,6 +10,11 @@ on:
   workflow_dispatch:
 
 jobs:
+  nightly-e2e:
+    # Cannot check the existence of secrets, so limiting to repository name to prevent all forks to run nightly.
+    # See: https://github.com/actions/runner/issues/520
+    if: ${{ github.repository == 'Stormbase/django-otp-webauthn' }}
+    uses: ./.github/workflows/playwright-tests.yml
   nightly-test:
     # Cannot check the existence of secrets, so limiting to repository name to prevent all forks to run nightly.
     # See: https://github.com/actions/runner/issues/520
@@ -38,7 +43,7 @@ jobs:
 
       - name: Compile translations
         run: |
-          /bin/sh ./compile_translations.sh
+          /bin/sh ./scripts/compile_translations.sh
 
       - name: Run 'future' tests
         id: test
