@@ -4,18 +4,36 @@
  */
 document.addEventListener("DOMContentLoaded", function () {
   //   Registration events
-  document.addEventListener("otp_webauthn.register_start", function (event) {
-    console.log("[sandbox] otp_webauthn.register_start event received", event);
-  });
-  document.addEventListener("otp_webauthn.register_complete", function (event) {
-    console.log(
-      "[sandbox] otp_webauthn.register_complete event received",
-      event,
-    );
-  });
-  document.addEventListener("otp_webauthn.register_failed", function (event) {
-    console.log("[sandbox] otp_webauthn.register_failed event received", event);
-  });
+  document.addEventListener(
+    "otp_webauthn.register_start",
+    function (event) {
+      console.log(
+        "[sandbox] otp_webauthn.register_start event received",
+        event,
+      );
+    },
+    true,
+  );
+  document.addEventListener(
+    "otp_webauthn.register_complete",
+    function (event) {
+      console.log(
+        "[sandbox] otp_webauthn.register_complete event received",
+        event,
+      );
+    },
+    true,
+  );
+  document.addEventListener(
+    "otp_webauthn.register_failed",
+    function (event) {
+      console.log(
+        "[sandbox] otp_webauthn.register_failed event received",
+        event,
+      );
+    },
+    true,
+  );
 
   // Verification events
   document.addEventListener(
@@ -26,6 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
         event,
       );
     },
+    true,
   );
   document.addEventListener(
     "otp_webauthn.verification_complete",
@@ -35,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
         event,
       );
     },
+    true,
   );
   document.addEventListener(
     "otp_webauthn.verification_failed",
@@ -44,5 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
         event,
       );
     },
+    true,
   );
 });
