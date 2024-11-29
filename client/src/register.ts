@@ -1,4 +1,4 @@
-import { State, Config } from "./types";
+import { State, Config, StatusEnum } from "./types";
 import { getConfig } from "./utils";
 import {
   browserSupportsWebAuthn,
@@ -60,6 +60,7 @@ import {
             buttonDisabled: false,
             buttonLabel,
             requestFocus: true,
+            statusEnum: StatusEnum.GET_OPTIONS_FAILED,
             status: gettext(
               "Registration failed. Unable to fetch registration options from server.",
             ),
@@ -89,6 +90,7 @@ import {
                 setPasskeyRegisterState({
                   buttonDisabled: false,
                   buttonLabel,
+                  statusEnum: StatusEnum.ABORTED,
                   status: gettext("Registration aborted."),
                   requestFocus: true,
                 });
@@ -97,6 +99,7 @@ import {
                 setPasskeyRegisterState({
                   buttonDisabled: false,
                   buttonLabel,
+                  statusEnum: StatusEnum.STATE_ERROR,
                   status: gettext(
                     "Registration failed. You most likely already have a Passkey registered for this site.",
                   ),
@@ -107,6 +110,7 @@ import {
                 setPasskeyRegisterState({
                   buttonDisabled: false,
                   buttonLabel,
+                  statusEnum: StatusEnum.NOT_ALLOWED_OR_ABORTED,
                   status: gettext("Registration aborted or not allowed."),
                   requestFocus: true,
                 });
@@ -115,6 +119,7 @@ import {
                 setPasskeyRegisterState({
                   buttonDisabled: false,
                   buttonLabel,
+                  statusEnum: StatusEnum.SECURITY_ERROR,
                   status: gettext(
                     "Registration failed. A technical problem occurred that prevents you from registering a Passkey for this site.",
                   ),
@@ -125,6 +130,7 @@ import {
                 setPasskeyRegisterState({
                   buttonDisabled: false,
                   buttonLabel,
+                  statusEnum: StatusEnum.UNKNOWN_ERROR,
                   status: gettext(
                     "Registration failed. An unknown error occurred.",
                   ),
@@ -146,6 +152,7 @@ import {
 
         setPasskeyRegisterState({
           buttonDisabled: true,
+          statusEnum: StatusEnum.BUSY,
           buttonLabel: gettext("Finishing registration..."),
         });
 
@@ -164,6 +171,7 @@ import {
           setPasskeyRegisterState({
             buttonDisabled: false,
             buttonLabel,
+            statusEnum: StatusEnum.SERVER_ERROR,
             status: gettext(
               "Registration failed. The server was unable to verify this passkey.",
             ),
@@ -189,6 +197,7 @@ import {
           setPasskeyRegisterState({
             buttonDisabled: false,
             buttonLabel,
+            statusEnum: StatusEnum.SERVER_ERROR,
             status: gettext("Registration failed. A server error occurred."),
             requestFocus: true,
           });
@@ -211,6 +220,7 @@ import {
           setPasskeyRegisterState({
             buttonDisabled: false,
             buttonLabel,
+            statusEnum: StatusEnum.SUCCESS,
             status: gettext("Registration successful!"),
             requestFocus: true,
           });
@@ -230,6 +240,7 @@ import {
           setPasskeyRegisterState({
             buttonDisabled: false,
             buttonLabel,
+            statusEnum: StatusEnum.SERVER_ERROR,
             status: msg,
             requestFocus: true,
           });
@@ -257,6 +268,12 @@ import {
 
         passkeyRegisterButton.disabled = state.buttonDisabled;
         passkeyRegisterButton.textContent = state.buttonLabel;
+
+        if (state.statusEnum) {
+          passkeyStatusText.setAttribute("data-status-enum", state.statusEnum);
+        } else {
+          passkeyStatusText.removeAttribute("data-status-enum");
+        }
 
         if (passkeyStatusText) {
           if (state.status) {
