@@ -77,3 +77,7 @@ jobs:
         uses: codecov/codecov-action@v4
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  e2e_tests:
+    name: End-to-End Tests
+    uses: ./.github/workflows/playwright-tests.yml
