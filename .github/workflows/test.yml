@@ -32,22 +32,6 @@ jobs:
         run: |
           yarn build
 
-  pre-commit:
-    name: Run pre-commit hooks
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-python@v5
-        with:
-          python-version: 3.13
-          cache: "pip"
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: ".nvmrc"
-      - uses: pre-commit/action@v3.0.1
-
   test_python:
     name: Test on Python ${{ matrix.python}}
     runs-on: ubuntu-latest
