@@ -60,7 +60,7 @@ jobs:
           python -m pip install .[testing] tox coverage
 
       - name: Compile translations
-        run: /bin/sh ./compile_translations.sh
+        run: /bin/sh ./scripts/compile_translations.sh
 
         # This step runs only for jobs NOT in the include matrix
       - name: Run tox targets for Python ${{ matrix.python }}

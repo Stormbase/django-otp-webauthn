@@ -42,7 +42,7 @@ jobs:
 
       - name: Compile translations
         run: |
-          /bin/sh ./compile_translations.sh
+          /bin/sh ./scripts/compile_translations.sh
 
       - name: Build package distributions
         run: python -m build
