@@ -55,6 +55,7 @@ testing =  [
   "pytest-mock>=3.14,<4",
   "jsonschema ~= 4.23",
 ]
+playwright = ["pytest-playwright>=0.5.2,<1", "playwright>=1.49,<2"]
 
 [project.urls]
 # TODO: documentation link
