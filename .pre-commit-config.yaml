@@ -23,3 +23,6 @@ repos:
       - id: prettier
         types_or:
           [css, javascript, ts, json, yaml, markdown, bash, editorconfig, toml]
+
+ci:
+  autoupdate_schedule: monthly
