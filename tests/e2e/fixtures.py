@@ -24,7 +24,7 @@ class VirtualAuthenticator:
     is_user_verified: bool
     default_backup_eligibility: bool
     default_backup_state: bool
-    automaticPresenceSimulation: bool
+    automatic_presence_simulation: bool
 
     def as_cdp_options(self) -> dict:
         return {
@@ -35,7 +35,7 @@ class VirtualAuthenticator:
             "isUserVerified": self.is_user_verified,
             "defaultBackupEligibility": self.default_backup_eligibility,
             "defaultBackupState": self.default_backup_state,
-            "automaticPresenceSimulation": self.automaticPresenceSimulation,
+            "automaticPresenceSimulation": self.automatic_presence_simulation,
         }
 
     @classmethod
@@ -48,7 +48,7 @@ class VirtualAuthenticator:
             is_user_verified=True,
             default_backup_eligibility=True,
             default_backup_state=False,
-            automaticPresenceSimulation=True,
+            automatic_presence_simulation=True,
         )
 
     @classmethod
@@ -61,5 +61,5 @@ class VirtualAuthenticator:
             is_user_verified=False,
             default_backup_eligibility=False,
             default_backup_state=False,
-            automaticPresenceSimulation=True,
+            automatic_presence_simulation=True,
         )
