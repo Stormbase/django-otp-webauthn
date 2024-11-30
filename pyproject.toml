@@ -53,6 +53,11 @@ testing =  [
   "pytest-randomly>=3.15,<4",
   "pytest-mock>=3.14,<4",
 ]
+docs = [
+  "alabaster==1.0.0",
+  "Sphinx==8.0.2",
+  "sphinx-autobuild==2024.10.3",
+]
 
 [project.urls]
 # TODO: documentation link

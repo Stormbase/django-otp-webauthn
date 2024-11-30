@@ -8,7 +8,7 @@
 
 project = "Django OTP WebAuthn"
 copyright = "2024"
-author = ""
+author = "Stormbase and individual contributors"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -17,6 +17,13 @@ extensions = []
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "venv"]
+
+extlinks = {
+    "git_tag": ("https://github.com/sphinx-doc/django-otp-webauthn/tree/%s", "%s"),
+    "bug": ("https://github.com/sphinx-doc/django-otp-webauthn/issues/%s", "#%s"),
+    "feature": ("https://github.com/sphinx-doc/django-otp-webauthn/issues/%s", "#%s"),
+    "issue": ("https://github.com/sphinx-doc/django-otp-webauthn/issues/%s", "#%s"),
+}
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -28,10 +35,12 @@ html_static_path = ["_static"]
 # https://alabaster.readthedocs.io/en/latest/index.html
 
 html_theme_options = {
+    "description": "An implementation of WebAuthn Passkeys for Django",
     "logo": "",
-    "github_button": "true",
-    "github_type": "No text variant",
-    "github_user": "activus-d",
-    "github_repo": "django-otp-webauthn-doc",
+    "github_banner": True,
+    "github_button": True,
+    "github_type": "star",
+    "github_user": "Stormbase",
+    "github_repo": "django-otp-webauthn",
     "page_width": "97%",
 }

@@ -10,6 +10,7 @@ A sandbox project is included in this repository to aid in development.
 - [Yarn](https://yarnpkg.com/)
 - [Pre-commit](https://pre-commit.com/)
 - [Caddy](https://caddyserver.com/) (optional, but recommended for https testing)
+- [GNU](https://www.gnu.org)
 
 ## Installation (sandbox)
 
