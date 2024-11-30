@@ -18,13 +18,6 @@ extensions = []
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "venv"]
 
-extlinks = {
-    "git_tag": ("https://github.com/sphinx-doc/django-otp-webauthn/tree/%s", "%s"),
-    "bug": ("https://github.com/sphinx-doc/django-otp-webauthn/issues/%s", "#%s"),
-    "feature": ("https://github.com/sphinx-doc/django-otp-webauthn/issues/%s", "#%s"),
-    "issue": ("https://github.com/sphinx-doc/django-otp-webauthn/issues/%s", "#%s"),
-}
-
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
