@@ -42,7 +42,8 @@ def test_register_credential__legacy_u2f_passwordless_setting_enabled(
     register_button.click()
 
     page.wait_for_selector(
-        f"#passkey-register-status-message[data-status-enum='{StatusEnum.NOT_ALLOWED_OR_ABORTED}']"
+        f"#passkey-register-status-message[data-status-enum='{StatusEnum.NOT_ALLOWED_OR_ABORTED}']",
+        timeout=2000,
     )
 
     # Did the right events fire?
@@ -92,7 +93,8 @@ def test_register_credential__legacy_u2f_passwordless_setting_disabled(
     register_button.click()
 
     page.wait_for_selector(
-        f"#passkey-register-status-message[data-status-enum='{StatusEnum.SUCCESS}']"
+        f"#passkey-register-status-message[data-status-enum='{StatusEnum.SUCCESS}']",
+        timeout=2000,
     )
 
     browser_credential = get_credential()
@@ -155,7 +157,8 @@ def test_register_credential__internal_success(
     # Wait for the page to display a success message, afterwards it is likely
     # safe to get the credential without being trapped waiting for eternity..
     page.wait_for_selector(
-        f"#passkey-register-status-message[data-status-enum='{StatusEnum.SUCCESS}']"
+        f"#passkey-register-status-message[data-status-enum='{StatusEnum.SUCCESS}']",
+        timeout=2000,
     )
     browser_credential = get_credential()
 
@@ -214,7 +217,9 @@ def test_register_credential__fail_bad_user_presence(
     expect(register_button).to_be_visible()
 
     register_button.click()
-    page.wait_for_selector("#passkey-register-status-message[data-status-enum]")
+    page.wait_for_selector(
+        "#passkey-register-status-message[data-status-enum]", timeout=2000
+    )
     # Did the right events fire?
     await_start_event()
     await_failure_event()
@@ -251,7 +256,8 @@ def test_register_credential__fail_bad_rpid(
 
     register_button.click()
     page.wait_for_selector(
-        f"#passkey-register-status-message[data-status-enum='{StatusEnum.SECURITY_ERROR}']"
+        f"#passkey-register-status-message[data-status-enum='{StatusEnum.SECURITY_ERROR}']",
+        timeout=2000,
     )
     # Did the right events fire?
     await_start_event()
