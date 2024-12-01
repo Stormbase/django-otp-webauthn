@@ -5,7 +5,7 @@ import pytest
 from django.test.client import Client as DjangoTestClient
 from playwright.sync_api import CDPSession
 
-from tests.e2e.fixtures import VirtualAuthenticator
+from tests.e2e.fixtures import VirtualAuthenticator, VirtualCredential
 
 
 class FutureWrapper:
@@ -30,7 +30,9 @@ def event_waiter():
 
 @pytest.fixture(scope="function")
 def cdpsession(page) -> CDPSession:
-    return page.context.new_cdp_session(page)
+    session = page.context.new_cdp_session(page)
+    session.send("WebAuthn.enable")
+    return session
 
 
 @pytest.fixture(autouse=True)
@@ -79,7 +81,6 @@ def wait_for_javascript_event(page):
 @pytest.fixture
 def virtual_authenticator(cdpsession):
     def _get_authenticator(authenticator: VirtualAuthenticator):
-        cdpsession.send("WebAuthn.enable")
         resp = cdpsession.send(
             "WebAuthn.addVirtualAuthenticator",
             {
@@ -89,6 +90,19 @@ def virtual_authenticator(cdpsession):
         return resp
 
     return _get_authenticator
+
+
+@pytest.fixture
+def virtual_credential(cdpsession):
+    def _get_credential(authenticator_id: str, credential: VirtualCredential):
+        data = {
+            "authenticatorId": authenticator_id,
+            "credential": credential.as_cdp_options(),
+        }
+        resp = cdpsession.send("WebAuthn.addCredential", data)
+        return resp
+
+    return _get_credential
 
 
 @pytest.fixture

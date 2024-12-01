@@ -19,6 +19,10 @@ class IndexView(TemplateView):
         return ctx
 
 
+class LoginWithPasskeyView(TemplateView):
+    template_name = "sandbox/login_passkey.html"
+
+
 class SecondFactorVerificationView(LoginRequiredMixin, TemplateView):
     template_name = "sandbox/second_factor_verification.html"
 

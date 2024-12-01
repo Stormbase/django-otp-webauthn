@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% load i18n otp_webauthn %}
+
+{% block title %}{% translate "Login using a Passkey" %}{% endblock %}
+
+{% block content %}
+<div>
+    <span id="passkey-verification-placeholder"></span>
+</div>
+
+<template id="passkey-verification-available-template">
+    <button class="button" type="button" id="passkey-verification-button">{% translate "Login using a Passkey" %}</button>
+    <div id="passkey-verification-status-message"></div>
+</template>
+
+<template id="passkey-verification-unavailable-template">
+    <p>{% translate "Sorry, your browser has no Passkey support" %}</p>
+</template>
+
+{% render_otp_webauthn_auth_scripts %}
+{% endblock content %}
