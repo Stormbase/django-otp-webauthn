@@ -11,7 +11,7 @@
 
 set -e
 
-IGNORE_PATHS="--ignore venv --ignore client --ignore .tox --ignore dist"
+IGNORE_PATHS="--ignore venv --ignore client --ignore .tox --ignore dist --ignore node_modules --ignore docs"
 
 echo "Updating djangojs.po files..."
 # Update JavaScript translations
