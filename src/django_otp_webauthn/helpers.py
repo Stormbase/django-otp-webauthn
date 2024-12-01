@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import hashlib
 import json
 
 from django.contrib.auth import get_user_model
@@ -38,6 +37,7 @@ from django_otp_webauthn import exceptions
 from django_otp_webauthn.models import (
     AbstractWebAuthnAttestation,
     AbstractWebAuthnCredential,
+    WebAuthnUserHandle,
 )
 from django_otp_webauthn.settings import app_settings
 from django_otp_webauthn.utils import get_attestation_model, get_credential_model
@@ -211,41 +211,10 @@ class WebAuthnHelper:
         """
         return user.get_username()
 
-    def get_unique_anonymous_user_id(self, user: AbstractBaseUser) -> bytes:
-        """Get a unique identifier for the user to use during WebAuthn
-        ceremonies. It must be a unique byte sequence no longer than 64 bytes.
-
-        To preserve user privacy, it must not contain any information that may
-        lead to the identification of the user. UUIDs may be a good choice for
-        this, plain email addresses and usernames are definitely not.
-
-        Clients can use this to identify if they already have a credential
-        stored for this user account and act accordingly.
-
-        For more information, see:
-        https://www.w3.org/TR/webauthn-2/#dom-publickeycredentialuserentity-id
-        """
-        # Because we lack a dedicated field to store random bytes on the user
-        # model, we'll instead resort to hashing the user's primary key as that
-        # is unique too and will never change. Since this value doesn't have to
-        # be unique across different relying parties, we don't need to salt it.
-        # SHA-256 is used because it is fast, commonly used, and produces a
-        # 64-byte hash. This is good enough privacy, though not as perfect as
-        # random bytes.
-        # SECURITY NOTE: The attack vector for de-anonymizing by
-        # linking authenticator back to a specific user is small, but still
-        # present. If an attacker suspects the authenticator belongs to a
-        # specific user, they can obtain the suspected user's primary key and
-        # hash it to see if it matches the user ID stored on the authenticator.
-        # Random bytes never shared with anyone don't have this issue.
-        # TODO: document the need to override this method and to use random
-        # bytes instead.
-        return hashlib.sha256(bytes(user.pk)).digest()
-
     def get_user_entity(self, user: AbstractBaseUser) -> PublicKeyCredentialUserEntity:
         """Get information about the user account a credential is being registered for."""
         return PublicKeyCredentialUserEntity(
-            id=self.get_unique_anonymous_user_id(user),
+            id=WebAuthnUserHandle.get_handle_by_user(user),
             name=self.get_credential_name(user),
             display_name=self.get_credential_display_name(user),
         )

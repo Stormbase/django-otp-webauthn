@@ -2,7 +2,11 @@ import factory
 import factory.fuzzy
 from factory.random import randgen as factory_randgen
 
-from django_otp_webauthn.models import WebAuthnAttestation, WebAuthnCredential
+from django_otp_webauthn.models import (
+    WebAuthnAttestation,
+    WebAuthnCredential,
+    WebAuthnUserHandle,
+)
 
 from .fuzzy import FuzzyBytes
 
@@ -70,3 +74,11 @@ class WebAuthnAttestationFactory(factory.django.DjangoModelFactory):
     fmt = "none"
     data = b"\00"
     client_data_json = b"\00"
+
+
+class WebAuthnUserHandleFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = WebAuthnUserHandle
+        django_get_or_create = ["user"]
+
+    user = factory.SubFactory("tests.factories.UserFactory")

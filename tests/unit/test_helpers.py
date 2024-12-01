@@ -17,7 +17,11 @@ from webauthn.helpers.structs import (
 from django_otp_webauthn.exceptions import CredentialNotFound
 from django_otp_webauthn.helpers import WebAuthnHelper
 from django_otp_webauthn.models import WebAuthnCredential
-from tests.factories import WebAuthnCredentialFactory
+from tests.factories import (
+    UserFactory,
+    WebAuthnCredentialFactory,
+    WebAuthnUserHandleFactory,
+)
 
 
 @pytest.fixture
@@ -142,26 +146,15 @@ def test_helper_get_credential_name(helper, user_in_memory):
     assert helper.get_credential_name(user_in_memory) == "johndoe"
 
 
-def test_helper_get_unique_anonymous_user_id(helper, user_in_memory):
-    user_in_memory.id = 123
-    id_hash = helper.get_unique_anonymous_user_id(user_in_memory)
-
-    assert isinstance(id_hash, bytes)
-    # Must not be longer than 64 bytes, requirement of the WebAuthn spec
-    assert len(id_hash) <= 64
-    # 123 -> sha256 -> hex
-    assert (
-        id_hash.hex()
-        == "409a7f83ac6b31dc8c77e3ec18038f209bd2f545e0f4177c2e2381aa4e067b49"
+@pytest.mark.django_db
+def test_helper_get_user_entity(helper):
+    user = UserFactory(username="johndoe", first_name="John", last_name="Doe")
+    WebAuthnUserHandleFactory(
+        user=user,
+        handle_hex="409a7f83ac6b31dc8c77e3ec18038f209bd2f545e0f4177c2e2381aa4e067b49",
     )
 
-
-def test_helper_get_user_entity(helper, user_in_memory):
-    user_in_memory.pk = 123
-    user_in_memory.username = "johndoe"
-    user_in_memory.first_name = "John"
-    user_in_memory.last_name = "Doe"
-    user_entity = helper.get_user_entity(user_in_memory)
+    user_entity = helper.get_user_entity(user)
 
     assert (
         user_entity.id.hex()
@@ -241,7 +234,9 @@ def test_helper_get_authentication_extensions(helper):
 
 
 @pytest.mark.django_db
-def test_helper_get_generate_registration_options_kwargs(helper, user, settings):
+def test_helper_get_generate_registration_options_kwargs(
+    helper, user, settings, user_handle_model
+):
     settings.OTP_WEBAUTHN_RP_NAME = "Acme Inc."
     settings.OTP_WEBAUTHN_RP_ID = "example.com"
     settings.OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS = None
@@ -283,7 +278,7 @@ def test_helper_get_generate_registration_options_kwargs(helper, user, settings)
 
     # The user's display name, id and name should be set
     assert kwargs["user_display_name"] == helper.get_credential_display_name(user)
-    assert kwargs["user_id"] == helper.get_unique_anonymous_user_id(user)
+    assert kwargs["user_id"] == user_handle_model.get_handle_by_user(user)
     assert kwargs["user_name"] == helper.get_credential_name(user)
 
     # A timeout should be set

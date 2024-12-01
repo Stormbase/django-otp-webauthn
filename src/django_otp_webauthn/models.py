@@ -1,5 +1,8 @@
 import hashlib
+from secrets import token_bytes
+from typing import Optional
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.core import checks
@@ -401,3 +404,69 @@ class WebAuthnAttestation(AbstractWebAuthnAttestation):
         verbose_name=_("credential"),
         editable=False,
     )
+
+
+class WebAuthnUserHandle(models.Model):
+    """Model to store WebAuthn 'user handles'[^1] for individual users.
+
+    User handles are used as by authenticators to identify credentials belonging
+    to the same user. This allows authenticators to identify if they already
+    have a credential for a given user. In practice this is used to avoid having
+    multiple credentials for the same user on the same authenticator.
+
+    This models follows the recommendation [^2] in the WebAuthn Level 3
+    specification to let the user handle be 64 random bytes, stored with the
+    user account.
+
+    For practical compatibility reasons, we store the user handle as a hex
+    string so it can be indexed across multiple database vendors.
+
+    - [^1]: https://www.w3.org/TR/webauthn-3/#user-handle
+    - [^2]: https://www.w3.org/TR/webauthn-3/#sctn-user-handle-privacy
+    """
+
+    class Meta:
+        verbose_name = _("WebAuthn user handle")
+        verbose_name_plural = _("WebAuthn user handles")
+
+    handle_hex = models.CharField(
+        max_length=128,
+        verbose_name=_("handle hex"),
+        unique=True,
+        editable=False,
+    )
+
+    user = models.OneToOneField(
+        to=settings.AUTH_USER_MODEL,
+        primary_key=True,
+        on_delete=models.CASCADE,
+        related_name="webauthn_user_handle",
+        verbose_name=_("user"),
+    )
+
+    @property
+    def handle(self) -> bytes:
+        return bytes.fromhex(self.handle_hex)
+
+    def save(self, *args, **kwargs):
+        if not self.handle_hex:
+            self.handle_hex = self.generate_handle_hex()
+        super().save(*args, **kwargs)
+
+    @classmethod
+    def get_handle_by_user(cls, user: AbstractBaseUser) -> bytes:
+        """Return the user handle for the given user."""
+        obj, _ = cls.objects.get_or_create(user=user)
+        return obj.handle
+
+    @classmethod
+    def get_user_by_handle(cls, handle: bytes) -> Optional[AbstractBaseUser]:
+        """Return the user associated with the given handle."""
+        try:
+            return cls.objects.get(handle_hex=handle.hex()).user
+        except cls.DoesNotExist:
+            return None
+
+    @staticmethod
+    def generate_handle_hex():
+        return token_bytes(64).hex()
