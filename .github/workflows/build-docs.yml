@@ -41,5 +41,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: sphinx-docs
-          path: docs/_build/html/ # Updated path to reflect docs directory
+          path: docs/_build/html/
           retention-days: 7
