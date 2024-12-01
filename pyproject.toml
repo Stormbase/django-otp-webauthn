@@ -59,6 +59,11 @@ playwright = [
   "playwright>=1.49,<2",
   "pytest-playwright>=0.5.2,<1",
 ]
+docs = [
+  "alabaster==1.0.0",
+  "Sphinx==8.0.2",
+  "sphinx-autobuild==2024.10.3",
+]
 
 [project.urls]
 # TODO: documentation link
