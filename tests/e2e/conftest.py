@@ -30,7 +30,9 @@ def event_waiter():
 
 @pytest.fixture(scope="function")
 def cdpsession(page) -> CDPSession:
-    return page.context.new_cdp_session(page)
+    session = page.context.new_cdp_session(page)
+    session.send("WebAuthn.enable")
+    return session
 
 
 @pytest.fixture(autouse=True)
@@ -79,7 +81,6 @@ def wait_for_javascript_event(page):
 @pytest.fixture
 def virtual_authenticator(cdpsession):
     def _get_authenticator(authenticator: VirtualAuthenticator):
-        cdpsession.send("WebAuthn.enable")
         resp = cdpsession.send(
             "WebAuthn.addVirtualAuthenticator",
             {
