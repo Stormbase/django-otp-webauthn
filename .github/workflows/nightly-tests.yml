@@ -1,4 +1,4 @@
-name: Test upcoming upstream changes
+name: Nightly tests
 # Inspired by: https://github.com/torchbox/wagtailmedia/blob/main/.github/workflows/nightly-tests.yml
 
 on:
