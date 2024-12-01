@@ -3,7 +3,7 @@
 - [x] Publish to PyPI
 - [x] Write tests
   - [x] Tests to ensure a stable API
-  - [ ] End to end tests to verify the default frontend implementation works as it should
+  - [x] End to end tests to verify the default frontend implementation works as it should
 - [ ] Write docs
   - [ ] Setup docs site
   - [ ] Better tutorial with screenshots

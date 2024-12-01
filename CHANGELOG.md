@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - All Python code is now 100% covered by tests ([#32](https://github.com/Stormbase/django-otp-webauthn/pull/32), [#33](https://github.com/Stormbase/django-otp-webauthn/pull/34), [#35](https://github.com/Stormbase/django-otp-webauthn/pull/35), [#36](https://github.com/Stormbase/django-otp-webauthn/pull/36) by [Stormheg](https://github.com/Stormheg))
+- Browser automation tests using Playwright and Chromium have been added to ensure the JavaScript implementation works as expected ([#39](https://github.com/Stormbase/django-otp-webauthn/pull/39), [#43](https://github.com/Stormbase/django-otp-webauthn/pull/43) by [Stormheg](https://github.com/Stormheg))
 
 ### Fixed
 
