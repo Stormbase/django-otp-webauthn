@@ -55,6 +55,12 @@ From here, you can login using the superuser you created. You can register a pas
 
 Additionally – once you've registered a passkey – your browser should prompt you to use your passkey when logging in. Completely passwordless!
 
+### About the sandbox
+
+The sandbox is used to test the functionality of the package. It is a Django project that uses the package as a dependency. The package is installed in the sandbox as a local package. This allows you to make changes to the package and see the effects in the sandbox.
+
+In addition, the same sandbox is also used by the E2E browser automation tests (see `tests/e2e` folder) to automate the testing of JavaScript functionality and make sure all the pieces work together.
+
 ## Testing
 
 _All commands must be run from the virtual environment created by Hatch. Use `hatch shell` to activate._
