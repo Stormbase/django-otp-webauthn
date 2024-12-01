@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-12 13:16+0000\n"
+"POT-Creation-Date: 2024-12-01 17:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,12 +41,15 @@ msgstr "Log in"
 
 #: sandbox/templates/django_admin_login.html:85
 #: sandbox/templates/registration/login.html:21
+#: sandbox/templates/sandbox/login_passkey.html:5
+#: sandbox/templates/sandbox/login_passkey.html:13
 msgid "Login using a Passkey"
 msgstr "Inloggen met een Passkey"
 
 #: sandbox/templates/django_admin_login.html:91
 #: sandbox/templates/registration/login.html:27
 #: sandbox/templates/sandbox/index.html:31
+#: sandbox/templates/sandbox/login_passkey.html:18
 msgid "Sorry, your browser has no Passkey support"
 msgstr "Sorry, je browser heeft geen Passkey-ondersteuning"
 
