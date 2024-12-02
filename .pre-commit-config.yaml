@@ -12,13 +12,13 @@ repos:
       - id: check-yaml
       - id: debug-statements
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.8.0"
+    rev: "v0.8.1"
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
       - id: ruff-format
   - repo: https://github.com/pycontribs/mirrors-prettier
-    rev: v3.3.3 # Keep in sync with package.json
+    rev: 54f80f36c84731f6436048e224d511d3581c7641 # Keep in sync with package.json
     hooks:
       - id: prettier
         types_or:
