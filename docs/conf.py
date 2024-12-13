@@ -35,5 +35,4 @@ html_theme_options = {
     "github_type": "star",
     "github_user": "Stormbase",
     "github_repo": "django-otp-webauthn",
-    "page_width": "97%",
 }
