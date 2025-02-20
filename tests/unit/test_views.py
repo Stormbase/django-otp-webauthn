@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth.models import AnonymousUser
+from rest_framework.renderers import JSONRenderer
 
 from django_otp_webauthn import exceptions
 from django_otp_webauthn.helpers import WebAuthnHelper
@@ -34,6 +35,20 @@ def test_views__no_caching_headers_present(rf, view_class, user_in_memory):
         == "max-age=0, no-cache, no-store, must-revalidate, private"
     )
     assert "Expires" in response.headers
+
+
+@pytest.mark.parametrize(
+    "view_class",
+    [
+        BeginCredentialRegistrationView,
+        CompleteCredentialRegistrationView,
+        BeginCredentialAuthenticationView,
+        CompleteCredentialAuthenticationView,
+    ],
+)
+def test_views__no_html_render(view_class):
+    view = view_class()
+    assert view.renderer_classes == [JSONRenderer]
 
 
 def test_pywebauthn_logger(settings):
