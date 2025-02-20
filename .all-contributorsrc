@@ -40,6 +40,16 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "activus-d",
+      "name": "Damilola Oladele",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98895460?v=4",
+      "profile": "https://damilola-oladele.github.io/",
+      "contributions": [
+        "doc",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
