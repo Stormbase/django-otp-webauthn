@@ -89,6 +89,7 @@ class BeginCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
 
     This view will return a JSON response with the options for the client to use to register a credential.
     """
+
     renderer_classes = [JSONRenderer]
 
     def post(self, *args, **kwargs):
@@ -107,6 +108,7 @@ class CompleteCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
 
     This view accepts client data about the registered credential, validates it, and saves the credential to the database.
     """
+
     renderer_classes = [JSONRenderer]
 
     def get_state(self):
@@ -141,6 +143,7 @@ class BeginCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView):
 
     This view will return a JSON response with the options for the client to use to authenticate with a credential.
     """
+
     renderer_classes = [JSONRenderer]
 
     def post(self, *args, **kwargs):
@@ -165,6 +168,7 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
     This view accepts client data about the registered webauthn , validates it,
     and logs the user in.
     """
+
     renderer_classes = [JSONRenderer]
 
     def get_state(self):
