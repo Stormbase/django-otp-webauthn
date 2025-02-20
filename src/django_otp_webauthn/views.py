@@ -14,6 +14,7 @@ from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.cache import never_cache
 from django_otp import login as otp_login
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -89,6 +90,8 @@ class BeginCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
     This view will return a JSON response with the options for the client to use to register a credential.
     """
 
+    renderer_classes = [JSONRenderer]
+
     def post(self, *args, **kwargs):
         user = self.get_user()
         helper = self.get_helper()
@@ -105,6 +108,8 @@ class CompleteCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
 
     This view accepts client data about the registered credential, validates it, and saves the credential to the database.
     """
+
+    renderer_classes = [JSONRenderer]
 
     def get_state(self):
         """Retrieve the registration state."""
@@ -139,6 +144,8 @@ class BeginCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView):
     This view will return a JSON response with the options for the client to use to authenticate with a credential.
     """
 
+    renderer_classes = [JSONRenderer]
+
     def post(self, *args, **kwargs):
         user = self.get_user()
         helper = self.get_helper()
@@ -161,6 +168,8 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
     This view accepts client data about the registered webauthn , validates it,
     and logs the user in.
     """
+
+    renderer_classes = [JSONRenderer]
 
     def get_state(self):
         """Retrieve the authentication state."""
