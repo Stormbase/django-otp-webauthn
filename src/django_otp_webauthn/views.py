@@ -132,6 +132,7 @@ class CompleteCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
         logger = _get_pywebauthn_logger()
         with rewrite_exceptions(logger=logger):
             device = helper.register_complete(user=user, state=state, data=data)
+            otp_login(self.request, device)
         return Response(data={"id": device.pk}, content_type="application/json")
 
 

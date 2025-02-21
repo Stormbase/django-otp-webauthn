@@ -180,6 +180,7 @@ def test_registration_complete__no_state(api_client, user):
     response = api_client.post(url)
     assert response.status_code == 400
     assert response.data["detail"].code == "invalid_state"
+    assert api_client.session.get("otp_device_id") is None
 
 
 @pytest.mark.django_db
@@ -228,3 +229,4 @@ def test_registration_complete__valid_response(api_client, user, credential_mode
     assert cred.pk == response.data["id"]
     assert cred.user == user
     assert cred.transports == ["internal", "hybrid"]
+    assert cred.persistent_id == api_client.session["otp_device_id"]
