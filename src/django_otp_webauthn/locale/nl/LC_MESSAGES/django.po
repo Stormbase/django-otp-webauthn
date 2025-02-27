@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-01 17:50+0000\n"
+"POT-Creation-Date: 2025-02-27 21:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,10 +152,10 @@ msgstr "WebAuthn user handle"
 msgid "WebAuthn user handles"
 msgstr "WebAuthn user handles"
 
-#: src/django_otp_webauthn/models.py:434
+#: src/django_otp_webauthn/models.py:437
 msgid "handle hex"
 msgstr "handle hex"
 
-#: src/django_otp_webauthn/models.py:444
+#: src/django_otp_webauthn/models.py:447
 msgid "user"
 msgstr "gebruiker"
