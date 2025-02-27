@@ -5,8 +5,16 @@ import pytest
 from django.conf import settings
 from rest_framework.test import APIClient
 
-from django_otp_webauthn.models import WebAuthnAttestation, WebAuthnCredential
-from tests.factories import UserFactory, WebAuthnCredentialFactory
+from django_otp_webauthn.models import (
+    WebAuthnAttestation,
+    WebAuthnCredential,
+    WebAuthnUserHandle,
+)
+from tests.factories import (
+    UserFactory,
+    WebAuthnCredentialFactory,
+    WebAuthnUserHandleFactory,
+)
 
 
 def _load_json_schema(path):
@@ -39,13 +47,23 @@ def credential_model():
 
 
 @pytest.fixture
-def attestations_model():
+def attestation_model():
     return WebAuthnAttestation
+
+
+@pytest.fixture
+def user_handle_model():
+    return WebAuthnUserHandle
 
 
 @pytest.fixture
 def credential():
     return WebAuthnCredentialFactory()
+
+
+@pytest.fixture
+def user_handle():
+    return WebAuthnUserHandleFactory()
 
 
 @pytest.fixture
