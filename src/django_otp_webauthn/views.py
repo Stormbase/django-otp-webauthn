@@ -132,7 +132,19 @@ class CompleteCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
         logger = _get_pywebauthn_logger()
         with rewrite_exceptions(logger=logger):
             device = helper.register_complete(user=user, state=state, data=data)
-            otp_login(self.request, device)
+
+            # Only mark the session as 2FA verified if the user isn't already
+            # 2FA verified. This is a sort of half-truth: the user didn't
+            # actually use this device, but we conveniently pretend they did for
+            # the purpose of upgrading their session to 2FA verified.
+            # If a different device was used to verify the current session, we
+            # don't want to break that fact. For example, in the interface
+            # implemented by a developer there might be some sort of indicator
+            # that indicates the method/device used to authenticate the current
+            # session. If the user registers a new device, we don't want to
+            # change that indicator.
+            if not self.request.user.is_verified():
+                otp_login(self.request, device)
         return Response(data={"id": device.pk}, content_type="application/json")
 
 
