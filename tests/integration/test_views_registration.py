@@ -180,6 +180,7 @@ def test_registration_complete__no_state(api_client, user):
     response = api_client.post(url)
     assert response.status_code == 400
     assert response.data["detail"].code == "invalid_state"
+    assert api_client.session.get("otp_device_id") is None
 
 
 @pytest.mark.django_db
@@ -192,6 +193,53 @@ def test_registration_complete__no_reusing_state(api_client, user):
 
     # The state should be removed from the session - there is no reusing it
     assert not api_client.session.get("otp_webauthn_register_state")
+
+
+@pytest.mark.django_db
+def test_registration_complete__valid_response_but_already_verified(
+    api_client, user, credential, credential_model
+):
+    url = reverse("otp_webauthn:credential-registration-complete")
+    api_client.force_login(user)
+
+    # Override state with a known value
+    session = api_client.session
+    session["otp_webauthn_register_state"] = {
+        "challenge": "3ThyM30dpNEVLPWC9o53PGYTz1cEtkel2-20WKrE_YYhC2hn9DjpB8HzOZdpHr9-im5RkUlaWMugug7GsqNf9A",
+        "require_user_verification": True,
+    }
+    # Let's pretend the user has already verified their 2FA
+    session["otp_device_id"] = credential.persistent_id
+    session.save()
+    credential.user = user
+    credential.save()
+
+    payload = {
+        "id": "wQHw7KNelqXG1fmEzfqINhTexhE",
+        "rawId": "wQHw7KNelqXG1fmEzfqINhTexhE",
+        "response": {
+            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YViYSZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NdAAAAAAAAAAAAAAAAAAAAAAAAAAAAFMEB8OyjXpalxtX5hM36iDYU3sYRpQECAyYgASFYIHdL14TTJhK8gZrgL88d5elYJRZjNVh6M9UP51wZzPltIlggwOAmqqFqFBBQ93kdkqRlxcKsMHol3UA7L6oP-SJOxsA",
+            "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiM1RoeU0zMGRwTkVWTFBXQzlvNTNQR1lUejFjRXRrZWwyLTIwV0tyRV9ZWWhDMmhuOURqcEI4SHpPWmRwSHI5LWltNVJrVWxhV011Z3VnN0dzcU5mOUEiLCJvcmlnaW4iOiJodHRwOi8vbG9jYWxob3N0OjgwMDAifQ",
+            "transports": ["internal", "hybrid"],
+            "publicKeyAlgorithm": -7,
+            "publicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEd0vXhNMmEryBmuAvzx3l6VglFmM1WHoz1Q_nXBnM-W3A4CaqoWoUEFD3eR2SpGXFwqwweiXdQDsvqg_5Ik7GwA",
+            "authenticatorData": "SZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2NdAAAAAAAAAAAAAAAAAAAAAAAAAAAAFMEB8OyjXpalxtX5hM36iDYU3sYRpQECAyYgASFYIHdL14TTJhK8gZrgL88d5elYJRZjNVh6M9UP51wZzPltIlggwOAmqqFqFBBQ93kdkqRlxcKsMHol3UA7L6oP-SJOxsA",
+        },
+        "type": "public-key",
+        "api_clientExtensionResults": {},
+        "authenticatorAttachment": "platform",
+    }
+    response = api_client.post(url, data=payload, format="json")
+    assert response.status_code == 200
+
+    cred = credential_model.objects.last()
+    assert cred.pk == response.data["id"]
+    assert cred.user == user
+    assert cred.transports == ["internal", "hybrid"]
+
+    # The user session was 2FA verified before with a different credential, that should not have changed
+    assert cred.persistent_id != credential.persistent_id
+    assert api_client.session["otp_device_id"] == credential.persistent_id
 
 
 @pytest.mark.django_db
@@ -228,3 +276,6 @@ def test_registration_complete__valid_response(api_client, user, credential_mode
     assert cred.pk == response.data["id"]
     assert cred.user == user
     assert cred.transports == ["internal", "hybrid"]
+
+    # The user session wasn't 2FA verified before, so now it should be
+    assert api_client.session["otp_device_id"] == cred.persistent_id
