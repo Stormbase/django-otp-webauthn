@@ -429,6 +429,9 @@ class WebAuthnUserHandle(models.Model):
         verbose_name = _("WebAuthn user handle")
         verbose_name_plural = _("WebAuthn user handles")
 
+    def __str__(self):
+        return f"{self.user} ({self.handle_hex})"
+
     handle_hex = models.CharField(
         max_length=128,
         verbose_name=_("handle hex"),
@@ -450,11 +453,11 @@ class WebAuthnUserHandle(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.handle_hex:
-            self.handle_hex = self.generate_handle_hex()
+            self.handle_hex = self.generate_handle().hex()
         super().save(*args, **kwargs)
 
     @classmethod
-    def get_handle_by_user(cls, user: AbstractBaseUser) -> bytes:
+    def get_handle_for_user(cls, user: AbstractBaseUser) -> bytes:
         """Return the user handle for the given user."""
         obj, _ = cls.objects.get_or_create(user=user)
         return obj.handle
@@ -468,5 +471,6 @@ class WebAuthnUserHandle(models.Model):
             return None
 
     @staticmethod
-    def generate_handle_hex():
-        return token_bytes(64).hex()
+    def generate_handle() -> bytes:
+        """Generate a random user handle."""
+        return token_bytes(64)

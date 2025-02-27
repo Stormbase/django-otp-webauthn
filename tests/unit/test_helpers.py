@@ -278,7 +278,7 @@ def test_helper_get_generate_registration_options_kwargs(
 
     # The user's display name, id and name should be set
     assert kwargs["user_display_name"] == helper.get_credential_display_name(user)
-    assert kwargs["user_id"] == user_handle_model.get_handle_by_user(user)
+    assert kwargs["user_id"] == user_handle_model.get_handle_for_user(user)
     assert kwargs["user_name"] == helper.get_credential_name(user)
 
     # A timeout should be set

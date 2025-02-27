@@ -214,7 +214,7 @@ class WebAuthnHelper:
     def get_user_entity(self, user: AbstractBaseUser) -> PublicKeyCredentialUserEntity:
         """Get information about the user account a credential is being registered for."""
         return PublicKeyCredentialUserEntity(
-            id=WebAuthnUserHandle.get_handle_by_user(user),
+            id=WebAuthnUserHandle.get_handle_for_user(user),
             name=self.get_credential_name(user),
             display_name=self.get_credential_display_name(user),
         )

@@ -245,37 +245,55 @@ def test_credential_get_helper_imports_from_settings__not_importable(settings, r
 
 def test_user_handle_generate_handle_hex(user_handle_model):
     """Test that the generate_handle_hex method works."""
-    handle = user_handle_model.generate_handle_hex()
+    handle = user_handle_model.generate_handle()
 
-    # The handle should be 128 characters long, as it is a hex representation of a 64 byte random value.
-    assert len(handle) == 128
-
-    # The handle should be a valid hex string.
-    int(handle, 16)
+    assert isinstance(handle, bytes)
+    assert len(handle) == 64
 
 
 @pytest.mark.django_db
-def test_user_handle_get_handle_by_user(user, user_handle_model):
+def test_user_handle__str__(user_handle):
+    """Test that the __str__ method works."""
+
+    handle_str = str(user_handle)
+
+    assert str(user_handle.user) in handle_str
+    assert user_handle.handle_hex in handle_str
+
+
+@pytest.mark.django_db
+def test_user_handle_unique(user_handle_model):
+    """Test that it is not possible to save duplicate handles."""
+    handle = user_handle_model.generate_handle()
+
+    user_handle_model.objects.create(handle_hex=handle.hex(), user=UserFactory())
+
+    with pytest.raises(IntegrityError):
+        user_handle_model.objects.create(handle_hex=handle.hex(), user=UserFactory())
+
+
+@pytest.mark.django_db
+def test_user_handle_get_handle_for_user(user, user_handle_model):
     """Test that the get_handle_for_user method works and creates if a handle if none exists."""
     user_handle_model.objects.count() == 0
-    handle = WebAuthnUserHandle.get_handle_by_user(user)
+    handle = WebAuthnUserHandle.get_handle_for_user(user)
     assert isinstance(handle, bytes)
     assert len(handle) == 64
     assert user_handle_model.objects.count() == 1
 
     # After initial creation, the same handle should be returned.
-    handle_2 = WebAuthnUserHandle.get_handle_by_user(user)
+    handle_2 = WebAuthnUserHandle.get_handle_for_user(user)
     assert handle == handle_2
 
     # And different users should have different handles.
-    handle_other_user = WebAuthnUserHandle.get_handle_by_user(UserFactory())
+    handle_other_user = WebAuthnUserHandle.get_handle_for_user(UserFactory())
     assert handle != handle_other_user
 
 
 @pytest.mark.django_db
 def test_user_handle_get_user_by_handle(user, user_handle_model):
     """Test that the get_handle_by_user method works."""
-    handle = WebAuthnUserHandle.get_handle_by_user(user)
+    handle = WebAuthnUserHandle.get_handle_for_user(user)
 
     assert WebAuthnUserHandle.get_user_by_handle(handle) == user
     assert WebAuthnUserHandle.get_user_by_handle(b"non_existent_handle") is None
