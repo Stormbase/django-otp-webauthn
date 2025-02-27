@@ -195,7 +195,9 @@ class WebAuthnHelper:
         """
 
         if hasattr(user, "get_full_name"):
-            return f"{user.get_full_name()} ({user.get_username()})"
+            if user.get_full_name():
+                return f"{user.get_full_name()} ({user.get_username()})"
+            return user.get_username()
 
         return user.get_username()
 

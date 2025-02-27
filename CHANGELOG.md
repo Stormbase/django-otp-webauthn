@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - The API views provided now explicitly indicate they only render JSON, disabling the browsable API (see [#55](https://github.com/Stormbase/django-otp-webauthn/issues/55) and [#56](https://github.com/Stormbase/django-otp-webauthn/pull/56), by [AlmerCarbonEquity](https://github.com/AlmerCarbonEquity))
+- Fixed an issue where the display name of a Passkey would have the username between parenthesis for users that have both an empty `first_name` and `last_name`.
 
 ### Changed
 

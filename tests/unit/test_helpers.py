@@ -104,6 +104,20 @@ def test_helper_get_authenticator_attachment_preference(helper):
     assert helper.get_authenticator_attachment_preference() is None
 
 
+def test_helper_get_credential_display_name__only_username(
+    helper, user_in_memory, mocker
+):
+    user = user_in_memory
+    user.username = "johndoe"
+
+    # If the user has an empty name, the username should be used
+    user.first_name = ""
+    user.last_name = ""
+
+    # If the user has a full name, it should be used
+    assert helper.get_credential_display_name(user) == "johndoe"
+
+
 def test_helper_get_credential_display_name(helper, user_in_memory, mocker):
     user = user_in_memory
     user.username = "johndoe"
