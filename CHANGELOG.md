@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - For context: these are used by the browser to identify if it already has a Passkey stored for a given user account.
 - After registering a new Passkey, users are now automatically marked as 'mfa verified' in the context of `django_otp.login` ([#57](https://github.com/Stormbase/django-otp-webauthn/pull/57) by [AlmerCarbonEquity](https://github.com/AlmerCarbonEquity))
 - The default JavaScript implementation is now built using Node 22
-- The default JavaScript implementation for interacting with the browser api has been updated to use [`@simplewebauthn/browser` v11](https://github.com/MasterKale/SimpleWebAuthn/releases/tag/v11.0.0)
+- The default JavaScript implementation for interacting with the browser api has been updated to use [`@simplewebauthn/browser` v13.1.0](https://github.com/MasterKale/SimpleWebAuthn/releases/tag/v13.1.0)
 
 ## [0.4.0] - 2024-10-27
 
