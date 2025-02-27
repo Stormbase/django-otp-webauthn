@@ -1,6 +1,7 @@
 # Django OTP WebAuthn
 
-[![Version](https://img.shields.io/pypi/v/django-otp-webauthn.svg)](https://pypi.python.org/pypi/django-otp-webauthn/)
+[![PyPI version](https://img.shields.io/pypi/v/django-otp-webauthn.svg)](https://pypi.python.org/pypi/django-otp-webauthn/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/django-otp-webauthn.svg)](https://pypi.org/project/django-otp-webauthn/)
 [![License: BSD-3-Clause](https://img.shields.io/badge/license-BSD-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![Build Status](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/test.yml/badge.svg)](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/test.yml)
 [![Nightly tests](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/nightly-tests.yml/badge.svg)](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/nightly-tests.yml)
