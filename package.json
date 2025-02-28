@@ -17,7 +17,7 @@
     "@types/node": "^22.9.0",
     "all-contributors-cli": "^6.26.1",
     "esbuild": "^0.25.0",
-    "prettier": "3.3.3",
+    "prettier": "3.5.2",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.5",
     "webpack": "^5.94.0",
