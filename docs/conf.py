@@ -13,7 +13,10 @@ author = "Stormbase and individual contributors"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    "sphinx_design",
+    "sphinx_copybutton",
+]
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "venv"]
@@ -21,18 +24,14 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "venv"]
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = "alabaster"
-html_static_path = ["_static"]
+html_theme = "furo"
 
-# -- Customize Alabaster theme -----------------------------------------------
-# https://alabaster.readthedocs.io/en/latest/index.html
+# -- Customize Furo theme -----------------------------------------------
+# https://pradyunsg.me/furo/
 
 html_theme_options = {
-    "description": "An implementation of WebAuthn Passkeys for Django",
-    "logo": "",
-    "github_banner": True,
-    "github_button": True,
-    "github_type": "star",
-    "github_user": "Stormbase",
-    "github_repo": "django-otp-webauthn",
+    "source_repository": "https://github.com/Stormbase/django-otp-webauthn",
+    "source_branch": "main",
+    "source_directory": "docs/",
+    "announcement": "<div><strong>📢Announcement:</strong> Django OTP WebAuthn is currently in development. Please report any issues or suggestions on the <a href='https://github.com/Stormbase/django-otp-webauthn/issues'>GitHub Issues</a>.</div>",
 }

@@ -91,7 +91,7 @@ The pre-commit hooks will now run automatically when you try to commit changes. 
 
 ## Documentation
 
-This project's documentation uses the [Sphinx](https://www.sphinx-doc.org) [Alabaster](https://alabaster.readthedocs.io/) theme.
+This project's documentation uses the [Sphinx](https://www.sphinx-doc.org) [Furo](https://pradyunsg.me/furo/) theme.
 
 To build the documentation, follow these steps:
 
