@@ -168,6 +168,7 @@ CONTENT_SECURITY_POLICY = {
 # OTP webauthn settings
 OTP_WEBAUTHN_RP_NAME = "Passkey Sandbox"
 OTP_WEBAUTHN_RP_ID = "localhost"
+OTP_WEBAUTHN_RP_RELATED_ORIGINS = []
 OTP_WEBAUTHN_ALLOWED_ORIGINS = ["https://localhost", "http://localhost:8000"]
 OTP_WEBAUTHN_EXCEPTION_LOGGER_NAME = "django_otp_webauthn.logger"
 

@@ -17,4 +17,7 @@ class OtpWebauthnConfig(AppConfig):
         register(
             checks.check_settings_allowed_origins_misconfigured, Tags.compatibility
         )
+        register(
+            checks.check_settings_rp_related_origins_misconfigured, Tags.compatibility
+        )
         register(checks.check_settings_relying_party, Tags.models)
