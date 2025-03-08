@@ -12,6 +12,7 @@ ERR_NO_ALLOWED_ORIGINS = "otp_webauthn.E030"
 ERR_ALLOWED_ORIGINS_MALFORMED = "otp_webauthn.E031"
 ERR_DANGEROUS_SESSION_BACKEND = "otp_webauthn.E040"
 ERR_ATTESTATION_MISSING_CREDENTIAL_FIELD = "otp_webauthn.E050"
+ERR_RP_RELATED_ORIGINS_MALFORMED = "otp_webauthn.E060"
 
 
 def check_settings_relying_party(app_configs, **kwargs):
@@ -126,6 +127,40 @@ def check_settings_allowed_origins_misconfigured(app_configs, **kwargs):
                     hint="Allowed origins should start with 'https://'. Check the OTP_WEBAUTHN_ALLOWED_ORIGINS setting.",
                     obj=None,
                     id=ERR_ALLOWED_ORIGINS_MALFORMED,
+                )
+            )
+
+    return errors
+
+
+def check_settings_rp_related_origins_misconfigured(app_configs, **kwargs):
+    errors = []
+    related_origins = app_settings.OTP_WEBAUTHN_RP_RELATED_ORIGINS
+
+    if not related_origins:
+        return []
+
+    if not isinstance(related_origins, list):
+        errors.append(
+            Error(
+                "RP ID related origins must be a list.",
+                hint="RP ID related origins should be a list of strings. Check the OTP_WEBAUTHN_RP_RELATED_ORIGINS setting.",
+                obj=None,
+                id=ERR_RP_RELATED_ORIGINS_MALFORMED,
+            )
+        )
+        return errors
+
+    for origin in related_origins:
+        if not origin.startswith("https://") and not origin.startswith(
+            "http://localhost"
+        ):
+            errors.append(
+                Error(
+                    f"RP ID related origin {origin!r} is not a secure origin.",
+                    hint="RP ID related origins should start with 'https://'. Check the OTP_WEBAUTHN_RP_RELATED_ORIGINS setting.",
+                    obj=None,
+                    id=ERR_RP_RELATED_ORIGINS_MALFORMED,
                 )
             )
 

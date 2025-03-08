@@ -69,6 +69,21 @@ class AppSettings:
     This takes precedence over the ``OTP_WEBAUTHN_RP_NAME`` setting.
     """
 
+    OTP_WEBAUTHN_RP_RELATED_ORIGINS = []
+    """A list of related origins for webauthn authentication. An origin should be
+    in the format 'https://example.com'.
+
+    Used to make cross-domain webauthn ceremonies work. For example, if your
+    application is hosted on 'https://examplepetstore.COM' and a localized
+    version is available on 'https://examplepetstore.CO.UK', WebAuthn
+    credentials are not automatically shared between these two domains. By
+    adding both origins to this list, you can allow the same credentials to work
+    on both domains.
+
+    Requires configuring the `.well-known/webauthn` endpoint to return the
+    related origins. See the documentation for details.
+    """
+
     OTP_WEBAUTHN_ALLOWED_ORIGINS = []
     """A list of allowed origins for webauthn authentication. An origin should be
     in the format 'https://example.com'.

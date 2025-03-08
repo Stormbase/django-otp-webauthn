@@ -138,6 +138,40 @@ def test_check_settings_allowed_origins_misconfigured(settings):
     call_command("check")
 
 
+def test_check_settings_rp_related_origins(settings):
+    """Verify that no SystemCheckError is raised when related origins are set."""
+    settings.OTP_WEBAUTHN_RP_RELATED_ORIGINS = []
+
+    call_command("check")
+
+    settings.OTP_WEBAUTHN_RP_RELATED_ORIGINS = ["https://example.com"]
+    call_command("check")
+
+
+def test_check_settings_rp_related_origins_misconfigured(settings):
+    """Verify that a SystemCheckError is raised when related origins are misconfigured."""
+
+    settings.OTP_WEBAUTHN_RP_RELATED_ORIGINS = "example.com"
+    with pytest.raises(SystemCheckError, match="RP ID related origins must be a list"):
+        call_command("check")
+
+    settings.OTP_WEBAUTHN_RP_RELATED_ORIGINS = ["example.com"]
+    with pytest.raises(
+        SystemCheckError, match="related origin 'example.com' is not a secure origin"
+    ):
+        call_command("check")
+
+    settings.OTP_WEBAUTHN_RP_RELATED_ORIGINS = ["http://example.com"]
+    with pytest.raises(
+        SystemCheckError,
+        match="related origin 'http://example.com' is not a secure origin.",
+    ):
+        call_command("check")
+
+    settings.OTP_WEBAUTHN_RP_RELATED_ORIGINS = ["http://localhost"]
+    call_command("check")
+
+
 def test_check_settings_dangerous_session_backend_used(settings):
     """Verify that a SystemCheckError is raised when the session backend is dangerous."""
 

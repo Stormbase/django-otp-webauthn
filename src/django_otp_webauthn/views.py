@@ -11,7 +11,7 @@ from django.contrib.auth.base_user import AbstractBaseUser
 from django.shortcuts import resolve_url
 from django.utils.decorators import method_decorator
 from django.utils.http import url_has_allowed_host_and_scheme
-from django.views.decorators.cache import never_cache
+from django.views.decorators.cache import cache_control, never_cache
 from django_otp import login as otp_login
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -25,6 +25,15 @@ from django_otp_webauthn.utils import get_credential_model, rewrite_exceptions
 
 WebAuthnCredential = get_credential_model()
 User = get_user_model()
+
+
+__all__ = [
+    "BeginCredentialRegistrationView",
+    "CompleteCredentialRegistrationView",
+    "BeginCredentialAuthenticationView",
+    "CompleteCredentialAuthenticationView",
+    "WellKnownWebAuthnView",
+]
 
 
 @lru_cache(maxsize=1)
@@ -279,3 +288,23 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
         self.complete_auth(device)
 
         return Response(self.get_success_data(device))
+
+
+class WellKnownWebAuthnView(APIView):
+    """View for serving the `.well-known/webauthn` configuration file."""
+
+    authentication_classes = []
+    permission_classes = [AllowAny]
+    renderer_classes = [JSONRenderer]
+    http_method_names = ["get"]
+
+    def get_related_origins(self):
+        return app_settings.OTP_WEBAUTHN_RP_RELATED_ORIGINS
+
+    @method_decorator(cache_control(public=True, max_age=600))
+    def get(self, *args, **kwargs):
+        data = {
+            # https://www.w3.org/TR/webauthn-3/#sctn-related-origins
+            "origins": self.get_related_origins(),
+        }
+        return Response(data=data, content_type="application/json")
