@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Nothing yet
+- Add support for [Related Origin Requests](https://www.w3.org/TR/webauthn-3/#sctn-related-origins), a feature defined in the level 3 working draft of the WebAuthn specification. It makes simple, cross-domain sharing of Passkeys possible ([#62](https://github.com/Stormbase/django-otp-webauthn/pull/62) by [Stormheg](https://github.com/Stormheg))
 
 ### Fixed
 
