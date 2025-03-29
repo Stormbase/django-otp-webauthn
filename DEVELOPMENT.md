@@ -7,10 +7,11 @@ A sandbox project is included in this repository to aid in development.
 - ...everything in the [compatibility section](./README.md#compatibility) on the main README.
 - [Hatch](https://hatch.pypa.io/)
 - [Node.js](https://nodejs.org/) v20
-- [Yarn](https://yarnpkg.com/)
+- [Yarn v1](https://classic.yarnpkg.com/en/docs)
 - [Pre-commit](https://pre-commit.com/)
 - [Caddy](https://caddyserver.com/) (optional, but recommended for https testing)
-- [GNU](https://www.gnu.org)
+- [GNU Make](https://www.gnu.org/software/make/) (to build documentation on Linux and MacOS)
+- [GNU gettext](https://www.gnu.org/software/gettext/) (for translations)
 
 ## Installation (sandbox)
 
