@@ -21,12 +21,12 @@ Use American English spelling. For example:
 Words to avoid
 --------------
 
-Avoid informal or unclear words. Use the following table for guidance:
+Avoid informal, unclear words, and internet slangs. Use the following table for guidance:
 
 +----------+----------------+---------------------+
 | Word     | Meaning        | Use instead         |
 +==========+================+=====================+
-| ain’t    | Is not         | isn’t               |
+| ain’t    | is not         | isn’t               |
 +----------+----------------+---------------------+
 | gonna    | going to       | going to            |
 +----------+----------------+---------------------+
@@ -49,6 +49,15 @@ Avoid informal or unclear words. Use the following table for guidance:
 +----------+----------------+---------------------+
 | ’twas    | it was         | it was              |
 +----------+----------------+---------------------+
+| wanna    | want to        | want to             |
++----------+----------------+---------------------+
+| YMMV     | Your mileage   | Your mileage may    |
+|          | may vary       | vary                |
++----------+----------------+---------------------+
+| u need to| you need to    | you need to         |
+| download | download       | download            |
+| Python   | Python         | Python              |
++----------+----------------+---------------------+
 
 Commonly misused words and preferred alternatives
 -------------------------------------------------
@@ -64,8 +73,6 @@ The following table shows the commonly misused words and their preferred alterna
 +----------------+---------------------------------------------------------+
 | does not yet   | doesn’t                                                 |
 +----------------+---------------------------------------------------------+
-| e.g.           | for example or such as                                  |
-+----------------+---------------------------------------------------------+
 | enable         | Be precise by using **turn on** for features or         |
 |                | **lets you** for capabilities                           |
 +----------------+---------------------------------------------------------+
@@ -74,6 +81,23 @@ The following table shows the commonly misused words and their preferred alterna
 | leverage       | use **build on**, **use**, or **take advantage of**     |
 |                | if needed                                               +
 +----------------+---------------------------------------------------------+
+
+Latin phrases and abbreviations
+-------------------------------
+
+Avoid Latin phrases like *ergo* or *de facto* and abbreviations like *i.e.* or *e.g.* Use clear, common English phrases instead. If possible, find a simpler way to express the idea. The only exception is *etc.*, which is acceptable when space is limited:
+
++------------+-----------------------+
+| Avoid      | Use  instead          |
++============+=======================+
+| e.g.       | for example, such as  |
++------------+-----------------------+
+| i.e.       | that is               |
++------------+-----------------------+
+| viz.       | namely                |
++------------+-----------------------+
+| ergo       | therefore             |
++------------+-----------------------+
 
 .. _`lists`:
 
@@ -140,8 +164,9 @@ Then, link to that section using the following syntax:
 
 Headings
 ~~~~~~~~
+Ensure your headings are concise and descriptive. Use sentence case for headings by capitalizing only the first word. If a heading includes an official term, retain its original capitalization.
 
-Always use heading levels in a sequential order without skipping, such as progressing from H1 to H2 to H3, rather than jumping from H1 directly to H3. In most cases, avoid using headings beyond H3. Instead, structure your content through numbered or bullet lists instead of adding deeper heading levels.
+Also, use heading levels in sequential order without skipping. For example, progress from H1 to H2 to H3. Avoid using headings beyond H3. Instead, structure content with numbered or bullet lists.
 
 Also, underlines must be the same length as the title or heading. Use sentence case for headings by capitalizing only the first word:
 
@@ -165,13 +190,6 @@ Also, underlines must be the same length as the title or heading. Use sentence c
 
     Heading three - major subsection
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-4. Heading four (H4):
-
-.. code-block:: rst
-
-    Heading four - minor subsection
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Paragraphs
 ~~~~~~~~~~
@@ -218,7 +236,7 @@ Lists can be numbered or unnumbered. For more information, see :ref:`lists`. You
 Code snippets
 ~~~~~~~~~~~~~
 
-Use the ``.. code-block::`` directive to display multi-line code snippets. Specify the file format or programming language after the directive to enable proper syntax highlighting. For example:
+Use the ``.. code-block::`` directive to display multi-line code snippets. Specify the file format or programming language after the directive to turn on proper syntax highlighting. For example:
 
 .. code-block:: rst
 

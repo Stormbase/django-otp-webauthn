@@ -19,7 +19,7 @@ Here’s what you’ll find in this section:
 
    .. grid-item-card:: :ref:`Models <models>`
 
-       Explore the abstract and concrete model classes to store WebAuthn credentials and attestations.
+       Explore the abstract and concrete model classes to store WebAuthn credentials and :term:`attestations <attestation>`.
 
    .. grid-item-card:: :ref:`Frontend JSON request and response <frontend-json-request-and-response>`
 

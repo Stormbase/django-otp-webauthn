@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "Django OTP WebAuthn"
-copyright = "2024"
+copyright = "2024 Stormbase and contributors. Licensed under the BSD-3-Clause License."
 author = "Stormbase and individual contributors"
 
 # -- General configuration ---------------------------------------------------

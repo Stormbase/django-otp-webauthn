@@ -20,7 +20,7 @@ Create custom views
 
 To customize a view, subclass the relevant base class and override its methods. For more information, see the reference documentation on :ref:`Views <views>`.
 
-For example, you can restrict :term:`passkey` registration by modifying the code in your ``<your-app>/views`` file like this:
+For example, you can restrict :term:`passkey <passkey/discoverable credential>` registration by creating custom views in your ``views.py`` file like this:
 
 .. code-block:: py
 
@@ -32,10 +32,10 @@ For example, you can restrict :term:`passkey` registration by modifying the code
 
     class MyCustomBeginCredentialRegistrationView(BaseBeginCredentialRegistration):
     	def check_can_register(self):
-    		user = self.get_user()
+            user = self.get_user()
 
-    # Perform some checks that may stop a user from registering
-    # and raise a Django Rest Framework API error
+        # Perform some checks that may stop a user from registering
+        # and raise a Django Rest Framework API error
     	if your_function_that_does_something(user)...:
             raise PasskeyRegistrationUnavailableError()
 
@@ -46,20 +46,19 @@ To use your custom views, register their URLs in place of the URL patterns provi
 
 .. code-block:: py
 
-    from django.urls import path
+    from django.urls import path, include
     from yourapp.views import MyCustomBeginCredentialRegistrationView
 
     urlpatterns = [
         # Place your customized view *before*
         # the django_otp_webauthn.urls include
         path(
-                "webauthn/registration/begin/",
-                MyCustomBeginCredentialRegistrationView.as_view(),
-                name="credential-registration-begin"
-            ),
+            "webauthn/registration/begin/",
+            MyCustomBeginCredentialRegistrationView.as_view(),
+            name="credential-registration-begin",
+        ),
         path(
-                "webauthn/",
-                include("django_otp_webauthn.urls",
-                namespace="otp_webauthn")
-            ),
+            "webauthn/",
+            include("django_otp_webauthn.urls", namespace="otp_webauthn"),
+        ),
     ]

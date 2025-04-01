@@ -3,9 +3,9 @@
 About passkeys
 ==============
 
-:term:`Passkeys <passkey>` are a more secure alternative to passwords. Passwords require users to remember and type in secret combinations of words, numbers, or characters. In contrast, passkeys are securely stored on a user's device and accessed through the device's biometric sensor, PIN, or pattern.
+:term:`Passkeys <passkey/discoverable credential>` are a more secure alternative to passwords. Passwords require users to remember and type in secret combinations of words, numbers, or characters. In contrast, passkeys are securely stored on a user's device and accessed through the device's biometric sensor, PIN, or pattern.
 
-A major risk associated with using passwords is that they're a **shared secret**, meaning the server also stores your password. If the server stores it insecurely and it gets leaked, your security is compromised. Passkeys remove this risk by ensuring that the server stores only the :term:`public key`. The stored public key is worthless without the corresponding :term:`private key` stored securely on your device.
+A major risk associated with using passwords is that they are a **shared secret**, meaning the server also stores your password. If the server stores it insecurely and it gets leaked, your security is compromised. Passkeys remove this risk by ensuring that the server stores only the :term:`public key`. The stored public key is worthless without the corresponding :term:`private key` stored securely on your device.
 
 Also, many people reuse passwords across different accounts, making them vulnerable to an attack known as **credential stuffing**. In these attacks, malicious actors try known username-password combinations from one site to other sites to gain unauthorized access. Passkeys remove this risk, as each passkey :term:`key pair` is unique and can't be reused across services.
 

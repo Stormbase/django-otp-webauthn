@@ -12,7 +12,7 @@ Customizing views
 
 You can override the built-in Django OTP WebAuthn views to use your own implementations. This lets you to:
 
-* **Handle side effects:** Perform additional actions, such as updating an audit log, when registering or using a :term:`passkey`.
+* **Handle side effects:** Perform additional actions, such as updating an audit log, when registering or using a :term:`passkey <passkey/discoverable credential>`.
 * **Control passkey availability:** Enforce conditions for registering or using passkeys. For example, you could require users to set up account recovery mechanisms before enabling passkeys.
 
 To learn how to customize your Django views, see :ref:`Customize views <customize-views>`.
@@ -30,7 +30,7 @@ The helper class acts as a wrapper for interacting with the underlying ``py_weba
 
 * Adapt or extend parts of the WebAuthn processes to fit your specific use case.
 
-* Configure options such as attestation conveyance preference and :term:`authenticator` attachment to match your application's security policies.
+* Configure options such as :term:`attestation` conveyance preference and :term:`authenticator` attachment to match your application's security policies.
 
 To learn how to customize the helper class, see :ref:`Customize helper class <customize-helper-class>`.
 

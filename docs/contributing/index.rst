@@ -3,7 +3,7 @@
 Contributing
 ============
 
-This package is open source and is licensed under the BSD-3 Clause `License <https://github.com/Stormbase/django-otp-webauthn/blob/main/LICENSE>`_. We welcome all contributions, including code improvements, bug fixes, and documentation updates.
+This package is open source and is licensed under the BSD-3 Clause `License <https://github.com/Stormbase/django-otp-webauthn/blob/main/LICENSE>`_. We welcome all contributions, including translations, bug reports, tutorials, code improvements, and documentation updates.
 
 Propose changes
 ---------------
@@ -96,7 +96,7 @@ To set up the Django OTP WebAuthn on your local machine, follow these steps:
 
         python manage.py runserver
 
-11. If you're using Caddy, run it with the included ```Caddyfile`` to enable HTTPS:
+11. If you're using Caddy, run it with the included ```Caddyfile`` to turn on HTTPS:
 
     .. code-block:: console
 
@@ -107,6 +107,119 @@ To set up the Django OTP WebAuthn on your local machine, follow these steps:
     .. code-block:: console
 
         caddy trust
+
+Test project
+------------
+
+You should run all commands from the virtual environment created by running the ``hatch shell`` command.
+
+Run tests with the following command:
+
+.. code-block:: console
+
+    pytest
+
+For test coverage, use these commands:
+
+.. code-block:: console
+
+    coverage run manage.py test
+    coverage report
+
+Generate a visual HTML report in the htmlcov directory with the following command:
+
+.. code-block:: console
+
+    coverage html
+
+Lint and format
+---------------
+
+This project uses ``pre-commit`` to enforce code linting and formatting. ``pre-commit`` automatically runs checks before allowing a Git commit.
+
+Install the pre-commit hooks with:
+
+.. code-block:: console
+
+    pre-commit install
+
+Now the hooks will run automatically on each commit. To trigger checks manually, run:
+
+.. code-block:: console
+
+    pre-commit run --all-files
+
+Translations
+------------
+
+This project uses the `standard Django translation system <https://docs.djangoproject.com/en/5.1/topics/i18n/translation/>`_ system for translations, which based on GNU `gettext <https://www.gnu.org/software/gettext/>`_.
+
+Two script files wrap the standard Django translation commands, making it easier to create and update translations.  For more details, see :ref:`update-translations`
+
+.. _update-translations:
+
+Update translations
+~~~~~~~~~~~~~~~~~~~~~
+
+Translations are stored in ``.po`` files. These files contain the translation strings for each language. You can find the ``.po`` files in the ``src/django_otp_webauthn/locale/<locale_code>/LC_MESSAGES/`` directory.
+
+To update the all translations based on the current source code, run the command:
+
+.. code-block:: console
+
+    ./scripts/update_translations.sh --all
+
+Updating a single locale is faster than updating all translations. To update translations for a specific locale only, run the command:
+
+.. code-block:: console
+
+    ./scripts/update_translations.sh -l <locale_code>
+
+.. attention::
+
+    Replace ``<locale_code>`` with the appropriate locale code you used when creating the translation file.
+
+Create new translations
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To create a new translation file for a specific language, run:
+
+.. code-block:: console
+
+    ./scripts/update_translations.sh -l <locale_code>
+
+.. attention::
+
+    Replace ``<locale_code>`` with the appropriate locale code like ``de`` for German or ``fr`` for French.
+
+Running the preceding command will create a ``django.po`` and ``djangojs.po`` files. You will find the created files in the ``src/django_otp_webauthn/locale/<locale_code>/LC_MESSAGES/django.po`` directory. Ensure you translate the messages in these files.
+
+There is also a separate ``django.po`` file for the sandbox, which is located in the ``sandbox/locale/<locale_code>/LC_MESSAGES/django.po`` directory.  The ``django.po`` file is used for the sandbox project, but translating it is optional.
+
+To make your translations visible, you have to compile the ``.po`` files into ``.mo`` files. To learn how to compile the ``.po`` files, see :ref:`compile-translations`.
+
+.. _compile-translations:
+
+Compile translations
+~~~~~~~~~~~~~~~~~~~~
+
+This project includes a wrapper script for ``compilemessages`` that compiles all ``.po`` files in the project. To compile all translations, run:
+
+.. code-block:: console
+
+    ./scripts/compile_translations.sh
+
+If you want to compile translations for a specific locale only, run the following command:
+
+.. code-block:: console
+
+    ./scripts/compile_translations.sh -l <locale_code>
+
+.. note::
+
+    Sometimes, translation updates don’t appear after recompiling the ``.po`` files because Django caches the .mo files. Try restarting the development server to apply your changes.
+
+    Also, Compiled ``.mo`` files are intentionally not checked into Git, as they are generated files.
 
 Build documentation
 -------------------

@@ -15,7 +15,7 @@ CompleteCredentialRegistrationView
 
 ``CompleteCredentialRegistrationView`` receives data from the client about the created credential, validates it, and stores it in the database.
 
-If validation fails, it raises a Django REST Framework exception to notify the frontend of the error. The frontend then informs the browser that the registration was unsuccessful, prompting the removal of the partially registered :term:`passkey`.
+If validation fails, it raises a Django REST Framework exception to notify the frontend of the error. The frontend then informs the browser that the registration was unsuccessful, prompting the removal of the partially registered :term:`passkey <passkey/discoverable credential>`.
 
 BeginCredentialAuthenticationView
 ---------------------------------

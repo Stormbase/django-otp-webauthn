@@ -154,7 +154,7 @@ Now add your Django OTP WebAuthn registration snippet into your project. For exa
 Update login template for passwordless authentication
 -----------------------------------------------------
 
-Now modify your login template to enable passkey-based login:
+Now modify your login template to turn on passkey-based login:
 
 .. code-block:: html
 

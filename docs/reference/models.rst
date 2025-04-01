@@ -5,6 +5,8 @@ Models
 
 Django OTP WebAuthn comes with two abstract classes that you can subclass to create your own models. Each abstract class has a concrete version that you can use out of the box.
 
+.. _abstractwebauthncredential:
+
 AbstractWebAuthnCredential
 --------------------------
 
@@ -13,7 +15,7 @@ AbstractWebAuthnCredential
 AbstractWebAuthnAttestation
 ---------------------------
 
-``AbstractWebAuthnAttestation`` stores attestations made when you register a credential.
+``AbstractWebAuthnAttestation`` stores :term:`attestations <attestation>` made when you register a credential.
 
 .. attention::
    Support for attestations isn't actively implemented, but might be extended in the future.

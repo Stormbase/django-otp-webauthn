@@ -1,22 +1,41 @@
-Limitations
-===========
+.. This file intentionally avoids using `.. contents::` directive for table of contents
+.. because Furo's styling conflicts with manual TOC implementations. Instead:
+.. - Furo automatically generates a sidebar TOC (no action needed)
+.. - For in-content navigation, use manual section links with `:ref:` labels
+.. See https://pradyunsg.me/furo/customisation/sidebar/#table-of-contents
 
-Purpose of Django OTP WebAuthn
-------------------------------
+Frequently asked questions
+==========================
+
+
+- :ref:`replace-passwords`
+
+- :ref:`manage-passkeys`
+
+- :ref:`yubikey-registration`
+
+.. _replace-passwords:
+
+Can this package fully replace passwords in my application?
+-----------------------------------------------------------
 
 Django OTP WebAuthn isn’t designed to fully replace passwords in your application. Instead, it adds :term:`WebAuthn` functionality to an existing application, complementing other authentication mechanisms. This is why it’s implemented as a plugin for the ``django-otp`` framework.
 
 If you need a fully passwordless solution, consider using a different package that better suits your requirements.
 
-Managing and naming passkeys
-----------------------------
+.. _manage-passkeys:
+
+Can I manage and name passkeys after registration?
+--------------------------------------------------
 
 With the exception of the Django admin site, no user-visible interface is provided for managing registered :term:`passkeys <passkey>`. This is intentional, as we believe such an interface should be site specific, `similar to django-otp <https://django-otp-official.readthedocs.io/en/stable/auth.html#managing-devices>`_. So it’s up to you to implement as you see fit.
 
 The same applies to naming a passkey after registration.
 
-Issues with security key registration
--------------------------------------
+.. _yubikey-registration:
+
+Why can't I register my YubiKey or security key when passwordless login is turned on?
+-------------------------------------------------------------------------------------
 
 If you’re trying to use a ``YubiKey`` or a similar security key with passwordless login enabled, you may run into registration issues. This is because when passwordless login is enabled, only certain types of devices can be registered. This helps prevent confusion when a device doesn’t work during authentication.
 

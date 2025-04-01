@@ -41,7 +41,7 @@ You can also override the attestation model without modifying the default creden
     from django_otp_webauthn.models import AbstractWebAuthnAttestation
 
     class MyAttestation(AbstractWebAuthnAttestation):
-        credential=models.OneToOneField("otp_webauthn.    WebAuthnCredential", on_delete=models.CASCADE,     related_name="swapped_attestation", editable=False)
+        credential=models.OneToOneField("otp_webauthn.WebAuthnCredential", on_delete=models.CASCADE, related_name="swapped_attestation", editable=False)
 
 Handle database index name length errors
 ----------------------------------------
@@ -58,10 +58,9 @@ The ``AbstractWebAuthnCredential`` model automatically generates an index name t
 If you encounter such an error, you can override the index in your credential model to ensure the index name is within the appropriate length limit like this:
 
 .. code-block:: py
-
+    
     class MyCredentialModelWithALongName(AbstractWebAuthnCredential):
-
-    class Meta:
-        indexes = [
-            models.Index(fields=["credential_id_sha256"], name="mycredential_id_sha256_idx"),
-        ]
+        class Meta(AbstractWebAuthnCredential.Meta):
+            indexes = [
+                models.Index(fields=["credential_id_sha256"], name="mycredential_id_sha256_idx"),
+            ]
