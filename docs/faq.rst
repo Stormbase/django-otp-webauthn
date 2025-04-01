@@ -28,7 +28,7 @@ If you need a fully passwordless solution, consider using a different package th
 Can I manage and name passkeys after registration?
 --------------------------------------------------
 
-With the exception of the Django admin site, no user-visible interface is provided for managing registered :term:`passkeys <passkey>`. This is intentional, as we believe such an interface should be site specific, `similar to django-otp <https://django-otp-official.readthedocs.io/en/stable/auth.html#managing-devices>`_. So it’s up to you to implement as you see fit.
+With the exception of the Django admin site, no user-visible interface is provided for managing registered :term:`passkeys <passkey/discoverable credential>`. This is intentional, as we believe such an interface should be site specific, `similar to django-otp <https://django-otp-official.readthedocs.io/en/stable/auth.html#managing-devices>`_. So it’s up to you to implement as you see fit.
 
 The same applies to naming a passkey after registration.
 
