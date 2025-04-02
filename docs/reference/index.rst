@@ -3,7 +3,7 @@ Reference
 
 Welcome to the Reference section of the Django OTP WebAuthn documentation. This section provides detailed information about the built-in components that facilitate :term:`WebAuthn` integration.
 
-Here’s what you’ll find in this section:
+Here are what you will find in this section:
 
 .. grid:: 1 1 2 2
    :gutter: 3

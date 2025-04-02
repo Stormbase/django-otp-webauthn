@@ -5,7 +5,7 @@ Getting started
 
 Welcome to the Getting started section of the documentation. This section will help you understand and implement :term:`passkeys <passkey/discoverable credential>` in your Django project using Django OTP WebAuthn.
 
-Here’s what you’ll find in this section:
+Here are what you will find in this section:
 
 .. grid:: 1 1 2 2
    :gutter: 3
