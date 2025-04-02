@@ -58,7 +58,7 @@ The ``AbstractWebAuthnCredential`` model automatically generates an index name t
 If you encounter such an error, you can override the index in your credential model to ensure the index name is within the appropriate length limit like this:
 
 .. code-block:: py
-    
+
     class MyCredentialModelWithALongName(AbstractWebAuthnCredential):
         class Meta(AbstractWebAuthnCredential.Meta):
             indexes = [
