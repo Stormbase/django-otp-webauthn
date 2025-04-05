@@ -64,12 +64,13 @@ To quickly start using Passkeys in your Django project, follow these steps:
    pip install django-otp-webauthn
    ```
 
-2. Add `django_otp_webauthn` to your `INSTALLED_APPS` in your Django settings:
+2. Add `django_otp_webauthn` and its dependency `django_otp` to your `INSTALLED_APPS` in your Django settings:
 
    ```python
    INSTALLED_APPS = [
        ...
        "django_otp_webauthn",
+       "django_otp",
        ...
    ]
    ```

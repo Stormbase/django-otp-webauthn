@@ -17,13 +17,16 @@ First, install Django OTP WebAuthn from PyPI by running the following command:
 Add it to installed apps
 ------------------------
 
-Go to your ``<project>/settings.py`` file and add ``django_otp_webauthn`` to ``INSTALLED_APPS``:
+Go to your ``<project>/settings.py`` file and add ``django_otp_webauthn`` and ``django_otp`` to ``INSTALLED_APPS``:
 
 .. code-block:: py
 
     INSTALLED_APPS = [
         ...
         "django_otp_webauthn",
+        "django_otp",
+        ...
+    ]
         ...
     ]
 
