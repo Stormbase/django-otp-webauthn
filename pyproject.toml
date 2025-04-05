@@ -45,7 +45,7 @@ testing =  [
   "django-debug-toolbar>4,<5",
   "dj-database-url>=2.1.0,<3",
   # To test functionality with a strict Content Security Policy
-  "django-csp>=4.0b2,<5",
+  "django-csp>=4,<5",
   # Update as necessary, prevent sudden breakage
   "pytest>8,<9",
   "coverage[toml]>=7,<8",
