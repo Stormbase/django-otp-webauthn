@@ -75,7 +75,18 @@ To quickly start using Passkeys in your Django project, follow these steps:
    ]
    ```
 
-3. Add the required URLs to your Django project:
+3. Add `django_otp.middleware.OTPMiddleware` to your `MIDDLEWARE` in your Django settings. It must come after `AuthenticationMiddleware`:
+
+   ```python
+   MIDDLEWARE = [
+       ...
+       "django.contrib.auth.middleware.AuthenticationMiddleware",
+       "django_otp.middleware.OTPMiddleware",
+       ...
+   ]
+   ```
+
+4. Add the required URLs to your Django project:
 
    ```python
    # urls.py
@@ -89,7 +100,7 @@ To quickly start using Passkeys in your Django project, follow these steps:
    ]
    ```
 
-4. Add required settings to your Django settings. This example assumes you want to configure for `localhost`. You will need to adjust the settings for your production environment.
+5. Add required settings to your Django settings. This example assumes you want to configure for `localhost`. You will need to adjust the settings for your production environment.
 
    ```python
    # settings.py
@@ -104,7 +115,7 @@ To quickly start using Passkeys in your Django project, follow these steps:
 
    ```
 
-5. Add `django_otp_webauthn.backends.WebAuthnBackend` to `AUTHENTICATION_BACKENDS` in your Django settings. This step is required to make 'passwordless authentication' work.
+6. Add `django_otp_webauthn.backends.WebAuthnBackend` to `AUTHENTICATION_BACKENDS` in your Django settings. This step is required to make 'passwordless authentication' work.
 
 If you are exclusively using Passkeys as a secondary verification step, you don't have to add this backend.
 
@@ -119,7 +130,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 ```
 
-6. Add the registration code to your logged-in user template.
+7. Add the registration code to your logged-in user template.
 
    ```html
    <!-- logged_in_template.html -->
@@ -154,7 +165,7 @@ AUTHENTICATION_BACKENDS = [
    {% render_otp_webauthn_register_scripts %}
    ```
 
-7. On your login page, include the following to enable passwordless login:
+8. On your login page, include the following to enable passwordless login:
 
    ```html
    {% load otp_webauthn %}
@@ -197,13 +208,13 @@ AUTHENTICATION_BACKENDS = [
    </form>
    ```
 
-8. Don't forget to run migrations:
+9. Don't forget to run migrations:
 
    ```sh
    python manage.py migrate
    ```
 
-9. That's it! You should now see a "Register Passkey" button on your logged-in user template. Clicking this button will start the registration process. After registration, you should see a "Login using a Passkey" button on your login page. Clicking this button will prompt you to use your Passkey to authenticate. Or if your browser supports it, you will be prompted to use your Passkey when you focus the username field.
+10. That's it! You should now see a "Register Passkey" button on your logged-in user template. Clicking this button will start the registration process. After registration, you should see a "Login using a Passkey" button on your login page. Clicking this button will prompt you to use your Passkey to authenticate. Or if your browser supports it, you will be prompted to use your Passkey when you focus the username field.
 
 ## Using custom credential and attestation models.
 
