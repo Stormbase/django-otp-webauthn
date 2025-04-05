@@ -159,12 +159,12 @@ AUTHENTICATION_BACKENDS = [
    {% load otp_webauthn %}
 
    <form method="post">
-       {# Suppose there is an username field on your page that has CSS selector: input[name="username"] #}
+       {% comment %} Suppose there is an username field on your page that has CSS selector: input[name="username"] {% endcomment %}
        <label for="id_username">Username</label>
        <input id="id_username" type="text" name="username" autocomplete="username">
-       {# Other fields omitted for brevity #}
+       {% comment %} Other fields omitted for brevity {% endcomment %}
 
-       {# This placeholder element will be replaced with either the contents of the `passkey-verification-available-template` or the `passkey-verification-unavailable-template` template. #}
+       {% comment %} This placeholder element will be replaced with either the contents of the `passkey-verification-available-template` or the `passkey-verification-unavailable-template` template. {% endcomment %}
        <span id="passkey-verification-placeholder"></span>
 
        {% comment %}
