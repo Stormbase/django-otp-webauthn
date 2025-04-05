@@ -27,6 +27,18 @@ Go to your ``<project>/settings.py`` file and add ``django_otp_webauthn`` and ``
         "django_otp",
         ...
     ]
+
+Add OTPMiddleware
+-----------------
+
+Add the ``django_otp.middleware.OTPMiddleware`` to the ``MIDDLEWARE`` setting in your ``<project>/settings.py`` file. It must be placed after the ``AuthenticationMiddleware``:
+
+.. code-block:: py
+
+    MIDDLEWARE = [
+        ...
+        "django.contrib.auth.middleware.AuthenticationMiddleware",
+        "django_otp.middleware.OTPMiddleware",
         ...
     ]
 
