@@ -111,7 +111,7 @@ Now add your Django OTP WebAuthn registration snippet into your project. For exa
 
 .. code-block:: html
 
-    <!-- logged_in_template.html -->
+    <!-- account_settings.html -->
     {% load otp_webauthn %}
 
     {% comment %}
