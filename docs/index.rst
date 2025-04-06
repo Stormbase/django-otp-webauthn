@@ -48,6 +48,13 @@ Django OTP WebAuthn works with most modern browsers that support WebAuthn passke
 
 For a complete list of supported browsers, see `Web Authentication API support on caniuse.com <https://caniuse.com/webauthn>`_.
 
+What next?
+----------
+
+Ready to dive in?
+
+Head over to the :ref:`Getting started <getting-started>` section to learn about :term:`passkeys <passkey/discoverable credential>` and how to integrate Django OTP WebAuthn into your Django project.
+
 
 .. toctree::
    :maxdepth: 2

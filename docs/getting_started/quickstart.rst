@@ -31,7 +31,7 @@ Go to your ``<project>/settings.py`` file and add ``django_otp_webauthn`` and ``
 Add OTPMiddleware
 -----------------
 
-Add the ``django_otp.middleware.OTPMiddleware`` to the ``MIDDLEWARE`` setting in your ``<project>/settings.py`` file. It must be placed after the ``AuthenticationMiddleware``:
+Add the ``django_otp.middleware.OTPMiddleware`` to the ``MIDDLEWARE`` setting in your ``<project>/settings.py`` file. Ensure you place it after the ``AuthenticationMiddleware``:
 
 .. code-block:: py
 
@@ -233,7 +233,17 @@ Finally, run the following command to apply database migrations:
 
     python manage.py migrate
 
-Now, if you configured your project for local environment and you run your server, you should see:
+If you configured your project for local environment, run your server:
+
+.. code-block:: console
+
+    python manage.py runserver
+
+.. note::
+
+    When running the development server, ensure you access your site using http://localhost:8000, as WebAuthn doesn't work on IP addresses such as ``http://127.0.0.1:8000``.
+
+Once you’ve done this, you will see the following on your login page:
 
 * a **Register Passkey** button on the login page
 
