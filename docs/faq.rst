@@ -49,4 +49,4 @@ However, it’s possible to register and use these security keys when passwordle
 
 You can still register and use these security keys when passwordless login is disabled. When used as a second-factor authentication method, the user is already partially authenticated, making it easier to return credential IDs securely.
 
-If you are curious, you can restrict registration by setting the ``residentKey`` :term:`authenticator` selection criteria to required. See the specification for details: `authenticatorSelection.residentKey in the Web Authentication specification <https://www.w3.org/TR/webauthn-2/#dom-authenticatorselectioncriteria-residentkey>`_.
+If you want more details, this restriction is done by setting the residentKey authenticator selection criteria to required. For more information, see `authenticatorSelection.residentKey in the Web Authentication specification <https://www.w3.org/TR/webauthn-2/#dom-authenticatorselectioncriteria-residentkey>`_.
