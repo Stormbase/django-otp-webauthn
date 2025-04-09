@@ -111,11 +111,11 @@ Numbered lists
 
 Use numbered lists for step-by-step instructions when order matters. For example:
 
-* Install the necessary software.
+1. Install the necessary software.
 
-* Configure the settings.
+2. Configure the settings.
 
-* Run the application.
+3. Run the application.
 
 Unnumbered lists
 ~~~~~~~~~~~~~~~~
