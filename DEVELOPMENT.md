@@ -7,10 +7,11 @@ A sandbox project is included in this repository to aid in development.
 - ...everything in the [compatibility section](./README.md#compatibility) on the main README.
 - [Hatch](https://hatch.pypa.io/)
 - [Node.js](https://nodejs.org/) v20
-- [Yarn](https://yarnpkg.com/)
+- [Yarn v1](https://classic.yarnpkg.com/en/docs)
 - [Pre-commit](https://pre-commit.com/)
 - [Caddy](https://caddyserver.com/) (optional, but recommended for https testing)
-- [GNU](https://www.gnu.org)
+- [GNU Make](https://www.gnu.org/software/make/) (to build documentation on Linux and MacOS)
+- [GNU gettext](https://www.gnu.org/software/gettext/) (for translations)
 
 ## Installation (sandbox)
 
@@ -91,7 +92,7 @@ The pre-commit hooks will now run automatically when you try to commit changes. 
 
 ## Documentation
 
-This project's documentation uses the [Sphinx](https://www.sphinx-doc.org) [Alabaster](https://alabaster.readthedocs.io/) theme.
+This project's documentation uses the [Sphinx](https://www.sphinx-doc.org) [Furo](https://pradyunsg.me/furo/) theme.
 
 To build the documentation, follow these steps:
 
@@ -118,6 +119,65 @@ To build the documentation, follow these steps:
    ```
    make run
    ```
+
+## Translations
+
+This project uses the [standard Django translation system](https://docs.djangoproject.com/en/5.1/topics/i18n/translation/) based on GNU gettext.
+
+We have a two script files in place that wrap the standard Django commands to make it easier to create and update the translations. See the next sections for more information.
+
+### Updating translations
+
+Translations are stored in `.po` files. These files are used to store the translation strings for each language. The `.po` files are located in the `src/django_otp_webauthn/locale/<locale_code>/LC_MESSAGES/` directory.
+
+To update all translations files based on the current source code, run the following command:
+
+```bash
+./scripts/update_translations.sh --all
+```
+
+Or, to update only the translations for your locale, run the following command:
+
+```bash
+./scripts/update_translations.sh -l <locale_code>
+```
+
+Replace `<locale_code>` with the locale code you used to create the translation messages file. This is quicker than updating all translations.
+
+### Creating new translations
+
+To create a new translation messages file for a specific language, run the following command:
+
+```bash
+./scripts/update_translations.sh -l <locale_code>
+```
+
+Replace `<locale_code>` with a locale code like `de` for German or `fr` for French.
+This will create a `django.po` and `djangojs.po` message files located in `src/django_otp_webauthn/locale/<locale_code>/LC_MESSAGES/django.po`. Please translate the messages in these files. There is also a separate `django.po` file for the sandbox located in `sandbox/locale/<locale_code>/LC_MESSAGES/django.po`, which is used for the sandbox project. You don't have to translate this file, feel free to leave it untranslated.
+
+To make your translations visible, you need to compile the `.po` files into `.mo` files. See the next section for how to do this.
+
+### Compiling translations
+
+In order to make the translations usable, they need to be compiled into `.mo` files. This project has a wrapper script around `compilemessages` that will compile all `.po` files in the project.
+
+To compile all translations, run the following command:
+
+```bash
+./scripts/compile_translations.sh
+```
+
+Or, to compile only the translations for your locale, run the following command:
+
+```bash
+./scripts/compile_translations.sh -l <locale_code>
+```
+
+Replace `<locale_code>` with the locale code you used to create the translation messages file. This is quicker than compiling all translations.
+
+**Note:** when perfecting your translations, you may find that the translation is not updated even after you recompile the `.po` files. This is because the `.mo` files are cached by Django. Try restarting the development server to see your changes.
+
+**Note:** compiled .mo files are not checked into git. This is intentional, as they are generated files.
 
 ## Releasing
 
