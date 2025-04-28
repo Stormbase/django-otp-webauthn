@@ -1,5 +1,5 @@
 import { State, Config, StatusEnum } from "./types";
-import { getConfig } from "./utils";
+import { getConfig, buildCompleteAuthenticationUrl } from "./utils";
 import {
   browserSupportsWebAuthn,
   browserSupportsWebAuthnAutofill,
@@ -107,14 +107,11 @@ import {
         );
         return;
       }
-      // Find out if there is a hidden 'next' field on the page
-      const next = document.querySelector(
-        "input[name='next']",
-      ) as HTMLInputElement;
-      let completeAuthenticationUrl = config.completeAuthenticationUrl;
-      if (next && next.value) {
-        completeAuthenticationUrl += `?next=${encodeURIComponent(next.value)}`;
-      }
+      // Find out if there is a hidden 'next' field on the page,
+      // or if there is a 'next' query parameter in the URL
+      const completeAuthenticationUrl = buildCompleteAuthenticationUrl(
+        config.completeAuthenticationUrl,
+      );
 
       // Complete
       const verificationResp = await fetch(completeAuthenticationUrl, {
@@ -317,14 +314,11 @@ import {
           buttonLabel: gettext("Finishing verification..."),
         });
 
-        // Find out if there is a hidden 'next' field on the page
-        const next = document.querySelector(
-          "input[name='next']",
-        ) as HTMLInputElement;
-        let completeAuthenticationUrl = config.completeAuthenticationUrl;
-        if (next && next.value) {
-          completeAuthenticationUrl += `?next=${encodeURIComponent(next.value)}`;
-        }
+        // Find out if there is a hidden 'next' field on the page,
+        // or if there is a 'next' query parameter in the URL
+        const completeAuthenticationUrl = buildCompleteAuthenticationUrl(
+          config.completeAuthenticationUrl,
+        );
 
         // Complete
         const verificationResp = await fetch(completeAuthenticationUrl, {
