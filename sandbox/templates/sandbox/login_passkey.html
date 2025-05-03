@@ -5,6 +5,7 @@
 {% block title %}{% translate "Login using a Passkey" %}{% endblock %}
 
 {% block content %}
+{% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
 <div>
     <span id="passkey-verification-placeholder"></span>
 </div>

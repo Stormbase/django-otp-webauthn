@@ -22,6 +22,12 @@ class IndexView(TemplateView):
 class LoginWithPasskeyView(TemplateView):
     template_name = "sandbox/login_passkey.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Used by E2E tests to test url redirection from an input field on the page
+        context["next"] = self.request.GET.get("next_input", "")
+        return context
+
 
 class SecondFactorVerificationView(LoginRequiredMixin, TemplateView):
     template_name = "sandbox/second_factor_verification.html"
