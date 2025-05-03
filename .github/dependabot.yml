@@ -1,24 +1,11 @@
 version: 2
 updates:
-  # @simplewebauthn packages, weekly, separate PRs
-  - package-ecosystem: npm
-    directory: "/"
-    schedule:
-      interval: weekly
-    allow:
-      - dependency-name: "@simplewebauthn/*"
-  # all other NPM packages, monthly, grouped in one PR
+  # all NPM packages
   - package-ecosystem: npm
     directory: "/"
     open-pull-requests-limit: 1
     schedule:
       interval: monthly
-    ignore:
-      - dependency-name: "@simplewebauthn/*"
-    groups:
-      all-other-deps:
-        patterns:
-          - "*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
