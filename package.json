@@ -12,7 +12,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@babel/preset-env": "^7.24.5",
-    "@babel/preset-typescript": "^7.24.1",
+    "@babel/preset-typescript": "^7.27.1",
     "@babel/register": "^7.23.7",
     "@types/node": "^22.9.0",
     "all-contributors-cli": "^6.26.1",
