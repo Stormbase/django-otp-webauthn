@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add documentation for nearly all features and settings to the Sphinx documentation site ([#61](https://github.com/Stormbase/django-otp-webauthn/pull/61) by [activus-d](https://github.com/activus-d))
+- Add documentation for nearly all features and settings to the [Sphinx documentation site](https://django-otp-webauthn.readthedocs.io/en/stable/) ([#61](https://github.com/Stormbase/django-otp-webauthn/pull/61) by [activus-d](https://github.com/activus-d))
 - Add support for [Related Origin Requests](https://www.w3.org/TR/webauthn-3/#sctn-related-origins), a feature defined in the level 3 working draft of the WebAuthn specification. It makes simple, cross-domain sharing of Passkeys possible ([#62](https://github.com/Stormbase/django-otp-webauthn/pull/62) by [Stormheg](https://github.com/Stormheg))
 - Add support for redirecting after Passkey authentication by reading a `next` url parameter from the current view ([#64](https://github.com/Stormbase/django-otp-webauthn/pull/64) by [atlasrealm](https://github.com/atlasrealm))
 
