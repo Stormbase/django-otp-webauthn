@@ -7,9 +7,9 @@ body:
       value: |
         **Thanks for taking the time to fill out this feedback!**
         We really appreciate your input, and it will help us improve the documentation.
-        
+
         Please provide an appropriate title at the top of this page.
-        
+
         ---
   - type: input
     id: page_url
