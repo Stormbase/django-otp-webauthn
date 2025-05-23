@@ -248,9 +248,13 @@ To build the documentation on your local machine, follow these steps:
 
         make run
 
+Other guidelines
+----------------
+
+Please, also follow these guidelines when contributing to the documentation:
 
 .. toctree::
-    :maxdepth: 2
-    :hidden:
+    :maxdepth: 1
 
     Style guide <style_guide.rst>
+    reStructuredText usage <restructuredtext_usage.rst>
