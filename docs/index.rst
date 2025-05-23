@@ -62,6 +62,7 @@ Head over to the :ref:`Getting started <getting-started>` section to learn about
 
    Getting started <getting_started/index.rst>
    Customizing behavior <customizing_behavior/index.rst>
+   How-to guides <how_to_guides/index.rst>
    Reference <reference/index.rst>
    glossary.rst
    FAQ <faq.rst>

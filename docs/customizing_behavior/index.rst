@@ -45,12 +45,3 @@ Customizing frontend
 --------------------
 
 The frontend implementation in this library supports customization only through CSS. For any additional customization, you have to create your own implementation. As long as you call the same API endpoints and use the same JSON structure, you can still use all other components of this package, including views and models.
-
-
-.. toctree::
-    :maxdepth: 2
-    :hidden:
-
-    Customize views <customize_views.rst>
-    Customize helper class <customize_helper_class.rst>
-    Customize models <customize_models.rst>
