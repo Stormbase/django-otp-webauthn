@@ -33,6 +33,8 @@ The system also checks other requirements, such as whether the :term:`authentica
 
 Finally, the system logs in the user associated with the ``WebAuthnCredential`` and marks them as having passed 2FA authentication.
 
+.. _wellknownwebauthnview:
+
 WellKnownWebAuthnView
 ---------------------
 
