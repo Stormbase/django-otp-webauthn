@@ -69,8 +69,7 @@ docs = [
 ]
 
 [project.urls]
-# TODO: documentation link
-# Documentation = "https://github.com/Stormbase/django-otp-webauthn/"
+Documentation = "https://django-otp-webauthn.readthedocs.io/en/latest/"
 Changelog = "https://github.com/Stormbase/django-otp-webauthn/blob/main/CHANGELOG.md"
 Issues = "https://github.com/Stormbase/django-otp-webauthn/issues"
 Source = "https://github.com/Stormbase/django-otp-webauthn"
