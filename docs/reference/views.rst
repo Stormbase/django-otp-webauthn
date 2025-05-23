@@ -32,3 +32,16 @@ CompleteCredentialAuthenticationView
 The system also checks other requirements, such as whether the :term:`authenticator` performed user verification by prompting for a PIN, password, or fingerprint, if requested.
 
 Finally, the system logs in the user associated with the ``WebAuthnCredential`` and marks them as having passed 2FA authentication.
+
+WellKnownWebAuthnView
+---------------------
+
+``WellKnownWebAuthnView`` supports WebAuthn across related origins.
+
+The view returns a JSON response containing the list of related origins configured in the ``OTP_WEBAUTHN_RP_RELATED_ORIGINS`` setting. This allows :term:`WebAuthn credentials <WebAuthn credential>` to work across multiple domains that share the same :term:`relying party`.
+
+The view permits public access, doesn't require authentication, and accepts only GET requests. Also, Responses are cached for 10 minutes.
+
+You can Configure this view at the ``/.well-known/webauthn`` URL. Define the ``OTP_WEBAUTHN_RP_RELATED_ORIGINS`` setting as a list of secure origins.
+
+The view accepts only origins that use ``https`` or ``http://localhost`` for local development.
