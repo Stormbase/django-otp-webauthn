@@ -9,7 +9,7 @@ Set up the URL
 Modify your ``<project>/urls.py`` file and add the required URL configuration:
 
 .. code-block:: py
-    
+
     from django.urls import path
     from django_otp_webauthn.views import WellKnownWebAuthnView
 
@@ -24,7 +24,7 @@ Add related origins to your Django settings
 Now in your ``<project>/settings.py`` file, add your related origins to ``OTP_WEBAUTHN_RP_RELATED_ORIGINS``:
 
 .. code-block:: py
-    
+
     OTP_WEBAUTHN_RP_RELATED_ORIGINS = [
         "https://example.com",
         "https://example.co.uk",
