@@ -1,6 +1,7 @@
 name: Feedback on Django OTP WebAuthn documentation
 description: Provide feedback on the Django OTP WebAuthn documentation.
 title: "[Feedback]: "
+labels: ["Documentation"]
 body:
   - type: markdown
     attributes:
