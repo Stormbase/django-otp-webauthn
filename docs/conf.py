@@ -33,5 +33,5 @@ html_theme_options = {
     "source_repository": "https://github.com/Stormbase/django-otp-webauthn",
     "source_branch": "main",
     "source_directory": "docs/",
-    "announcement": "<div><strong>📢Announcement:</strong> Django OTP WebAuthn is still pretty new. Please report any issues or suggestions on <a href='https://github.com/Stormbase/django-otp-webauthn/issues/new?template=feedback.yml'>GitHub Issues</a>.</div>",
+    "announcement": "<div><strong>📢Announcement:</strong> Django OTP WebAuthn is still pretty new. Please report any issues or suggestions on <a href='https://github.com/Stormbase/django-otp-webauthn/issues/new?template=feedback.yml' target='_blank' rel='noopener noreferrer'>GitHub Issues</a>.</div>",
 }
