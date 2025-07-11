@@ -10,9 +10,9 @@ Propose changes
 
 The following steps provide an overview of the process involved in proposing changes to Django OTP WebAuthn:
 
-1. Create an issue in the repository to outline the proposed changes.
+1. Create an issue in the `repository <https://github.com/Stormbase/django-otp-webauthn>`_ to outline the proposed changes.
 
-2. Fork the `repository <https://github.com/Stormbase/django-otp-webauthn>`_ and create a new branch for the changes.
+2. Fork the repository and create a new branch for the changes.
 
 3. :ref:`set-up-django-otp-webauthn`.
 
@@ -236,13 +236,7 @@ To build the documentation on your local machine, follow these steps:
 
         cd docs
 
-3. Build the documentation:
-
-    .. code-block:: console
-
-        make html
-
-4. Serve and watch for changes:
+3. Build and serve the documentation, then watch for changes :
 
     .. code-block:: console
 

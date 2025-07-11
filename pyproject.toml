@@ -42,6 +42,7 @@ dependencies = [
 
 optional-dependencies.docs = [
   "furo==2024.8.6",
+  "pyspelling==2.10",
   "sphinx==8.0.2",
   "sphinx-autobuild==2024.10.3",
   "sphinx-copybutton==0.5.2",
@@ -109,7 +110,7 @@ include = [
 
 [tool.hatch.envs.default]
 dependencies = [
-  "django-otp-webauthn[testing]",
+  "django-otp-webauthn[testing,docs]",
 ]
 
 [tool.hatch.envs.hatch-static-analysis]
