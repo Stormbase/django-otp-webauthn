@@ -1,0 +1,29 @@
+matrix:
+  - name: HTML files
+    aspell:
+      lang: en
+      d: en_US
+      encoding: utf-8
+    dictionary:
+      wordlists:
+        - wordlist.txt
+      output: wordlist.dic
+    sources:
+    - _build/html/**/*.html|!_build/html/index.html|!_build/html/contributing/style_guide.html|!_build/html/glossary.html|!_build/html/genindex.html|!_build/html/search.html
+    pipeline:
+      - pyspelling.filters.html:
+          comments: false
+          attributes:
+            - title
+            - alt
+          ignores:
+            - code
+            - pre
+            - spellexception
+            - link
+            - title
+            - div.relatedlinks
+            - strong.command
+            - div.visually-hidden
+            - img
+            - a.p-navigation__link
