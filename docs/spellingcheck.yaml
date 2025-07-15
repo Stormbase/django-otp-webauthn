@@ -9,7 +9,7 @@ matrix:
         - wordlist.txt
       output: wordlist.dic
     sources:
-    - _build/html/**/*.html|!_build/html/index.html|!_build/html/contributing/style_guide.html|!_build/html/glossary.html|!_build/html/genindex.html|!_build/html/search.html
+      - _build/html/**/*.html|!_build/html/index.html|!_build/html/contributing/style_guide.html|!_build/html/glossary.html|!_build/html/genindex.html|!_build/html/search.html
     pipeline:
       - pyspelling.filters.html:
           comments: false
