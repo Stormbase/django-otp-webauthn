@@ -28,6 +28,7 @@ export type Config = {
 
   // The selector for the field that will is supposed to trigger the autofill UI.
   autocompleteLoginFieldSelector?: string;
+  nextFieldSelector?: string;
 
   csrfToken: string;
 };

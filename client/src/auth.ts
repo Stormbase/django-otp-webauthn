@@ -111,6 +111,7 @@ import {
       // or if there is a 'next' query parameter in the URL
       const completeAuthenticationUrl = buildCompleteAuthenticationUrl(
         config.completeAuthenticationUrl,
+        config.nextFieldSelector,
       );
 
       // Complete
@@ -318,6 +319,7 @@ import {
         // or if there is a 'next' query parameter in the URL
         const completeAuthenticationUrl = buildCompleteAuthenticationUrl(
           config.completeAuthenticationUrl,
+          config.nextFieldSelector,
         );
 
         // Complete
