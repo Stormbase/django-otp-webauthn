@@ -35,10 +35,9 @@ class WebAuthnCredentialAdmin(admin.ModelAdmin):
     def has_add_permission(self, request, obj=None):
         return False
 
+    @admin.display(description=_("COSE public key"))
     def public_key_hex(self, obj):
         return obj.public_key.hex()
-
-    public_key_hex.short_description = _("COSE public key")
 
     def get_fieldsets(self, request, obj=None):
         extra_fields = []

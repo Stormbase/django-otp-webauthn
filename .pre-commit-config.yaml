@@ -23,6 +23,11 @@ repos:
       - id: prettier
         types_or:
           [css, javascript, ts, json, yaml, markdown, bash, editorconfig, toml]
+  - repo: https://github.com/adamchainz/django-upgrade
+    rev: "1.25.0"
+    hooks:
+      - id: django-upgrade
+        args: [--target-version, "4.2"]
 
 ci:
   autoupdate_schedule: monthly
