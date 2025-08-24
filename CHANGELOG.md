@@ -37,14 +37,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- The API views provided now explicitly indicate they only render JSON, disabling the browsable API (see [#55](https://github.com/Stormbase/django-otp-webauthn/issues/55) and [#56](https://github.com/Stormbase/django-otp-webauthn/pull/56), by [AlmerCarbonEquity](https://github.com/AlmerCarbonEquity))
+- The API views provided now explicitly indicate they only render JSON, disabling the browsable API (see [#55](https://github.com/Stormbase/django-otp-webauthn/issues/55) and [#56](https://github.com/Stormbase/django-otp-webauthn/pull/56), by [atlasrealm](https://github.com/atlasrealm))
 - Fixed an issue where the display name of a Passkey would have the username between parenthesis for users that have both an empty `first_name` and `last_name`.
 
 ### Changed
 
 - **Noteworthy:** the way [WebAuthn user handles](https://www.w3.org/TR/webauthn-3/#user-handle) are generated has been changed to make them more privacy-friendly. There should be no breaking backward-compatibility issues. ([#44](https://github.com/Stormbase/django-otp-webauthn/pull/4) by [Stormheg](https://github.com/Stormheg))
   - For context: these are used by the browser to identify if it already has a Passkey stored for a given user account.
-- After registering a new Passkey, users are now automatically marked as 'mfa verified' in the context of `django_otp.login` ([#57](https://github.com/Stormbase/django-otp-webauthn/pull/57) by [AlmerCarbonEquity](https://github.com/AlmerCarbonEquity))
+- After registering a new Passkey, users are now automatically marked as 'mfa verified' in the context of `django_otp.login` ([#57](https://github.com/Stormbase/django-otp-webauthn/pull/57) by [atlasrealm](https://github.com/atlasrealm))
 - The default JavaScript implementation is now built using Node 22
 - The default JavaScript implementation for interacting with the browser api has been updated to use [`@simplewebauthn/browser` v13.1.0](https://github.com/MasterKale/SimpleWebAuthn/releases/tag/v13.1.0)
 
