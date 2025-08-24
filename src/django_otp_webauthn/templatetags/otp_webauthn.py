@@ -11,7 +11,7 @@ register = template.Library()
 def get_configuration(request: HttpRequest, extra_options: dict = {}) -> dict:
     configuration = {
         "autocompleteLoginFieldSelector": None,
-        "nextFieldSelector": None,
+        "nextFieldSelector": "input[name='next']",
         "csrfToken": csrf.get_token(request),
         "beginAuthenticationUrl": reverse(
             "otp_webauthn:credential-authentication-begin"
@@ -40,7 +40,8 @@ def render_otp_webauthn_auth_scripts(
     if app_settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN:
         extra_options["autocompleteLoginFieldSelector"] = username_field_selector
 
-    extra_options["nextFieldSelector"] = next_field_selector
+    if next_field_selector:
+        extra_options["nextFieldSelector"] = next_field_selector
 
     context["configuration"] = get_configuration(request, extra_options)
 

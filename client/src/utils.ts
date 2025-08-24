@@ -19,14 +19,17 @@ export async function getConfig(): Promise<Config> {
 
 /**
  * Appends the 'next' query parameter to the base URL if present.
- * Prefers input[name="next"] if present, otherwise falls back to URL query.
+ * The 'next' value is taken from either the input field specified by
+ * `nextFieldSelectorQuery` or from the current URL's `next` query parameter.
  */
 export function buildCompleteAuthenticationUrl(
   baseUrl: string,
-  nextFieldSelectorQuery?: string,
+  nextFieldSelectorQuery: string,
 ): string {
-  const nextInputSelector = nextFieldSelectorQuery || "input[name='next']";
-  const nextInput = document.querySelector<HTMLInputElement>(nextInputSelector);
+  const nextInput = document.querySelector<HTMLInputElement>(
+    nextFieldSelectorQuery,
+  );
+
   const nextValue =
     nextInput?.value || new URLSearchParams(window.location.search).get("next");
 

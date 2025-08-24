@@ -26,9 +26,10 @@ export type Config = {
   beginAuthenticationUrl: string;
   completeAuthenticationUrl: string;
 
-  // The selector for the field that will is supposed to trigger the autofill UI.
+  // The selector for the field that is supposed to trigger the autofill UI.
   autocompleteLoginFieldSelector?: string;
-  nextFieldSelector?: string;
+  // The selector used to find the "next" field containing the URL to redirect to
+  nextFieldSelector: string;
 
   csrfToken: string;
 };
