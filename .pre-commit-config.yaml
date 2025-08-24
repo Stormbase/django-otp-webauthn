@@ -28,6 +28,10 @@ repos:
     hooks:
       - id: django-upgrade
         args: [--target-version, "4.2"]
+  - repo: https://github.com/rtts/djhtml
+    rev: 3.0.9
+    hooks:
+      - id: djhtml
 
 ci:
   autoupdate_schedule: monthly

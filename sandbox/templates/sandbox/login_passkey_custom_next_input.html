@@ -6,22 +6,22 @@
 
 {% block content %}
 
-<div>
-    <span id="passkey-verification-placeholder"></span>
-</div>
+    <div>
+        <span id="passkey-verification-placeholder"></span>
+    </div>
 
-<template id="passkey-verification-available-template">
-    <button class="button" type="button" id="passkey-verification-button">{% translate "Login using a Passkey" %}</button>
-    <div id="passkey-verification-status-message"></div>
-</template>
+    <template id="passkey-verification-available-template">
+        <button class="button" type="button" id="passkey-verification-button">{% translate "Login using a Passkey" %}</button>
+        <div id="passkey-verification-status-message"></div>
+    </template>
 
-<template id="passkey-verification-unavailable-template">
-    <p>{% translate "Sorry, your browser has no Passkey support" %}</p>
-</template>
+    <template id="passkey-verification-unavailable-template">
+        <p>{% translate "Sorry, your browser has no Passkey support" %}</p>
+    </template>
 
-<input type="hidden" name="next" value="/wrong-path-after-login">
-<input type="hidden" name="volgende" value="/correct-path-after-login">
+    <input type="hidden" name="next" value="/wrong-path-after-login">
+    <input type="hidden" name="volgende" value="/correct-path-after-login">
 
-{% render_otp_webauthn_auth_scripts next_field_selector="input[name='volgende']" %}
+    {% render_otp_webauthn_auth_scripts next_field_selector="input[name='volgende']" %}
 
 {% endblock content %}
