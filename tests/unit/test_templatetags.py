@@ -18,6 +18,7 @@ def test_get_configuration__defaults(rf):
     assert configuration["autocompleteLoginFieldSelector"] is None
 
     assert "csrfToken" in configuration
+    assert configuration["nextFieldSelector"] == "input[name='next']"
     # Assert that the URLs are actually resolved
     assert resolve_url(configuration["beginAuthenticationUrl"])
     assert resolve_url(configuration["completeAuthenticationUrl"])
@@ -50,6 +51,21 @@ def test_render_otp_webauthn_register_scripts(rf):
 
     assert soup.select_one(f'script[src="{i18n_url}"]')
     assert soup.select_one('script[src$="otp_webauthn_register.js"]')
+
+
+def test_render_otp_webauthn_auth_scripts__custom_next_selector(rf, settings):
+    settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = True
+    request = rf.get("/")
+    context = Context({"request": request})
+    template = Template(
+        "{% load otp_webauthn %}{% render_otp_webauthn_auth_scripts next_field_selector=\"input[name='volgende']\" %}"
+    )
+    rendered = template.render(context)
+
+    soup = BeautifulSoup(rendered, "html.parser")
+    config = soup.select_one("script[id=otp_webauthn_config]")
+    config = json.loads(config.text)
+    assert config["nextFieldSelector"] == "input[name='volgende']"
 
 
 def test_render_otp_webauthn_auth_scripts__allow_passwordless(rf, settings):
