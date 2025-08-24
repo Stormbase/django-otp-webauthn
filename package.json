@@ -14,7 +14,7 @@
     "@babel/preset-env": "^7.24.5",
     "@babel/preset-typescript": "^7.24.1",
     "@babel/register": "^7.23.7",
-    "@types/node": "^22.9.0",
+    "@types/node": "^24.3.0",
     "all-contributors-cli": "^6.26.1",
     "esbuild": "^0.25.0",
     "prettier": "3.6.2",

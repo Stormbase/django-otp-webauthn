@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Nothing yet
+- The default JavaScript implementation is now built using Node 24
+- The default JavaScript implementation for interacting with the browser api has been updated to use [`@simplewebauthn/browser` v13.1.2](https://github.com/MasterKale/SimpleWebAuthn/releases/tag/v13.1.2)
 
 ### Fixed
 
