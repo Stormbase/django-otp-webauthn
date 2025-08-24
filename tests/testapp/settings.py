@@ -3,7 +3,7 @@
 # Example:
 #  $ DJANGO_SETTINGS_MODULE=tests.testapp.settings python manage.py
 
-from sandbox.settings import *  # noqa
+from sandbox.settings import *  # noqa: F403
 
 INSTALLED_APPS += [  # noqa: F405
     "tests.testapp",

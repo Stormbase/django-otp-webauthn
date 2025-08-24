@@ -50,7 +50,7 @@ def wait_for_javascript_event(page):
         # Hot mess - why is there no Playwright API for this?
 
         # We need to generate a unique name for the nook to store the event result in
-        nook = "".join([chr(97 + random.randint(0, 25)) for _ in range(25)])
+        nook = "".join([chr(97 + random.randint(0, 25)) for _ in range(25)])  # noqa: S311 (not used for secure purposes)
 
         # Setup the listener, that stores the event detail in the nook
         page.evaluate(f"""

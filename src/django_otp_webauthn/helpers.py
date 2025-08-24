@@ -506,7 +506,7 @@ class WebAuthnHelper:
         try:
             device = WebAuthnCredential.get_by_credential_id(credential.raw_id)
         except WebAuthnCredential.DoesNotExist:
-            raise exceptions.CredentialNotFound()
+            raise exceptions.CredentialNotFound() from None
 
         expected_challenge = base64url_to_bytes(state["challenge"])
         expected_origins = self.get_allowed_origins()

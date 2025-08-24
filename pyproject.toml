@@ -120,16 +120,36 @@ dependencies = [  ]
 target-version = "py39" # minimum target version
 
 lint.select = [
-  "BLE", # flake8-blind-except
-  "C4",  # flake8-comprehensions
-  "E",   # pycodestyle errors
-  "F",   # pyflakes
-  "I",   # isort
-  "T20", # flake8-print
-  "UP",  # pyupgrade
+  "B",      # flake8-bugbear
+  "BLE",    # flake8-blind-except
+  "C4",     # flake8-comprehensions
+  "DJ",     # flake8-django
+  "E",      # pycodestyle errors
+  "F",      # pyflakes
+  "I",      # isort
+  "INT",    # flake8-gettext
+  "PGH",    # pygrep-hooks
+  "PIE",    # flake8-pie
+  "RUF100", # unused noqa
+  "S",      # flake8-bandit
+  "SIM",    # flake8-simplify
+  "T20",    # flake8-print
+  "UP",     # pyupgrade
+  "W",      # pycodestyle warnings
+  "YTT",    # flake8-2020
 ]
-# E501: Line too long
-lint.ignore = [ "E501" ]
+lint.extend-ignore = [
+  "E501",   # no line length errors
+  "SIM105", # https://docs.astral.sh/ruff/rules/suppressible-exception/
+]
+lint.per-file-ignores."sandbox/settings/*" = [
+  "F405", # https://docs.astral.sh/ruff/rules/undefined-local-with-import-star-usage/
+]
+lint.per-file-ignores."tests/*" = [
+  "S101",   # Bandit: Use of `assert` okay in tests
+  "SIM117", # flake8-simply: Using multiple nested `with` statements is often clearer in the context of tests
+]
+lint.fixable = [ "C4", "E", "F", "I", "UP" ]
 lint.isort.known-first-party = [ "django_otp_webauthn", "sandbox", "tests" ]
 
 [tool.pytest.ini_options]

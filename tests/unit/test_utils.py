@@ -164,6 +164,6 @@ def test_rewrite_exceptions_context_manager_with_logger(
 
 def test_rewrite_exceptions_uncaught_exception():
     """Test that the rewrite_exceptions context manager does not swallow exceptions it is not supposed to."""
-    with pytest.raises(Exception):
+    with pytest.raises(Exception):  # noqa: B017
         with rewrite_exceptions():
             raise Exception()

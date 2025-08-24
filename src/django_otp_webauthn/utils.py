@@ -115,11 +115,11 @@ def get_credential_model() -> AbstractWebAuthnCredential:
     except ValueError:
         raise ImproperlyConfigured(
             "OTP_WEBAUTHN_CREDENTIAL_MODEL must be of the form 'app_label.model_name'"
-        )
+        ) from None
     except LookupError:
         raise ImproperlyConfigured(
             f"OTP_WEBAUTHN_CREDENTIAL_MODEL refers to model '{app_settings.OTP_WEBAUTHN_CREDENTIAL_MODEL}' that has not been installed"
-        )
+        ) from None
 
 
 def get_attestation_model() -> AbstractWebAuthnAttestation:
@@ -132,11 +132,11 @@ def get_attestation_model() -> AbstractWebAuthnAttestation:
     except ValueError:
         raise ImproperlyConfigured(
             "OTP_WEBAUTHN_ATTESTATION_MODEL must be of the form 'app_label.model_name'"
-        )
+        ) from None
     except LookupError:
         raise ImproperlyConfigured(
             f"OTP_WEBAUTHN_ATTESTATION_MODEL refers to model '{app_settings.OTP_WEBAUTHN_ATTESTATION_MODEL}' that has not been installed"
-        )
+        ) from None
 
 
 def get_credential_model_string() -> str:

@@ -8,7 +8,9 @@ from django_otp_webauthn.settings import app_settings
 register = template.Library()
 
 
-def get_configuration(request: HttpRequest, extra_options: dict = {}) -> dict:
+def get_configuration(request: HttpRequest, extra_options: dict = None) -> dict:
+    if extra_options is None:
+        extra_options = {}
     configuration = {
         "autocompleteLoginFieldSelector": None,
         "nextFieldSelector": "input[name='next']",

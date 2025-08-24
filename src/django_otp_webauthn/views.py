@@ -60,7 +60,6 @@ class RegistrationCeremonyMixin:
 
     def check_can_register(self):
         """Perform any necessary pre-checks to see if the registration ceremony can proceed."""
-        pass
 
 
 class AuthenticationCeremonyMixin:

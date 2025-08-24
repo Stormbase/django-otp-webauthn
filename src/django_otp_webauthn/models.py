@@ -74,16 +74,6 @@ class AbstractWebAuthnAttestation(models.Model):
     See https://www.w3.org/TR/webauthn-3/#sctn-attestation for more information about attestation.
     """
 
-    class Meta:
-        abstract = True
-        verbose_name = _("WebAuthn attestation")
-        verbose_name_plural = _("WebAuthn attestations")
-
-    objects = WebAuthnAttestationManager()
-
-    def __str__(self):
-        return f"{self.credential} (fmt={self.fmt})"
-
     class Format(models.TextChoices):
         PACKED = "packed", "packed"
         TPM = "tpm", "tpm"
@@ -108,6 +98,16 @@ class AbstractWebAuthnAttestation(models.Model):
     This is in binary form to preserve exactly what the client sent. This is
     important because it needs to be byte-for-byte identical in order to verify
     the signature."""
+
+    objects = WebAuthnAttestationManager()
+
+    class Meta:
+        abstract = True
+        verbose_name = _("WebAuthn attestation")
+        verbose_name_plural = _("WebAuthn attestations")
+
+    def __str__(self):
+        return f"{self.credential} (fmt={self.fmt})"
 
     @classmethod
     def check(cls, **kwargs):
@@ -391,8 +391,6 @@ class WebAuthnCredential(AbstractWebAuthnCredential):
     Web Authentication standard.
     """
 
-    pass
-
 
 class WebAuthnAttestation(AbstractWebAuthnAttestation):
     """Model to store attestation for registered credentials for future reference"""
@@ -425,13 +423,6 @@ class WebAuthnUserHandle(models.Model):
     - [^2]: https://www.w3.org/TR/webauthn-3/#sctn-user-handle-privacy
     """
 
-    class Meta:
-        verbose_name = _("WebAuthn user handle")
-        verbose_name_plural = _("WebAuthn user handles")
-
-    def __str__(self):
-        return f"{self.user} ({self.handle_hex})"
-
     handle_hex = models.CharField(
         max_length=128,
         verbose_name=_("handle hex"),
@@ -447,14 +438,21 @@ class WebAuthnUserHandle(models.Model):
         verbose_name=_("user"),
     )
 
-    @property
-    def handle(self) -> bytes:
-        return bytes.fromhex(self.handle_hex)
+    class Meta:
+        verbose_name = _("WebAuthn user handle")
+        verbose_name_plural = _("WebAuthn user handles")
+
+    def __str__(self):
+        return f"{self.user} ({self.handle_hex})"
 
     def save(self, *args, **kwargs):
         if not self.handle_hex:
             self.handle_hex = self.generate_handle().hex()
         super().save(*args, **kwargs)
+
+    @property
+    def handle(self) -> bytes:
+        return bytes.fromhex(self.handle_hex)
 
     @classmethod
     def get_handle_for_user(cls, user: AbstractBaseUser) -> bytes:

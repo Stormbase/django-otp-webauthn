@@ -30,7 +30,7 @@ def helper(rf):
 
 
 # Dummy callable. Needs to be at an importable location to be useful.
-def dummy_rp_callable(request):  # noqa
+def dummy_rp_callable(request):
     assert isinstance(request, HttpRequest)
     return request.GET.get("rp")
 
