@@ -68,7 +68,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The custom `__str__` representation for `WebAuthnCredential` is removed because displaying a AAGUID is not a friendly representation. It now defaults back to the django-otp default: `name + (username)`([#27](https://github.com/Stormbase/django-otp-webauthn/pull/27) by [Stormheg](https://github.com/Stormheg))
 - The default `ModelAdmin` for `WebAuthnCredential` credential is no longer automatically registered. ([#27](https://github.com/Stormbase/django-otp-webauthn/pull/27) by [Stormheg](https://github.com/Stormheg))
-
   - You can instead register it manually in your `admin.py` file
 
     ```python
