@@ -293,3 +293,35 @@ def test_authenticate_credential__next_input_element(
 
     # We should navigate to the url specified in the next parameter
     page.wait_for_url(live_server.url + "/next-input/")
+
+
+def test_authenticate_credential__custom_next_input_element(
+    live_server,
+    django_db_serialized_rollback,
+    page,
+    user,
+    virtual_authenticator,
+    virtual_credential,
+):
+    """Verify we can use a input named next on the page to redirect to a different page after authentication."""
+    credential = WebAuthnCredentialFactory(user=user, discoverable=True)
+    authenticator = virtual_authenticator(VirtualAuthenticator.internal())
+    authenticator_id = authenticator["authenticatorId"]
+
+    # Create a virtual credential from our database model
+    virtual_credential(authenticator_id, VirtualCredential.from_model(credential))
+
+    # Go to the login with passkey page
+    page.goto(live_server.url + reverse("testsuite:login-passkey-custom-next-input"))
+
+    # Find the 'volgende' input and take its value, to confirm we redirect to that URL
+    volgende_input = page.locator("input[name='volgende']")
+    next_value = volgende_input.input_value()
+
+    login_button = page.locator("button#passkey-verification-button")
+    expect(login_button).to_be_visible()
+
+    login_button.click()
+
+    # We should now land on the URL specified in the 'volgende' input
+    page.wait_for_url(live_server.url + next_value)

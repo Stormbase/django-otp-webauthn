@@ -18,4 +18,6 @@ urlpatterns = [
     path("admin/", admin_site.urls),
     path("webauthn/", include("django_otp_webauthn.urls", namespace="otp_webauthn")),
     path(".well-known/webauthn", WellKnownWebAuthnView.as_view()),
+    # Urls only used in the test suite, not intended to be used for development
+    path("tests-only/", include("sandbox.urls_test", namespace="testsuite")),
 ]
