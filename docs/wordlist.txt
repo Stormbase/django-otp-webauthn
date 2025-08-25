@@ -5,6 +5,7 @@ authenticator
 authenticator's
 authenticators
 authenticatorSelection
+backend
 backends
 backticks
 BeginCredentialAuthenticationView
@@ -12,6 +13,7 @@ BeginCredentialRegistrationView
 biometric
 biometrics
 Caddy
+ccTLD
 CompleteCredentialAuthenticationView
 CompleteCredentialRegistrationView
 cryptographic
@@ -37,6 +39,8 @@ pre
 PyPI
 py
 Quickstart
+rpID
+rpIDs
 reStructuredText
 residentKey
 Stormbase
@@ -45,6 +49,8 @@ subclassing
 untrusted
 WebAuthn
 webauthn
+WebAuthn's
 WebAuthnCredential
 WebAuthnUserHandle
+WellKnownWebAuthnView
 YubiKey
