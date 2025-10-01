@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: "3.13"
           cache: "pip"
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version-file: ".nvmrc"
       - name: Install additional system packages
