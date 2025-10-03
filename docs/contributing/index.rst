@@ -245,7 +245,7 @@ To build the documentation on your local machine, follow these steps:
 Other guidelines
 ----------------
 
-Please, also follow these guidelines when contributing to the documentation:
+Also, follow these guidelines when contributing to the documentation:
 
 .. toctree::
     :maxdepth: 1
