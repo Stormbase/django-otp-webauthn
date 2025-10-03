@@ -63,7 +63,7 @@ install-spelling-deps:
 			sudo port install aspell aspell-dict-en; \
 		else \
 			echo "Neither Homebrew nor MacPorts found."; \
-			echo "Please install aspell manually:"; \
+			echo "Install aspell manually:"; \
 			echo "  - Install Homebrew: https://brew.sh"; \
 			echo "  - Then run: brew install aspell"; \
 			echo "  - Or install MacPorts: https://www.macports.org"; \
@@ -72,7 +72,7 @@ install-spelling-deps:
 		fi \
 	else \
 		echo "Could not detect package manager."; \
-		echo "Please manually install aspell and aspell-en for your system."; \
+		echo "Manually install aspell and aspell-en for your system."; \
 		echo "Common package names: aspell, aspell-en"; \
 		exit 1; \
 	fi
@@ -103,7 +103,7 @@ spelling: check-spelling-deps
 	fi
 	@if [ ! -d "$(BUILDDIR)/html" ]; then \
 		echo "Error: HTML build directory '$(BUILDDIR)/html' not found."; \
-		echo "Please run 'make html' first to build the documentation."; \
+		echo "Run 'make html' first to build the documentation."; \
 		exit 1; \
 	fi
 	pyspelling -c $(SPELLING_CONFIG) -j 8

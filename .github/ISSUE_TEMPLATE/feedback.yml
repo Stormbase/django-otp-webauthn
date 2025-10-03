@@ -9,14 +9,14 @@ body:
         **Thanks for taking the time to fill out this feedback!**
         We really appreciate your input, and it will help us improve the documentation.
 
-        Please provide an appropriate title at the top of this page.
+        Provide an appropriate title at the top of this page.
 
         ---
   - type: input
     id: page_url
     attributes:
       label: Page URL
-      description: Please enter the URL of the page you are referring to.
+      description: Enter the URL of the page you are referring to.
       placeholder: For example, https://django-otp-webauthn.readthedocs.io/en/latest/
     validations:
       required: true
@@ -24,7 +24,7 @@ body:
     id: content
     attributes:
       label: Select all that apply
-      description: Please let us know what issue you encountered with the documentation.
+      description: Let us know what issue you encountered with the documentation.
       options:
         - label: I found what I was looking for
         - label: I couldn't find what I was looking for
@@ -37,7 +37,7 @@ body:
     attributes:
       label: Issue Description
       description: |
-        Please provide a detailed description of the issue:
+        Provide a detailed description of the issue:
         - What part of the documentation were you trying to use?
         - What did you expect to happen, and what actually happened?
         - Any error messages or screenshots you can provide would be very helpful.
