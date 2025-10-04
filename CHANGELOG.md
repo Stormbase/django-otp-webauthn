@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Support for Django 6.0 pending its final release ([#88](https://github.com/Stormbase/django-otp-webauthn/pull/88) by [Stormheg](https://github.com/Stormheg))
 - Allow customizing the selector used to find the "next" field containing the URL to redirect to after successful Passkey authentication. This can be done using the new `next_field_selector` argument to the `render_otp_webauthn_auth_scripts` template tag. ([#78](https://github.com/Stormbase/django-otp-webauthn/pull/78) by [bprobian](https://github.com/bprobian))
+
+### Removed
+
+- Django 5.0 is no longer formally supported ([#88](https://github.com/Stormbase/django-otp-webauthn/pull/88) by[Stormheg](https://github.com/Stormheg))
 
 ### Changed
 
@@ -19,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Maintenance: add more pre-commit hooks to ensure code quality and consistency
+- Avoid wasteful json deserialization and subsequent serialization by utilizing `py_webauthn.helpers.options_to_json_dict`, requires `py_webauthn>=2.6` ([#87](https://github.com/Stormbase/django-otp-webauthn/pull/87) by [Stormheg](https://github.com/Stormheg))
 
 ## [0.6.0] - 2025-05-03
 
