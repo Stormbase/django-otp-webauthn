@@ -54,7 +54,7 @@ optional-dependencies.playwright = [
 optional-dependencies.testing = [
   "beautifulsoup4>=4,<5",
   "coverage[toml]>=7,<8",
-  "dj-database-url>=2.1,<3",
+  "dj-database-url>=3,<4",
   # To test functionality with a strict Content Security Policy
   "django-csp>=4,<5",
   "django-debug-toolbar>=6,<7",
@@ -65,7 +65,8 @@ optional-dependencies.testing = [
   "pytest-env>=1,<2",
   "pytest-factoryboy>=2,<3",
   "pytest-mock>=3.14,<4",
-  "pytest-randomly>=3.15,<4",
+  "pytest-randomly>=4,<5",
+  "pytest-rerunfailures>=16,<17",
 ]
 urls.Changelog = "https://github.com/Stormbase/django-otp-webauthn/blob/main/CHANGELOG.md"
 urls.Documentation = "https://django-otp-webauthn.readthedocs.io/en/latest/"
