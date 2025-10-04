@@ -29,7 +29,7 @@ Django OTP WebAuthn is compatible with the following versions:
 
 * Django >= 4.2
 
-* Python >= 3.9
+* Python >= 3.10
 
 * django-otp >= 1.4.0
 
