@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import json
-
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.http import HttpRequest
@@ -9,12 +7,12 @@ from webauthn import (
     base64url_to_bytes,
     generate_authentication_options,
     generate_registration_options,
-    options_to_json,
     verify_authentication_response,
     verify_registration_response,
 )
 from webauthn.helpers import (
     generate_challenge,
+    options_to_json_dict,
     parse_attestation_object,
     parse_authentication_credential_json,
     parse_registration_credential_json,
@@ -313,21 +311,16 @@ class WebAuthnHelper:
 
         kwargs = self.get_generate_registration_options_kwargs(user=user)
         options = generate_registration_options(**kwargs)
-
-        json_string = options_to_json(options)
-        # We work with dicts and not JSON strings, so we need to load the JSON
-        # string again. Sadly this causes extra overhead but it'll have to do
-        # for now.
-        data = json.loads(json_string)
+        options_dict = options_to_json_dict(options)
 
         # Manually add the extensions to the options, as the PyWebAuthn library
         # doesn't support this yet.
         extensions = self.get_registration_extensions()
-        data["extensions"] = extensions
+        options_dict["extensions"] = extensions
 
-        state = self.get_registration_state(data)
+        state = self.get_registration_state(options_dict)
 
-        return data, state
+        return options_dict, state
 
     def register_complete(self, user: AbstractBaseUser, state: dict, data: dict):
         """Complete the registration process."""
@@ -481,20 +474,15 @@ class WebAuthnHelper:
             user=user, require_user_verification=require_user_verification
         )
         options = generate_authentication_options(**kwargs)
-
-        json_string = options_to_json(options)
-        # We work with dicts and not JSON strings, so we need to load the JSON
-        # string again. Sadly this causes extra overhead but it'll have to do
-        # for now.
-        data = json.loads(json_string)
+        options_dict = options_to_json_dict(options)
 
         # Manually add the extensions to the options, as the PyWebAuthn library
         # doesn't support this yet.
         extensions = self.get_authentication_extensions()
-        data["extensions"] = extensions
+        options_dict["extensions"] = extensions
 
-        state = self.get_authentication_state(data)
-        return data, state
+        state = self.get_authentication_state(options_dict)
+        return options_dict, state
 
     def authenticate_complete(
         self, user: AbstractBaseUser | None, state: dict, data: dict
