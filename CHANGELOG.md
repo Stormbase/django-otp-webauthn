@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Maintenance: add more pre-commit hooks to ensure code quality and consistency
+- Maintenance: the documentation is now spell-checked using `pyspelling` ([#77](https://github.com/Stormbase/django-otp-webauthn/pull/77) by [activus-d](https://github.com/activus-d))
 - Avoid wasteful json deserialization and subsequent serialization by utilizing `py_webauthn.helpers.options_to_json_dict`, requires `py_webauthn>=2.6` ([#87](https://github.com/Stormbase/django-otp-webauthn/pull/87) by [Stormheg](https://github.com/Stormheg))
 
 ## [0.6.0] - 2025-05-03
