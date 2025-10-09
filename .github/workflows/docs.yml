@@ -1,4 +1,4 @@
-name: Build Documentation
+name: Documentation
 
 on:
   push:
@@ -43,3 +43,30 @@ jobs:
           name: django-otp-webauthn-docs
           path: docs/_build/html/
           retention-days: 7
+  spellcheck:
+    runs-on: ubuntu-latest
+    needs: build-docs
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
+          cache: "pip"
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y aspell aspell-en
+          python -m pip install --upgrade pip setuptools
+          python -m pip install pyspelling
+      - name: Download documentation artifacts
+        uses: actions/download-artifact@v5
+        with:
+          name: django-otp-webauthn-docs
+          path: docs/_build/html/
+          run-id: ${{ github.run_id }}
+
+      - name: Run spell check
+        working-directory: ./docs
+        run: |
+          python -m pyspelling -c spellingcheck.yaml
