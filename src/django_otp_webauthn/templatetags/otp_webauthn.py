@@ -15,6 +15,7 @@ def get_configuration(request: HttpRequest, extra_options: dict = None) -> dict:
         "autocompleteLoginFieldSelector": None,
         "nextFieldSelector": "input[name='next']",
         "csrfToken": csrf.get_token(request),
+        "removeUnknownCredential": app_settings.OTP_WEBAUTHN_SIGNAL_UNKNOWN_CREDENTIAL,
         "beginAuthenticationUrl": reverse(
             "otp_webauthn:credential-authentication-begin"
         ),

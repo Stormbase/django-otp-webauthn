@@ -85,10 +85,11 @@ import {
         return;
       }
 
+      const responseJson = await response.json();
       let attResp;
       try {
         attResp = await startAuthentication({
-          optionsJSON: await response.json(),
+          optionsJSON: responseJson,
           useBrowserAutofill: true,
         });
       } catch (error: unknown) {
@@ -149,6 +150,9 @@ import {
 
       // Handle failed verification
       if (!verificationResp.ok && "detail" in verificationJSON) {
+        if (verificationResp.status === 404) {
+          signalPasskeyMissing(attResp.rawId, responseJson.rpId);
+        }
         loginField.dispatchEvent(
           new CustomEvent(EVENT_VERIFICATION_FAILED, {
             detail: {
@@ -232,6 +236,8 @@ import {
           },
         });
 
+        const responseJson = await response.json();
+
         if (!response.ok) {
           await setPasskeyVerifyState({
             buttonDisabled: false,
@@ -258,7 +264,7 @@ import {
 
         try {
           attResp = await startAuthentication({
-            optionsJSON: await response.json(),
+            optionsJSON: responseJson,
             useBrowserAutofill: false,
           });
         } catch (error: unknown) {
@@ -363,6 +369,9 @@ import {
         const verificationJSON = await verificationResp.json();
 
         if (!verificationResp.ok) {
+          if (verificationResp.status === 404 && attResp) {
+            signalPasskeyMissing(attResp.rawId, responseJson.rpId);
+          }
           const msg =
             verificationJSON.detail ||
             gettext("Verification failed. An unknown error occurred.");
@@ -468,6 +477,48 @@ import {
             VERIFICATION_STATUS_MESSAGE_VISIBLE_CLASS,
           );
         }
+      }
+    }
+
+    /* Uses the `PublicKeyCredential.signalUnknownCredential` API to inform the browser
+     * that the Passkey that was used is not recognized by the server, prompting the browser to delete it from its stored credentials.
+     * This function is a no-op if the API is not supported by the browser.
+     */
+    async function signalPasskeyMissing(
+      credentialId: string,
+      rpId: string,
+    ): Promise<void> {
+      if (!config.removeUnknownCredential) {
+        console.trace(
+          "Not signaling unknown credential to the browser as per configuration.",
+        );
+        return;
+      }
+      if (!("signalUnknownCredential" in PublicKeyCredential)) {
+        console.trace(
+          "PublicKeyCredential.signalUnknownCredential is not supported by this browser. Won't signal.",
+        );
+        return;
+      }
+
+      try {
+        await (PublicKeyCredential as any).signalUnknownCredential({
+          rpId,
+          credentialId,
+        });
+        console.trace(
+          // Important: 'Credential not found' is used as a needle for automated tests that check that the signaling happened.
+          "Credential not found. Requested browser remove credential.",
+          {
+            rpId,
+            credentialId,
+          },
+        );
+      } catch (error) {
+        console.error(
+          "Error while signaling unknown credential to the browser",
+          error,
+        );
       }
     }
 
