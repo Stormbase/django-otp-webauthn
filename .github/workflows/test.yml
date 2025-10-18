@@ -49,11 +49,10 @@ jobs:
           python-version: ${{ matrix.python }}
           cache: "pip"
 
-      - name: Install additional system packages
-        run: |
-          sudo apt-get update -y
-          # Need `gettext` to compile translations
-          sudo apt-get install gettext
+      - uses: gerlero/apt-install@a0d81074b838120197865dc2576f67c4f40044b2
+        name: Install gettext
+        with:
+          packages: gettext
 
       - name: Install dependencies
         run: |
