@@ -48,7 +48,9 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           cache: "pip"
-
+      - name: Disable man-db (speed up apt installs)
+        run: |
+          sudo rm -f /var/lib/man-db/auto-update
       - uses: gerlero/apt-install@a0d81074b838120197865dc2576f67c4f40044b2
         name: Install gettext
         with:
