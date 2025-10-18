@@ -19,11 +19,21 @@ def test_get_configuration__defaults(rf):
 
     assert "csrfToken" in configuration
     assert configuration["nextFieldSelector"] == "input[name='next']"
+    assert configuration["removeUnknownCredential"] is True
     # Assert that the URLs are actually resolved
     assert resolve_url(configuration["beginAuthenticationUrl"])
     assert resolve_url(configuration["completeAuthenticationUrl"])
     assert resolve_url(configuration["beginRegistrationUrl"])
     assert resolve_url(configuration["completeRegistrationUrl"])
+
+
+def test_get_configuration__disable_signal_unknown_credential(rf, settings):
+    """Test that the configuration reflects the setting to disable signaling unknown credentials."""
+    settings.OTP_WEBAUTHN_SIGNAL_UNKNOWN_CREDENTIAL = False
+    request = rf.get("/")
+    configuration = get_configuration(request)
+
+    assert configuration["removeUnknownCredential"] is False
 
 
 def test_get_configuration__extra_options(rf):

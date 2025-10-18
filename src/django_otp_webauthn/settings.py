@@ -130,6 +130,15 @@ class AppSettings:
     For more information about the specific values, see the `WebAuthn specification <https://www.w3.org/TR/webauthn-3/#enumdef-attestationconveyancepreference>`_
     """
 
+    OTP_WEBAUTHN_SIGNAL_UNKNOWN_CREDENTIAL = True
+    """.. versionadded:: v0.11.0
+
+    When set to ``True``, the client-side script will signal the browser when a
+    user attempts to authenticate with a credential that does not exist on the
+    server. This is intended to inform the browser that the Passkey is no longer
+    valid, allowing it to remove the Passkey from the user's device and prevent
+    it from being presented as an option in future authentication attempts."""
+
     def __getattribute__(self, __name: str):
         # Check if a Django project settings should override the app default.
         # In order to avoid returning any random properties of the django settings, we inspect the prefix firstly.

@@ -1,4 +1,5 @@
 import random
+import re
 from concurrent.futures import Future
 
 import pytest
@@ -76,6 +77,27 @@ def wait_for_javascript_event(page):
         return _return
 
     return _wait_for_javascript_event
+
+
+@pytest.fixture
+def wait_for_console_message(page):
+    """Returns a function that blocks until a certain console message has been posted."""
+
+    def _wait_for_console_message(message_text_regex: str, *, level="log"):
+        future = FutureWrapper()
+
+        def _handle_console_message(msg):
+            if msg.type == level and re.match(message_text_regex, msg.text):
+                future.set_result(msg)
+
+        page.on("console", _handle_console_message)
+
+        def _return():
+            return future.get_result()
+
+        return _return
+
+    return _wait_for_console_message
 
 
 @pytest.fixture
