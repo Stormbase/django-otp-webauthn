@@ -9,7 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Nothing yet
+- **New feature (experimental):** the browser will now be signaled to remove an unknown credential after a failed authentication attempt. This is controlled by the new `OTP_WEBAUTHN_SIGNAL_UNKNOWN_CREDENTIAL` setting, which defaults to `True`. If set to `False`, the browser will not be signaled.
+  - The purpose of this is to improve user experience by removing credentials that are no longer valid from the users' device, stopping the user from being prompted to use this credential in the future.
+  - The exact response of browsers to the signal varies, most browsers tested appear to ignore this signal and thus this feature has no effect.
+  - This uses a draft feature defined the WebAuthn L3 specification: https://www.w3.org/TR/2025/WD-webauthn-3-20250127/#sctn-signal-methods.
+  - It works on recent versions of Chrome, Edge and Safari but not Firefox (as of October 2025).
+  - Read more about the browser API used: [`PublicKeyCredential.signalUnknownCredential` on MDN](https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredential/signalUnknownCredential_static).
+  - This feature is experimental because not all browsers support it properly yet. The specification is also still in draft status and may change in the future.
 
 ### Changed
 

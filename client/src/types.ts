@@ -32,4 +32,5 @@ export type Config = {
   nextFieldSelector: string;
 
   csrfToken: string;
+  removeUnknownCredential: boolean;
 };

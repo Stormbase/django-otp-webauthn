@@ -1,5 +1,6 @@
 from django.urls import reverse
 from playwright.sync_api import expect
+from webauthn import base64url_to_bytes
 
 from tests.e2e.fixtures import StatusEnum, VirtualAuthenticator, VirtualCredential
 from tests.factories import WebAuthnCredentialFactory
@@ -40,6 +41,129 @@ def test_authenticate_credential__internal_passwordless_manual(
     assert user.username in page.content()
 
 
+def test_authenticate_credential__manual_signal_no_credential(
+    live_server,
+    django_db_serialized_rollback,
+    page,
+    user,
+    virtual_authenticator,
+    virtual_credential,
+    wait_for_javascript_event,
+    wait_for_console_message,
+):
+    """Verify that manually using the 'Authenticate with Passkey' button with a credential
+    that does not exist signals an unknown credential to the browser."""
+
+    credential = WebAuthnCredentialFactory(user=user, discoverable=True)
+    authenticator = virtual_authenticator(VirtualAuthenticator.internal())
+    authenticator_id = authenticator["authenticatorId"]
+
+    # Create a virtual credential from our database model
+    virtual_credential(authenticator_id, VirtualCredential.from_model(credential))
+
+    # Remove the credential to simulate it was not found / unknown
+    credential.delete()
+
+    # Go to the login with passkey page
+    page.goto(live_server.url + reverse("login-passkey"))
+    await_failure_event = wait_for_javascript_event(JS_EVENT_VERIFICATION_FAILED)
+
+    login_button = page.locator("button#passkey-verification-button")
+    expect(login_button).to_be_visible()
+
+    login_button.click()
+    expected_url = live_server.url + reverse(
+        "otp_webauthn:credential-authentication-complete"
+    )
+
+    # Looks for this message in the console log to confirm the signaling happened
+    await_credential_not_found_message = wait_for_console_message(
+        r"Credential not found", level="trace"
+    )
+
+    with page.expect_response(expected_url, timeout=5000) as response_info:
+        assert response_info.value.status == 404  # Credential was not found
+
+    # We must wait for the failure event. The signaling happens before the
+    # failure event, so we know for sure is must have happened. If we don't wait
+    # in this indirect way, we will block forever waiting for the console
+    # message and timeout.
+    await_failure_event()
+
+    # If this does not return, most likely `auth.ts/signalPasskeyMissing()`
+    # returned early and did not post a console message confirming the
+    # signaling happened. We check for console messages because there is
+    # no other way to confirm this using Chrome DevTools Protocol.
+    message = await_credential_not_found_message()
+
+    # Check the message contains the right arguments - the assumption is that
+    # if the arguments are correct, the signaling was called correctly.
+    message_values = message.args[1].json_value()
+    assert message_values["rpId"] == "localhost"
+    assert credential.credential_id == base64url_to_bytes(
+        message_values["credentialId"]
+    )
+
+
+def test_authenticate_credential__manual_disable_signal_no_credential(
+    live_server,
+    django_db_serialized_rollback,
+    page,
+    user,
+    virtual_authenticator,
+    virtual_credential,
+    wait_for_javascript_event,
+    wait_for_console_message,
+    settings,
+):
+    """Verify that manually using the 'Authenticate with Passkey' button with a credential with
+    a credential that does not exist does NOT signal an unknown credential to the browser
+    when ``OTP_WEBAUTHN_SIGNAL_UNKNOWN_CREDENTIAL = False``."""
+    settings.OTP_WEBAUTHN_SIGNAL_UNKNOWN_CREDENTIAL = False
+    credential = WebAuthnCredentialFactory(user=user, discoverable=True)
+    authenticator = virtual_authenticator(VirtualAuthenticator.internal())
+    authenticator_id = authenticator["authenticatorId"]
+
+    # Create a virtual credential from our database model
+    virtual_credential(authenticator_id, VirtualCredential.from_model(credential))
+
+    # Remove the credential to simulate it was not found / unknown
+    credential.delete()
+
+    # Go to the login with passkey page
+    page.goto(live_server.url + reverse("login-passkey"))
+    await_failure_event = wait_for_javascript_event(JS_EVENT_VERIFICATION_FAILED)
+
+    login_button = page.locator("button#passkey-verification-button")
+    expect(login_button).to_be_visible()
+
+    login_button.click()
+    expected_url = live_server.url + reverse(
+        "otp_webauthn:credential-authentication-complete"
+    )
+
+    # Looks for this message in the console log to confirm the signaling happened
+    await_credential_not_found_message = wait_for_console_message(
+        r"Not signaling unknown credential to the browser as per configuration",
+        level="trace",
+    )
+
+    with page.expect_response(expected_url, timeout=5000) as response_info:
+        assert response_info.value.status == 404  # Credential was not found
+
+    # We must wait for the failure event. The signaling happens before the
+    # failure event, so we know for sure is must have happened. If we don't wait
+    # in this indirect way, we will block forever waiting for the console
+    # message and timeout.
+    await_failure_event()
+
+    # If this does not return, most likely `auth.ts/signalPasskeyMissing()`
+    # returned early and did not post a console message confirming the
+    # signaling happened. We check for console messages because there is
+    # no other way to confirm this using Chrome DevTools Protocol.
+    await_credential_not_found_message()
+
+
 def test_authenticate_credential__internal_passwordless_using_autofill(
     live_server,
     django_db_serialized_rollback,
@@ -66,6 +190,62 @@ def test_authenticate_credential__internal_passwordless_using_autofill(
     page.wait_for_url(live_server.url + reverse("index"))
 
     assert user.username in page.content()
+
+
+def test_authenticate_credential__passwordless_signal_no_credential(
+    live_server,
+    django_db_serialized_rollback,
+    page,
+    user,
+    virtual_authenticator,
+    virtual_credential,
+    wait_for_javascript_event,
+    wait_for_console_message,
+):
+    """Verify that using autofill with a credential that does not exist
+    signals an unknown credential to the browser."""
+    credential = WebAuthnCredentialFactory(user=user, discoverable=True)
+    authenticator = virtual_authenticator(VirtualAuthenticator.internal())
+    authenticator_id = authenticator["authenticatorId"]
+
+    # Create a virtual credential from our database model
+    virtual_credential(authenticator_id, VirtualCredential.from_model(credential))
+
+    # Remove the credential to simulate it was not found / unknown
+    credential.delete()
+
+    # Looks for this message in the console log to confirm the signaling happened
+    await_credential_not_found_message = wait_for_console_message(
+        r"Credential not found", level="trace"
+    )
+    # Visit the login page with the autofill form
+    expected_url = live_server.url + reverse(
+        "otp_webauthn:credential-authentication-complete"
+    )
+    with page.expect_response(expected_url, timeout=5000) as response_info:
+        page.goto(live_server.url + reverse("auth:login"))
+        await_failure_event = wait_for_javascript_event(JS_EVENT_VERIFICATION_FAILED)
+        assert response_info.value.status == 404  # Credential was not found
+
+    # We must wait for the failure event. The signaling happens before the
+    # failure event, so we know for sure is must have happened. If we don't wait
+    # in this indirect way, we will block forever waiting for the console
+    # message and timeout.
+    await_failure_event()
+
+    # If this does not return, most likely `auth.ts/signalPasskeyMissing()`
+    # returned early and did not post a console message confirming the
+    # signaling happened. We check for console messages because there is
+    # no other way to confirm this using Chrome DevTools Protocol.
+    message = await_credential_not_found_message()
+
+    # Check the message contains the right arguments - the assumption is that
+    # if the arguments are correct, the signaling was called correctly.
+    message_values = message.args[1].json_value()
+    assert message_values["rpId"] == "localhost"
+    assert credential.credential_id == base64url_to_bytes(
+        message_values["credentialId"]
+    )
 
 
 def test_authenticate_credential__internal_second_factor_fails_when_credential_is_disabled(
