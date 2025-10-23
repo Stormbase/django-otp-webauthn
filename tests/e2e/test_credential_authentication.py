@@ -167,7 +167,7 @@ def test_authenticate_credential__u2f_second_factor(
     playwright_force_login,
 ):
     """Verify authentication with a U2F authenticator credential works if used
-    by an already authenticated user as  form of second factor."""
+    by an already authenticated user as a form of second factor."""
     # We must be authenticated already to use this credential, because the
     # server will provide us with the credential id we need for U2F to function.
     playwright_force_login(user)
@@ -303,7 +303,7 @@ def test_authenticate_credential__custom_next_input_element(
     virtual_authenticator,
     virtual_credential,
 ):
-    """Verify we can use a input named next on the page to redirect to a different page after authentication."""
+    """Verify we can use a input named 'volgende' on the page to redirect to a different page after authentication."""
     credential = WebAuthnCredentialFactory(user=user, discoverable=True)
     authenticator = virtual_authenticator(VirtualAuthenticator.internal())
     authenticator_id = authenticator["authenticatorId"]

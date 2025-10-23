@@ -22,7 +22,7 @@ def test_register_credential__legacy_u2f_passwordless_setting_enabled(
 ):
     """Verify that legacy U2F authenticator credential registration is
     impossible when passwordless login is enabled, as these devices can never be
-    user to authenticate without a password.
+    used to authenticate without a password.
 
     See comment in ``WebAuthnHelper.get_discoverable_credentials_preference``
     method for more information.
