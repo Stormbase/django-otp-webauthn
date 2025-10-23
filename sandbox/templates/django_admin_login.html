@@ -8,6 +8,7 @@ Modified to add Passkey login support.
 {% load i18n static %}
 {% load otp_webauthn %}
 
+{% block title %}{% if form.errors %}{% translate "Error:" %} {% endif %}{{ block.super }}{% endblock %}
 {% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/login.css" %}">
   {{ form.media }}
 {% endblock %}
@@ -63,7 +64,7 @@ Modified to add Passkey login support.
       {% url 'admin_password_reset' as password_reset_url %}
       {% if password_reset_url %}
         <div class="password-reset-link">
-          <a href="{{ password_reset_url }}">{% translate 'Forgotten your password or username?' %}</a>
+          <a href="{{ password_reset_url }}">{% translate 'Forgotten your login credentials?' %}</a>
         </div>
       {% endif %}
       <div class="submit-row">
