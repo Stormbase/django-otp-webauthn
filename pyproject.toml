@@ -128,10 +128,12 @@ lint.select = [
   "DJ",     # flake8-django
   "E",      # pycodestyle errors
   "F",      # pyflakes
+  "G",      # flake8-logging-format
   "I",      # isort
   "INT",    # flake8-gettext
   "PGH",    # pygrep-hooks
   "PIE",    # flake8-pie
+  "PT",     # flake8-pytest-style
   "RUF100", # unused noqa
   "S",      # flake8-bandit
   "SIM",    # flake8-simplify

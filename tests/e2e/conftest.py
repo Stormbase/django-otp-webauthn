@@ -28,7 +28,7 @@ def event_waiter():
     return _event_waiter
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture
 def cdpsession(page) -> CDPSession:
     session = page.context.new_cdp_session(page)
     session.send("WebAuthn.enable")

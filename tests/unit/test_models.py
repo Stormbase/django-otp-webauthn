@@ -118,12 +118,11 @@ def test_credentials_are_unique():
 
     cred1 = WebAuthnCredentialFactory(credential_id=credential_id)
 
+    cred2 = WebAuthnCredentialFactory()
+    assert cred2.pk is not cred1.pk
+    cred2.credential_id = credential_id
+    cred2.credential_id_sha256 = None
     with pytest.raises(IntegrityError):
-        cred2 = WebAuthnCredentialFactory()
-        assert cred2.pk is not cred1.pk
-        cred2.credential_id = credential_id
-        cred2.credential_id_sha256 = None
-
         # At this point, the hash will be generated and the unique constraint will be violated.
         cred2.save()
 
