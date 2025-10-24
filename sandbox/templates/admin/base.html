@@ -1,0 +1,7 @@
+{% extends "admin/base.html" %}
+{% load otp_webauthn %}
+
+{% block extrabody %}
+    {{ block.super }}
+    {% render_otp_webauthn_sync_signals_scripts %}
+{% endblock extrabody %}
