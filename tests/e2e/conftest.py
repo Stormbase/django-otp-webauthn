@@ -81,23 +81,83 @@ def wait_for_javascript_event(page):
 
 @pytest.fixture
 def wait_for_console_message(page):
-    """Returns a function that blocks until a certain console message has been posted."""
+    """Returns a function that blocks until a certain console message has been posted.
 
-    def _wait_for_console_message(message_text_regex: str, *, level="log"):
-        future = FutureWrapper()
+    Only saves the first matching message. You can use this fixture multiple times
+    in a test to wait for multiple different messages.
 
-        def _handle_console_message(msg):
-            if msg.type == level and re.match(message_text_regex, msg.text):
-                future.set_result(msg)
+    Args:
+        message_text_regex: A regex string to match against the console message text.
+        level: The console message level to match against (e.g. "log", "error", etc.)
 
-        page.on("console", _handle_console_message)
+    Returns:
+        A function that, when called, blocks until the console message is seen, and then returns the playwright ConsoleMessage object.
+        See: https://playwright.dev/python/docs/api/class-consolemessage
 
-        def _return():
-            return future.get_result()
+    Usage:
+        def my_testcase(live_server, page, wait_for_console_message):
+            # Set up the listener to capture the console message
+            await_message = wait_for_console_message(r"hello", level="info")
 
-        return _return
+            page.goto(live_server.url)
+            # Do stuff that triggers the console message
+            page.evaluate("console.log('hello', 42, { foo: 'bar' })")
 
-    return _wait_for_console_message
+            # Wait for and get the console message. This will block until the message is seen, or raise a timeout error.
+            msg = await_message()
+
+            # Now you can inspect the msg object as needed
+            msg.args[0].json_value() # hello
+            msg.args[1].json_value() # 42
+    """
+
+    waiters: list[dict] = []
+    buffer: list = []
+
+    def _on_console(msg):
+        # store raw messages so later-created waiters can match them too
+        buffer.append(msg)
+        # satisfy any outstanding waiters
+        for waiter in list(waiters):
+            try:
+                if not waiter["future"].done() and waiter["regex"].search(msg.text):
+                    waiter["future"].set_result(msg)
+            except Exception:  # noqa: S110, BLE001 - yes, do catch naked exceptions and don't log them
+                # guard handler from raising (handlers should be best-effort)
+                pass
+
+    # register the listener immediately so we don't miss early messages
+    page.on("console", _on_console)
+
+    def _factory(pattern, timeout: int = 5000, level: str | None = None):
+        regex = re.compile(pattern) if isinstance(pattern, (str, bytes)) else pattern
+        # If we've already seen a matching message, return it immediately.
+        for msg in buffer:
+            if regex.search(msg.text) and (level is None or msg.type == level):
+
+                def _immediate(msg=msg):
+                    return msg
+
+                return _immediate
+
+        future = Future()
+        waiter = {"regex": regex, "future": future}
+        waiters.append(waiter)
+
+        def _waiter():
+            try:
+                # concurrent.futures.Future expects seconds, but our testing convention is milliseconds
+                sec = timeout / 1000.0 if timeout is not None else None
+                return future.result(timeout=sec)
+            finally:
+                try:
+                    waiters.remove(waiter)
+                except ValueError:
+                    pass
+
+        return _waiter
+
+    return _factory
 
 
 @pytest.fixture
