@@ -252,7 +252,7 @@ def test_register_credential__fail_bad_rpid(
 
     register_button.click()
     page.wait_for_selector(
-        f"#passkey-register-status-message[data-status-enum='{StatusEnum.SECURITY_ERROR}']",
+        f"#passkey-register-status-message[data-status-enum='{StatusEnum.SECURITY_ERROR.value}']",
         timeout=2000,
     )
     # Did the right events fire?
