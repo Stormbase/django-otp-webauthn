@@ -6,6 +6,7 @@ const config: Configuration = {
   entry: {
     auth: "./client/src/auth.ts",
     register: "./client/src/register.ts",
+    sync_signals: "./client/src/sync_signals.ts",
   },
   module: {
     rules: [
