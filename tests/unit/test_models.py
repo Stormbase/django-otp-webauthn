@@ -6,6 +6,7 @@ import pytest
 from django.db import IntegrityError
 from django.test.utils import isolate_apps
 from django.utils import timezone
+from webauthn.helpers import bytes_to_base64url
 from webauthn.helpers.structs import (
     AttestationObject,
     AuthenticatorTransport,
@@ -128,8 +129,19 @@ def test_credentials_are_unique():
 
 
 @pytest.mark.django_db
-def test_get_by_credential_id(django_assert_num_queries):
-    """Test that the get_by_credential_id method works."""
+def test_credential_credential_id_base64url():
+    """Test that the credential_id_base64url property works."""
+    credential_id = b"credential_id"
+    expected_base64url = "Y3JlZGVudGlhbF9pZA"
+
+    credential = WebAuthnCredentialFactory(credential_id=credential_id)
+
+    assert credential.credential_id_base64url == expected_base64url
+
+
+@pytest.mark.django_db
+def test_credential_get_by_credential_id(django_assert_num_queries):
+    """Test that WebAuthnCredential.get_by_credential_id method works."""
     credential_id = b"credential_id"
 
     cred1 = WebAuthnCredentialFactory(credential_id=credential_id)
@@ -251,6 +263,25 @@ def test_user_handle_generate_handle_hex(user_handle_model):
 
     assert isinstance(handle, bytes)
     assert len(handle) == 64
+
+
+@pytest.mark.django_db
+def test_user_handle_handle_property(user_handle):
+    """Test that the handle property works."""
+    handle_bytes = user_handle.handle
+
+    assert isinstance(handle_bytes, bytes)
+    assert handle_bytes == bytes.fromhex(user_handle.handle_hex)
+
+
+@pytest.mark.django_db
+def test_user_handle_handle_base64url_property(user_handle):
+    """Test that the handle_base64url property works."""
+    expected_base64url = bytes_to_base64url(bytes.fromhex(user_handle.handle_hex))
+    handle_base64url = user_handle.handle_base64url
+
+    assert isinstance(handle_base64url, str)
+    assert handle_base64url == expected_base64url
 
 
 @pytest.mark.django_db
