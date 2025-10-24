@@ -55,10 +55,10 @@ def as_credential_descriptors(
     return descriptors
 
 
-class WebAuthnAttestationManager(models.Manager): ...
+class WebAuthnAttestationManager(models.Manager): ...  # pragma: no cover
 
 
-class WebAuthnCredentialManager(DeviceManager): ...
+class WebAuthnCredentialManager(DeviceManager): ...  # pragma: no cover
 
 
 class WebAuthnCredentialQuerySet(models.QuerySet):
