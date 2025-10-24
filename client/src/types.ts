@@ -34,3 +34,11 @@ export type Config = {
   csrfToken: string;
   removeUnknownCredential: boolean;
 };
+
+export type SyncSignalConfig = {
+  rpId: string;
+  userId: string;
+  name: string;
+  displayName: string;
+  credentialIds: string[];
+};

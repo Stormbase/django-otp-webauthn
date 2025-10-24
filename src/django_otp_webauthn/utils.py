@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
+from django.http import HttpRequest
 from django.urls import reverse
 from webauthn.helpers import exceptions as pywebauthn_exceptions
 
@@ -149,3 +150,16 @@ def get_attestation_model_string() -> str:
     """Returns the string representation of the WebAuthnAttestation model
     that is active in this project."""
     return app_settings.OTP_WEBAUTHN_ATTESTATION_MODEL
+
+
+def request_user_details_sync(request: HttpRequest) -> None:
+    """Causes the `{% render_otp_webauthn_sync_signals_scripts %}` template tag
+    to render a script that calls the `PublicKeyCredential.signalCurrentUserDetails`
+    and `PublicKeyCredential.signalAllAcceptedCredentials` browser apis on the
+    next page load.
+
+    This ensures the users' browser is made aware of changes to user details and
+    credentials.
+    """
+    request.session["otp_webauthn_sync_needed"] = True
+    request.session.save()
