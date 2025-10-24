@@ -128,22 +128,68 @@ def virtual_credential(cdpsession):
 
 
 @pytest.fixture
-def playwright_force_login(live_server, context):
+def playwright_manipulate_session(live_server, context):
+    """Fixture that allows direct manipulation of the session.
+
+    Usage:
+        def my_pytest_playwright_testcase(live_server, page, playwright_manipulate_session):
+            # Update or add a specific key:
+            playwright_manipulate_session(lambda session: session.update({"some_key": "some_value"}))
+
+            # Remove a specific key:
+            playwright_manipulate_session(lambda session: session.pop("some_key", None))
+
+            # Clear the session entirely:
+            playwright_manipulate_session(lambda session: session.clear())
+
+            # Navigate the live server as normal, with the updated session:
+            page.goto(live_server.url)
+    """
+
+    def _playwright_manipulate_session(modify_func):
+        # Get the session id cookie from the browser context
+        session_cookie_value = None
+        for cookie in context.cookies():
+            if cookie["name"] == "sessionid":
+                session_cookie_value = cookie["value"]
+                break
+
+        # Instantiate a Django test client to gain access to the SessionStore
+        # and load the session if we already have one
+        client = DjangoTestClient()
+        if session_cookie_value:
+            client.cookies["sessionid"] = session_cookie_value
+
+        session = client.session
+
+        # let the caller modify the session
+        modify_func(session)
+
+        session.save()
+        # Update the browser context with the new session id cookie
+        context.add_cookies(
+            [
+                {
+                    "url": live_server.url,
+                    "name": "sessionid",
+                    "value": session.session_key,
+                }
+            ]
+        )
+
+    return _playwright_manipulate_session
+
+
+@pytest.fixture
+def playwright_force_login(live_server, context, playwright_manipulate_session):
     """Fixture that forces the given user to be logged in by manipulating the session cookie."""
 
     def _playwright_force_login(user):
         login_helper = DjangoTestClient()
         login_helper.force_login(user)
 
-        context.add_cookies(
-            [
-                {
-                    "url": live_server.url,
-                    "name": "sessionid",
-                    "value": login_helper.cookies["sessionid"].value,
-                }
-            ]
+        playwright_manipulate_session(
+            lambda session: session.update(login_helper.session.items())
         )
-        return user
 
     return _playwright_force_login
