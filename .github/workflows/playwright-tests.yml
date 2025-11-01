@@ -42,7 +42,7 @@ jobs:
         run: |
           /bin/sh ./scripts/run_e2e_testsuite.sh
       - name: Upload Playwright traces
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: ${{ !cancelled() }}
         with:
           name: playwright-traces
