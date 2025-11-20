@@ -10,7 +10,7 @@
     "lint": "prettier --check 'client/**/*.{ts,js,jsx,css,scss}'"
   },
   "devDependencies": {
-    "@babel/core": "^7.24.5",
+    "@babel/core": "^7.28.4",
     "@babel/preset-env": "^7.24.5",
     "@babel/preset-typescript": "^7.24.1",
     "@babel/register": "^7.23.7",
