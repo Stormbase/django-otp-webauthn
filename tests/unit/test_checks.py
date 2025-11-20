@@ -8,6 +8,7 @@ def dummy_callable(*args, **kwargs):
     return "dummy-value"
 
 
+@pytest.mark.django_db
 def test_check_settings_relying_party_id__not_set(settings):
     """Verify that a SystemCheckError is raised when the relying party ID is not set."""
     settings.OTP_WEBAUTHN_RP_ID_CALLABLE = None
@@ -17,6 +18,7 @@ def test_check_settings_relying_party_id__not_set(settings):
         call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_relying_party_id__static_value_set(settings):
     """Verify that no SystemCheckError is raised when the relying party ID is set."""
     settings.OTP_WEBAUTHN_RP_ID_CALLABLE = None
@@ -25,6 +27,7 @@ def test_check_settings_relying_party_id__static_value_set(settings):
     call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_relying_party_id__callable_value_set(settings):
     """Verify that no SystemCheckError is raised when the relying party ID is set."""
     settings.OTP_WEBAUTHN_RP_ID_CALLABLE = "tests.unit.test_checks.dummy_callable"
@@ -33,6 +36,7 @@ def test_check_settings_relying_party_id__callable_value_set(settings):
     call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_relying_party_name__not_set(settings):
     """Verify that a SystemCheckError is raised when the relying party name is not set."""
     settings.OTP_WEBAUTHN_RP_NAME_CALLABLE = None
@@ -42,6 +46,7 @@ def test_check_settings_relying_party_name__not_set(settings):
         call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_relying_party_name__static_value_set(settings):
     """Verify that no SystemCheckError is raised when the relying party name is set."""
     settings.OTP_WEBAUTHN_RP_NAME_CALLABLE = None
@@ -50,6 +55,7 @@ def test_check_settings_relying_party_name__static_value_set(settings):
     call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_relying_party_name__callable_value_set(settings):
     """Verify that no SystemCheckError is raised when the relying party name is set."""
     settings.OTP_WEBAUTHN_RP_NAME_CALLABLE = "tests.unit.test_checks.dummy_callable"
@@ -58,6 +64,7 @@ def test_check_settings_relying_party_name__callable_value_set(settings):
     call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_supported_cose_algorithms__none(settings):
     """Verify that no SystemCheckError is raised when OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS=None - defaults will be used."""
     settings.OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS = None
@@ -65,6 +72,7 @@ def test_check_settings_supported_cose_algorithms__none(settings):
     call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_supported_cose_algorithms__empty_list(settings):
     """Verify that a SystemCheckError is raised when no COSE algorithms are set."""
     settings.OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS = []
@@ -73,6 +81,7 @@ def test_check_settings_supported_cose_algorithms__empty_list(settings):
         call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_supported_cose_algorithms__invalid_algorithm(settings):
     """Verify that a SystemCheckError is raised when an invalid COSE algorithm is set."""
     settings.OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS = [1337]
@@ -81,6 +90,7 @@ def test_check_settings_supported_cose_algorithms__invalid_algorithm(settings):
         call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_supported_cose_algorithms__valid_algorithm(settings):
     """Verify that no SystemCheckError is raised when a valid COSE algorithm is set."""
     settings.OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS = [
@@ -90,6 +100,7 @@ def test_check_settings_supported_cose_algorithms__valid_algorithm(settings):
     call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_allowed_origins_missing(settings):
     """Verify that a SystemCheckError is raised when no allowed origins are set."""
     settings.OTP_WEBAUTHN_ALLOWED_ORIGINS = []
@@ -98,6 +109,7 @@ def test_check_settings_allowed_origins_missing(settings):
         call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_allowed_origins_set(settings):
     """Verify that no SystemCheckError is raised when allowed origins are set."""
     settings.OTP_WEBAUTHN_ALLOWED_ORIGINS = ["https://example.com"]
@@ -105,6 +117,7 @@ def test_check_settings_allowed_origins_set(settings):
     call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_allowed_origins_misconfigured(settings):
     """Verify that a SystemCheckError is raised when allowed origins are misconfigured."""
     # Not a list
@@ -138,6 +151,7 @@ def test_check_settings_allowed_origins_misconfigured(settings):
     call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_rp_related_origins(settings):
     """Verify that no SystemCheckError is raised when related origins are set."""
     settings.OTP_WEBAUTHN_RP_RELATED_ORIGINS = []
@@ -148,6 +162,7 @@ def test_check_settings_rp_related_origins(settings):
     call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_rp_related_origins_misconfigured(settings):
     """Verify that a SystemCheckError is raised when related origins are misconfigured."""
 
@@ -172,6 +187,7 @@ def test_check_settings_rp_related_origins_misconfigured(settings):
     call_command("check")
 
 
+@pytest.mark.django_db
 def test_check_settings_dangerous_session_backend_used(settings):
     """Verify that a SystemCheckError is raised when the session backend is dangerous."""
 
