@@ -248,3 +248,11 @@ Once you’ve done this, you will see the following on your login page:
 * a **Register Passkey** button on the login page
 
 * a **Login using a Passkey** button on the login page
+
+Next steps
+----------
+
+Now that you have Django OTP WebAuthn set up, you can explore additional features such as:
+
+* :ref:`keeping_passkeys_in_sync`, to improve your users' experience.
+* :ref:`configure_related_origins`, for when your application is active on multiple domains and you want to share Passkeys across them.
