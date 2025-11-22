@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-14 12:33+0000\n"
+"POT-Creation-Date: 2026-08-17 12:13+0000\n"
 "PO-Revision-Date: 2025-12-11 12:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -162,22 +162,22 @@ msgstr "Gehashte Berechtigungs-ID"
 msgid "discoverable"
 msgstr "Auffindbar"
 
-#: src/django_otp_webauthn/models.py:439
+#: src/django_otp_webauthn/models.py:444
 msgid "credential"
 msgstr "Berechtigung"
 
-#: src/django_otp_webauthn/models.py:465
+#: src/django_otp_webauthn/models.py:470
 msgid "handle hex"
 msgstr "Handle Hex"
 
-#: src/django_otp_webauthn/models.py:475
+#: src/django_otp_webauthn/models.py:480
 msgid "user"
 msgstr "Benutzer"
 
-#: src/django_otp_webauthn/models.py:479
+#: src/django_otp_webauthn/models.py:484
 msgid "WebAuthn user handle"
 msgstr "WebAuthn Benutzer Handle"
 
-#: src/django_otp_webauthn/models.py:480
+#: src/django_otp_webauthn/models.py:485
 msgid "WebAuthn user handles"
 msgstr "WebAuthn Benutzer Handle"
