@@ -241,6 +241,9 @@ def test_registration_complete__valid_response_but_already_verified(
     assert cred.persistent_id != credential.persistent_id
     assert api_client.session["otp_device_id"] == credential.persistent_id
 
+    # Signaled that user details sync is needed
+    assert api_client.session["otp_webauthn_sync_needed"] is True
+
 
 @pytest.mark.django_db
 def test_registration_complete__valid_response(api_client, user, credential_model):
@@ -279,3 +282,6 @@ def test_registration_complete__valid_response(api_client, user, credential_mode
 
     # The user session wasn't 2FA verified before, so now it should be
     assert api_client.session["otp_device_id"] == cred.persistent_id
+
+    # Signaled that user details sync is needed
+    assert api_client.session["otp_webauthn_sync_needed"] is True

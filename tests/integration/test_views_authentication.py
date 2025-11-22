@@ -212,6 +212,8 @@ def test_authentication_complete__anonymous_user_passwordless_login_allowed(
     assert (
         session["_auth_user_backend"] == "django_otp_webauthn.backends.WebAuthnBackend"
     )
+    # Signaled that user details sync is needed
+    assert session["otp_webauthn_sync_needed"] is True
 
 
 @pytest.mark.django_db
@@ -235,6 +237,8 @@ def test_authentication_complete__verify_existing_user(api_client, settings, use
     session = api_client.session
     assert "otp_webauthn_authentication_state" not in session
     assert session["otp_device_id"] == credential.persistent_id
+    # Signaled that user details sync is needed
+    assert session["otp_webauthn_sync_needed"] is True
 
 
 @pytest.mark.django_db
@@ -258,6 +262,8 @@ def test_authentication_complete_device_usable__unconfirmed(api_client, user):
     session = api_client.session
     assert "otp_webauthn_authentication_state" not in session
     assert "otp_device_id" not in session
+    # No user details sync should be requested
+    assert "otp_webauthn_sync_needed" not in session
 
 
 @pytest.mark.django_db
@@ -285,6 +291,8 @@ def test_authentication_complete_device_usable__user_disabled(
     session = api_client.session
     assert "otp_webauthn_authentication_state" not in session
     assert "otp_device_id" not in session
+    # No user details sync should be requested
+    assert "otp_webauthn_sync_needed" not in session
 
 
 @pytest.mark.django_db
