@@ -9,7 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Nothing yet
+- **New feature (experimental):** the browser will now be signaled to remove an unknown Passkey after a failed authentication attempt.
+  - The purpose of this is to improve user experience by removing Passkeys that are no longer valid from the users' device, stopping the user from being prompted to use this Passkey in the future.
+  - This is controlled by the new `OTP_WEBAUTHN_SIGNAL_UNKNOWN_CREDENTIAL` setting, which defaults to `True`. If set to `False`, the browser will not be signaled.
+  - It works on recent versions of Chrome, Edge and Safari but not Firefox (as of October 2025).
+  - Read more about the browser API used: [`PublicKeyCredential.signalUnknownCredential` on MDN](https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredential/signalUnknownCredential_static).
+  - This feature is experimental because not all browsers support it properly yet. The specification is also still in draft status and may change in the future.
+- **New feature (experimental)**: the `render_otp_webauthn_sync_signals_scripts` template tag has been added to allow updating user details stored in the browser when they change on the server side.
+  - The purpose of this is to improve user experience by keeping the user details (like display name) in sync between server and client, so that the browser can show the correct information when prompting the user to select a Passkey.
+  - It works on recent versions of Chrome, Edge and Safari but not Firefox (as of October 2025).
+  - This feature is experimental because not all browsers support it properly yet. The specification is also still in draft status and may change in the future.
+  - Read more about the browser APIs used:
+    - [`PublicKeyCredential.signalCurrentUserDetails` on MDN](https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredential/signalCurrentUserDetails_static)
+    - [`PublicKeyCredential.signalAllAcceptedCredentials` on MDN](https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredential/signalAllAcceptedCredentials_static)
 
 ### Changed
 
