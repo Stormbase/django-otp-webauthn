@@ -153,8 +153,11 @@ def get_attestation_model_string() -> str:
 
 
 def request_user_details_sync(request: HttpRequest) -> None:
-    """Causes the `{% render_otp_webauthn_sync_signals_scripts %}` template tag
-    to render a script that calls the `PublicKeyCredential.signalCurrentUserDetails`
+    """Marks the current session as needing user details and accepted credentials
+    synchronization with the browser.
+
+    The implementation will cause the `{% render_otp_webauthn_sync_signals_scripts %}`
+    template tag to render a script that calls the `PublicKeyCredential.signalCurrentUserDetails`
     and `PublicKeyCredential.signalAllAcceptedCredentials` browser apis on the
     next page load.
 
