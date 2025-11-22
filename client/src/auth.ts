@@ -290,6 +290,17 @@ import {
                   status: gettext("Verification canceled or not allowed."),
                 });
                 break;
+              case "SecurityError":
+                await setPasskeyVerifyState({
+                  buttonDisabled: false,
+                  buttonLabel,
+                  requestFocus: true,
+                  statusEnum: StatusEnum.SECURITY_ERROR,
+                  status: gettext(
+                    "Passkey authentication failed. A technical problem prevents the verification process for beginning. Please try another method.",
+                  ),
+                });
+                break;
               default:
                 await setPasskeyVerifyState({
                   buttonDisabled: false,

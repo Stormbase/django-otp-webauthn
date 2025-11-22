@@ -149,22 +149,22 @@ msgstr "gehashte credential id"
 msgid "discoverable"
 msgstr "zichtbaar"
 
-#: src/django_otp_webauthn/models.py:402
+#: src/django_otp_webauthn/models.py:407
 msgid "credential"
 msgstr "credential"
 
-#: src/django_otp_webauthn/models.py:428
+#: src/django_otp_webauthn/models.py:433
 msgid "handle hex"
 msgstr "handle hex"
 
-#: src/django_otp_webauthn/models.py:438
+#: src/django_otp_webauthn/models.py:443
 msgid "user"
 msgstr "gebruiker"
 
-#: src/django_otp_webauthn/models.py:442
+#: src/django_otp_webauthn/models.py:447
 msgid "WebAuthn user handle"
 msgstr "WebAuthn user handle"
 
-#: src/django_otp_webauthn/models.py:443
+#: src/django_otp_webauthn/models.py:448
 msgid "WebAuthn user handles"
 msgstr "WebAuthn user handles"
