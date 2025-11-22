@@ -135,7 +135,7 @@ def test_render_otp_webauthn_sync_signals_scripts__not_authenticated(client):
     rendered = template.render(context)
     # User is not authenticated, so we stay silent and render
     # nothing - even though the sync needed flag is set.
-    assert rendered.strip() == ""
+    assert rendered == ""
 
 
 @pytest.mark.django_db
@@ -190,4 +190,4 @@ def test_render_otp_webauthn_sync_signals_scripts__authenticated(
 
     rendered = template.render(context)
     # We did not set the sync needed flag, so we stay silent and render nothing
-    assert rendered.strip() == ""
+    assert rendered == ""

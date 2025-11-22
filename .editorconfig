@@ -13,5 +13,9 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 4
 
+[src/django_otp_webauthn/templates/*.html]
+# Final newlines don't have to end up in the HTML output of end users
+insert_final_newline = false
+
 [*.md]
 trim_trailing_whitespace = false
