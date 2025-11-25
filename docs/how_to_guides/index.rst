@@ -37,4 +37,4 @@ Here are what you will find in this section:
     Customize helper class <customize_helper_class.rst>
     Customize models <customize_models.rst>
     Configure related origins <configure_related_origins.rst>
-    Keeping Passkeys up-to-date with changing user details <keeping_passkeys_in_sync.rst>
+    Keep passkeys up-to-date <keeping_passkeys_in_sync.rst>
