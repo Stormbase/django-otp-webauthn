@@ -45,7 +45,7 @@ When a user removes a passkey from your application, the browser doesn't automat
 
 To handle, call the ``request_user_details_sync`` utility function after you remove a passkey. This ensures that on the next page load, the browser receives the information it needs to remove the deleted passkey from storage. Depending on the browser’s implementation, the user may be prompted to confirm the removal.
 
-If the user tries to use a removed passkey during authentication, the browser automatically determines that the passkey is 
+If the user tries to use a removed passkey during authentication, the browser automatically determines that the passkey is
 no longer valid through the `PublicKeyCredential.signalUnknownCredential
 <https://developer.mozilla.org/en-US/docs/Web/API/PublicKeyCredential/signalUnknownCredential_static>`_
 WebAuthn API.
