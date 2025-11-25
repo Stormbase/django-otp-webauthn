@@ -51,8 +51,8 @@ no longer valid through the `PublicKeyCredential.signalUnknownCredential
 WebAuthn API.
 
 
-How to trigger user details sync
---------------------------------
+Trigger user details synchronization
+------------------------------------
 
 To trigger the user details synchronization process, call the ``request_user_details_sync`` utility function whenever a user updates their details. For example, if you have a view that lets users change their email address or username, add a call to this function after the update succeeds. This ensures that the next time the user loads a page, their passkeys are updated with the new details.
 
