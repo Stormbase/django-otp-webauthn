@@ -53,7 +53,7 @@ jobs:
         with:
           python-version: "3.x"
           cache: "pip"
-      - uses: gerlero/apt-install@a0d81074b838120197865dc2576f67c4f40044b2
+      - uses: gerlero/apt-install@69d8f22493ec83ec5277cf2f661bd4d2fa88986e
         name: Install aspell
         with:
           packages: aspell aspell-en
