@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-12-11 11:43+0000\n"
+"PO-Revision-Date: 2025-12-11 12:44+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.8\n"
+
+#: src/django_otp_webauthn/admin.py:38
+msgid "COSE public key"
+msgstr "COSE Public Key"
+
+#: src/django_otp_webauthn/admin.py:62
+msgid "Identity"
+msgstr "Identität"
+
+#: src/django_otp_webauthn/admin.py:68
+msgid "Meta"
+msgstr ""
+
+#: src/django_otp_webauthn/admin.py:74
+msgid "WebAuthn credential data"
+msgstr "WebAuthn Berechtigungsdaten"
+
+#: src/django_otp_webauthn/apps.py:11
+msgid "OTP WebAuthn"
+msgstr ""
+
+#: src/django_otp_webauthn/exceptions.py:12
+msgid ""
+"State is missing or invalid. Please begin the operation first before trying "
+"to complete it."
+msgstr ""
+"Der Status fehlt oder ist ungültig. Bitte beginnen Sie den Vorgang, bevor "
+"Sie versuchen, ihn abzuschließen."
+
+#: src/django_otp_webauthn/exceptions.py:19
+msgid "Unprocessable Entity"
+msgstr "Nicht verarbeitbare Entität"
+
+#: src/django_otp_webauthn/exceptions.py:25
+msgid "Passwordless login is disabled."
+msgstr "Die Anmeldung ohne Passwort ist deaktiviert."
+
+#: src/django_otp_webauthn/exceptions.py:31
+msgid "This user account is marked as disabled."
+msgstr "Dieses Benutzerkonto wurde als deaktiviert markiert."
+
+#: src/django_otp_webauthn/exceptions.py:37
+msgid "This Passkey has been marked as disabled."
+msgstr "Dieser Passkey wurde als deaktiviert markiert."
+
+#: src/django_otp_webauthn/exceptions.py:44
+msgid "The Passkey you tried to use was not found. Perhaps it was removed?"
+msgstr ""
+"Der von Ihnen verwendete Passkey wurde nicht gefunden. Möglicherweise wurde "
+"er entfernt?"
+
+#: src/django_otp_webauthn/models.py:86
+msgid "format"
+msgstr "Format"
+
+#: src/django_otp_webauthn/models.py:90
+msgid "data"
+msgstr "Data"
+
+#: src/django_otp_webauthn/models.py:94
+msgid "client data JSON"
+msgstr "Client Data JSON"
+
+#: src/django_otp_webauthn/models.py:106
+msgid "WebAuthn attestation"
+msgstr "WebAuthn Attestation"
+
+#: src/django_otp_webauthn/models.py:107
+msgid "WebAuthn attestations"
+msgstr "WebAuthn Attestations"
+
+#: src/django_otp_webauthn/models.py:148
+msgid "WebAuthn credential"
+msgstr "WebAuthn Berechtigung"
+
+#: src/django_otp_webauthn/models.py:149
+msgid "WebAuthn credentials"
+msgstr "WebAuthn Berechtigungen"
+
+#: src/django_otp_webauthn/models.py:156
+msgid "Public Key"
+msgstr "Öffentlicher Schlüssel"
+
+#: src/django_otp_webauthn/models.py:161
+msgid "credential type"
+msgstr "Berechtigungstyp"
+
+#: src/django_otp_webauthn/models.py:174
+msgid "credential id data"
+msgstr "Berechtigung-ID Daten"
+
+#: src/django_otp_webauthn/models.py:191
+msgid "COSE public key data"
+msgstr "COSE Public Key Data"
+
+#: src/django_otp_webauthn/models.py:199
+msgid "transports"
+msgstr "Transports"
+
+#: src/django_otp_webauthn/models.py:219
+msgid "sign count"
+msgstr "Signierungen"
+
+#: src/django_otp_webauthn/models.py:237
+msgid "backup eligible"
+msgstr "Backup-fähig"
+
+#: src/django_otp_webauthn/models.py:247
+msgid "backup state"
+msgstr "Backup Status"
+
+#: src/django_otp_webauthn/models.py:270
+msgid "AAGUID"
+msgstr ""
+
+#: src/django_otp_webauthn/models.py:287
+msgid "hashed credential id"
+msgstr "Gehashte Berechtigungs-ID"
+
+#: src/django_otp_webauthn/models.py:296
+msgid "discoverable"
+msgstr "Auffindbar"
+
+#: src/django_otp_webauthn/models.py:402
+msgid "credential"
+msgstr "Berechtigung"
+
+#: src/django_otp_webauthn/models.py:428
+msgid "handle hex"
+msgstr "Handle Hex"
+
+#: src/django_otp_webauthn/models.py:438
+msgid "user"
+msgstr "Benutzer"
+
+#: src/django_otp_webauthn/models.py:442
+msgid "WebAuthn user handle"
+msgstr "WebAuthn Benutzer Handle"
+
+#: src/django_otp_webauthn/models.py:443
+msgid "WebAuthn user handles"
+msgstr "WebAuthn Benutzer Handle"
