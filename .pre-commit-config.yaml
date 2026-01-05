@@ -17,7 +17,7 @@ repos:
       - id: trailing-whitespace
       - id: debug-statements
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.14.3"
+    rev: "v0.14.10"
     hooks:
       - id: ruff-check
         args: [--fix, --exit-non-zero-on-fix]
@@ -29,7 +29,7 @@ repos:
         types_or:
           [css, javascript, ts, json, yaml, markdown, bash, editorconfig, toml]
   - repo: https://github.com/tox-dev/pyproject-fmt
-    rev: "v2.11.0"
+    rev: "v2.11.1"
     hooks:
       - id: pyproject-fmt
         args: ["--max-supported-python=3.14"]
