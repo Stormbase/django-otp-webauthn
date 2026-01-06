@@ -1,0 +1,103 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-06 12:33+0000\n"
+"PO-Revision-Date: 2026-01-06 13:55+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.4\n"
+
+msgid "Verification failed. A server error occurred."
+msgstr "Verifica fallita. Si è verificato un errore del server."
+
+msgid "An error occurred during verification."
+msgstr "Si è verificato un errore durante la verifica."
+
+msgid "Verify with Passkey"
+msgstr "Verifica con Passkey"
+
+msgid "Verifying..."
+msgstr "Verifica in corso…"
+
+msgid "Verification failed. Could not retrieve parameters from the server."
+msgstr "Verifica fallita. Impossibile recuperare i parametri dal server."
+
+msgid "Verification aborted."
+msgstr "Verifica interrotta."
+
+msgid "Verification canceled or not allowed."
+msgstr "Verifica annullata o non consentita."
+
+msgid "Verification failed. An unknown error occurred."
+msgstr "Verifica non riuscita. Si è verificato un errore sconosciuto."
+
+msgid "Finishing verification..."
+msgstr "Completamento della verifica…"
+
+msgid "Verification failed. An unknown server error occurred."
+msgstr "Verifica fallita. Si è verificato un errore sconosciuto del server."
+
+msgid "Verification successful!"
+msgstr "Verifica avvenuta con successo!"
+
+msgid "Register a Passkey"
+msgstr "Registra una passkey"
+
+msgid "Registering..."
+msgstr "Registrazione in corso…"
+
+msgid "Registration failed. Unable to fetch registration options from server."
+msgstr ""
+"Registrazione fallita. Impossibile recuperare le opzioni di registrazione "
+"dal server."
+
+msgid "Registration aborted."
+msgstr "Registrazione interrotta."
+
+msgid ""
+"Registration failed. You most likely already have a Passkey registered for "
+"this site."
+msgstr ""
+"Registrazione fallita. Molto probabilmente hai già una Passkey registrata "
+"per questo sito."
+
+msgid "Registration aborted or not allowed."
+msgstr "Registrazione annullata o non consentita."
+
+msgid ""
+"Registration failed. A technical problem occurred that prevents you from "
+"registering a Passkey for this site."
+msgstr ""
+"Registrazione fallita. Si è verificato un problema tecnico che impedisce la "
+"registrazione di una Passkey per questo sito."
+
+msgid "Registration failed. An unknown error occurred."
+msgstr "Registrazione fallita. Si è verificato un errore sconosciuto."
+
+msgid "Finishing registration..."
+msgstr "Completamento della registrazione…"
+
+msgid "Registration failed. The server was unable to verify this passkey."
+msgstr ""
+"Registrazione fallita. Il server non è riuscito a verificare questa passkey."
+
+msgid "Registration failed. A server error occurred."
+msgstr "Registrazione fallita. Si è verificato un errore del server."
+
+msgid "Registration successful!"
+msgstr "Registrazione avvenuta con successo!"
+
+msgid "An error occurred during registration."
+msgstr "Si è verificato un errore durante la registrazione."
