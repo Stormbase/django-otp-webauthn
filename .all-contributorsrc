@@ -70,6 +70,15 @@
         "code",
         "translation"
       ]
+    },
+    {
+      "login": "contmp",
+      "name": "Bastian Probian",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1750187?v=4",
+      "profile": "https://contmp.de/",
+      "contributions": [
+        "translation"
+      ]
     }
   ],
   "contributorsPerLine": 7,
