@@ -9,15 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Nothing yet
+- German translations ([#104](https://github.com/Stormbase/django-otp-webauthn/pull/104) by [bprobian](https://github.com/bprobian))
+- Italian translations ([#109](https://github.com/Stormbase/django-otp-webauthn/pull/109) by [bprobian](https://github.com/bprobian))
+- Spanish translations ([#109](https://github.com/Stormbase/django-otp-webauthn/pull/109) by [bprobian](https://github.com/bprobian))
 
 ### Changed
 
-- Nothing yet
-
-### Fixed
-
-- Nothing yet
+- Improve translation update script ([#105](https://github.com/Stormbase/django-otp-webauthn/pull/105) by [bprobian](https://github.com/bprobian))
 
 ## [0.7.0] - 2025-10-09
 
