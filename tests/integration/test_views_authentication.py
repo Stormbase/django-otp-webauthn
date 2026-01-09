@@ -19,7 +19,7 @@ def test_authentication__anonymous_user_passwordless_login_disallowed(
     """Test that an anonymous user is not allowed to begin authentication if passwordless login is disabled."""
     settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = False
     response = api_client.post(url)
-    assert response.status_code == 403
+    assert response.status_code == 403, response.data
     assert response.data["detail"].code == "passwordless_login_disabled"
 
 
@@ -40,12 +40,12 @@ def test_authentication__http_verbs(api_client, user, url):
 
     # OPTIONS should be allowed
     response = api_client.options(url)
-    assert response.status_code == 200
+    assert response.status_code == 200, response.data
 
     # POST should be allowed
     response = api_client.post(url)
     # We expect either a 200 or a 400 response (because we are not passing any data)
-    assert response.status_code == 200 or response.status_code == 400
+    assert response.status_code == 200 or response.status_code == 400, response.data
 
 
 # BEGIN AUTHENTICATION VIEW
@@ -63,7 +63,7 @@ def test_authentication_begin__anonymous_user_passwordless_login_allowed(
         ]
     }
     response = api_client.post(reverse("otp_webauthn:credential-authentication-begin"))
-    assert response.status_code == 200
+    assert response.status_code == 200, response.data
     data = response.json()
     session = api_client.session
 
@@ -94,7 +94,7 @@ def test_authentication_begin__logged_in_user(
     WebAuthnCredentialFactory(user=user, credential_id=credential_id)
 
     response = api_client.post(reverse("otp_webauthn:credential-authentication-begin"))
-    assert response.status_code == 200
+    assert response.status_code == 200, response.data
     data = response.json()
     session = api_client.session
 
@@ -121,7 +121,7 @@ def test_authentication_complete__no_state(api_client, user):
     url = reverse("otp_webauthn:credential-authentication-complete")
     api_client.force_login(user)
     response = api_client.post(url)
-    assert response.status_code == 400
+    assert response.status_code == 400, response.data
     assert response.data["detail"].code == "invalid_state"
 
 
@@ -131,7 +131,7 @@ def test_authentication_complete__no_reusing_state(api_client, user):
     api_client.force_login(user)
     api_client.session["otp_webauthn_authentication_state"] = {"challenge": "challenge"}
     response = api_client.post(url)
-    assert response.status_code == 400
+    assert response.status_code == 400, response.data
 
     # The state should be removed from the session - there is no reusing it
     assert not api_client.session.get("otp_webauthn_authentication_state")
@@ -202,7 +202,7 @@ def test_authentication_complete__anonymous_user_passwordless_login_allowed(
         data=payload,
         format="json",
     )
-    assert response.status_code == 200
+    assert response.status_code == 200, response.data
     data = response.json()
     assert data["id"] == credential.pk
     session = api_client.session
@@ -212,6 +212,8 @@ def test_authentication_complete__anonymous_user_passwordless_login_allowed(
     assert (
         session["_auth_user_backend"] == "django_otp_webauthn.backends.WebAuthnBackend"
     )
+    # Signaled that user details sync is needed
+    assert session["otp_webauthn_sync_needed"] is True
 
 
 @pytest.mark.django_db
@@ -229,12 +231,14 @@ def test_authentication_complete__verify_existing_user(api_client, settings, use
         data=payload,
         format="json",
     )
-    assert response.status_code == 200
+    assert response.status_code == 200, response.data
     data = response.json()
     assert data["id"] == credential.pk
     session = api_client.session
     assert "otp_webauthn_authentication_state" not in session
     assert session["otp_device_id"] == credential.persistent_id
+    # Signaled that user details sync is needed
+    assert session["otp_webauthn_sync_needed"] is True
 
 
 @pytest.mark.django_db
@@ -253,11 +257,13 @@ def test_authentication_complete_device_usable__unconfirmed(api_client, user):
         data=payload,
         format="json",
     )
-    assert response.status_code == 403
+    assert response.status_code == 403, response.data
     assert response.data["detail"].code == "credential_disabled"
     session = api_client.session
     assert "otp_webauthn_authentication_state" not in session
     assert "otp_device_id" not in session
+    # No user details sync should be requested
+    assert "otp_webauthn_sync_needed" not in session
 
 
 @pytest.mark.django_db
@@ -280,11 +286,13 @@ def test_authentication_complete_device_usable__user_disabled(
         data=payload,
         format="json",
     )
-    assert response.status_code == 403
+    assert response.status_code == 403, response.data
     assert response.data["detail"].code == "user_disabled"
     session = api_client.session
     assert "otp_webauthn_authentication_state" not in session
     assert "otp_device_id" not in session
+    # No user details sync should be requested
+    assert "otp_webauthn_sync_needed" not in session
 
 
 @pytest.mark.django_db
@@ -300,6 +308,6 @@ def test_authentication_complete_get_success_url__understands_next_url_parameter
         data=payload,
         format="json",
     )
-    assert response.status_code == 200
+    assert response.status_code == 200, response.data
     data = response.json()
     assert data["redirect_url"] == "/admin"

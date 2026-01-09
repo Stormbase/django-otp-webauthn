@@ -1,4 +1,4 @@
-{% load static %}<!DOCTYPE html>
+{% load static otp_webauthn %}<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -10,5 +10,6 @@
     </head>
     <body>
         {% block content %}{% endblock content %}
+        {% render_otp_webauthn_sync_signals_scripts %}
     </body>
 </html>
