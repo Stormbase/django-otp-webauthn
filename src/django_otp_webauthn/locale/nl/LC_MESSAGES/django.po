@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-27 21:44+0000\n"
+"POT-Creation-Date: 2026-01-09 13:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/django_otp_webauthn/admin.py:41
+#: src/django_otp_webauthn/admin.py:38
 msgid "COSE public key"
 msgstr "Publieke COSE-sleutel"
 
-#: src/django_otp_webauthn/admin.py:63
+#: src/django_otp_webauthn/admin.py:62
 msgid "Identity"
 msgstr "Identiteit"
 
-#: src/django_otp_webauthn/admin.py:69
+#: src/django_otp_webauthn/admin.py:68
 msgid "Meta"
 msgstr "Meta-gegevens"
 
-#: src/django_otp_webauthn/admin.py:75
+#: src/django_otp_webauthn/admin.py:74
 msgid "WebAuthn credential data"
 msgstr "WebAuthn-gegevens"
 
@@ -68,25 +68,25 @@ msgstr ""
 "De Passkey die u probeert te gebruiken is niet gevonden. Misschien is deze "
 "verwijderd?"
 
-#: src/django_otp_webauthn/models.py:79
-msgid "WebAuthn attestation"
-msgstr "WebAuthn attestatie"
-
-#: src/django_otp_webauthn/models.py:80
-msgid "WebAuthn attestations"
-msgstr "WebAuthn attestaties"
-
-#: src/django_otp_webauthn/models.py:96
+#: src/django_otp_webauthn/models.py:86
 msgid "format"
 msgstr "formaat"
 
-#: src/django_otp_webauthn/models.py:100
+#: src/django_otp_webauthn/models.py:90
 msgid "data"
 msgstr "data"
 
-#: src/django_otp_webauthn/models.py:104
+#: src/django_otp_webauthn/models.py:94
 msgid "client data JSON"
 msgstr "client data JSON"
+
+#: src/django_otp_webauthn/models.py:106
+msgid "WebAuthn attestation"
+msgstr "WebAuthn attestatie"
+
+#: src/django_otp_webauthn/models.py:107
+msgid "WebAuthn attestations"
+msgstr "WebAuthn attestaties"
 
 #: src/django_otp_webauthn/models.py:148
 msgid "WebAuthn credential"
@@ -140,22 +140,22 @@ msgstr "gehashte credential id"
 msgid "discoverable"
 msgstr "zichtbaar"
 
-#: src/django_otp_webauthn/models.py:404
+#: src/django_otp_webauthn/models.py:402
 msgid "credential"
 msgstr "credential"
 
-#: src/django_otp_webauthn/models.py:429
-msgid "WebAuthn user handle"
-msgstr "WebAuthn user handle"
-
-#: src/django_otp_webauthn/models.py:430
-msgid "WebAuthn user handles"
-msgstr "WebAuthn user handles"
-
-#: src/django_otp_webauthn/models.py:437
+#: src/django_otp_webauthn/models.py:428
 msgid "handle hex"
 msgstr "handle hex"
 
-#: src/django_otp_webauthn/models.py:447
+#: src/django_otp_webauthn/models.py:438
 msgid "user"
 msgstr "gebruiker"
+
+#: src/django_otp_webauthn/models.py:442
+msgid "WebAuthn user handle"
+msgstr "WebAuthn user handle"
+
+#: src/django_otp_webauthn/models.py:443
+msgid "WebAuthn user handles"
+msgstr "WebAuthn user handles"

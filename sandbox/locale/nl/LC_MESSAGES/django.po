@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-01 17:50+0000\n"
+"POT-Creation-Date: 2026-01-09 13:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,38 +18,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: sandbox/templates/django_admin_login.html:30
+#: sandbox/templates/django_admin_login.html:11
+msgid "Error:"
+msgstr "Fout:"
+
+#: sandbox/templates/django_admin_login.html:31
 msgid "Please correct the error below."
 msgid_plural "Please correct the errors below."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Corrigeer de onderstaande fout."
+msgstr[1] "Corrigeer de onderstaande fouten."
 
-#: sandbox/templates/django_admin_login.html:46
+#: sandbox/templates/django_admin_login.html:47
 #, python-format
 msgid ""
 "You are authenticated as %(username)s, but are not authorized to access this "
 "page. Would you like to login to a different account?"
 msgstr ""
+"Je bent geauthenticeerd als %(username)s, maar hebt geen toestemming om deze "
+"pagina te bezoeken. Wil je inloggen met een ander account?"
 
-#: sandbox/templates/django_admin_login.html:66
-msgid "Forgotten your password or username?"
-msgstr ""
+#: sandbox/templates/django_admin_login.html:67
+msgid "Forgotten your login credentials?"
+msgstr "Je inloggegevens vergeten?"
 
-#: sandbox/templates/django_admin_login.html:70
+#: sandbox/templates/django_admin_login.html:71
 msgid "Log in"
 msgstr "Log in"
 
-#: sandbox/templates/django_admin_login.html:85
+#: sandbox/templates/django_admin_login.html:86
 #: sandbox/templates/registration/login.html:21
 #: sandbox/templates/sandbox/login_passkey.html:5
-#: sandbox/templates/sandbox/login_passkey.html:13
+#: sandbox/templates/sandbox/login_passkey.html:14
+#: sandbox/templates/sandbox/login_passkey_custom_next_input.html:5
+#: sandbox/templates/sandbox/login_passkey_custom_next_input.html:14
 msgid "Login using a Passkey"
 msgstr "Inloggen met een Passkey"
 
-#: sandbox/templates/django_admin_login.html:91
+#: sandbox/templates/django_admin_login.html:92
 #: sandbox/templates/registration/login.html:27
 #: sandbox/templates/sandbox/index.html:31
-#: sandbox/templates/sandbox/login_passkey.html:18
+#: sandbox/templates/sandbox/login_passkey.html:19
+#: sandbox/templates/sandbox/login_passkey_custom_next_input.html:19
 msgid "Sorry, your browser has no Passkey support"
 msgstr "Sorry, je browser heeft geen Passkey-ondersteuning"
 
