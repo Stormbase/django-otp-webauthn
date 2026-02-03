@@ -123,7 +123,7 @@ For test coverage, use these commands:
 
 .. code-block:: console
 
-    coverage run manage.py test
+    coverage run -m pytest
     coverage report
 
 Generate a visual HTML report in the htmlcov directory with the following command:
