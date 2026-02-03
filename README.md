@@ -51,7 +51,7 @@ For a complete list, see [caniuse.com/webauthn](https://caniuse.com/webauthn).
 - **Passkeys as a second factor.** Lets users just click yes on the browser prompt to verify their identity after they have entered their password.
 - **Passwordless login with Passkeys (optional).** Lets users verify their identity using a biometric sensor, security key, or other compatible device. Can be disabled if you prefer to use Passkeys as a second factor only.
 - **Batteries included.** comes with a default frontend JavaScript implementation that works out of the box and removes complexity for you.
-- **Flexible frontend.** you can style the fronted implementation to fit your brand. Or roll your own frontend implementation if you need something more custom.
+- **Flexible frontend.** you can style the frontend implementation to fit your brand. Or roll your own frontend implementation if you need something more custom.
 - **Compatible with strict [Content Security Policy (CSP)](https://content-security-policy.com/).** The frontend implementation does not rely on inline scripts and is compatible with strict CSP settings.
 
 ## Quick start guide - how to use Passkeys in your Django project
