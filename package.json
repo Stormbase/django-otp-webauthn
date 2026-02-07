@@ -20,7 +20,7 @@
     "prettier": "3.6.2",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.5",
-    "webpack": "^5.94.0",
+    "webpack": "^5.104.1",
     "webpack-cli": "^6.0.0",
     "webpack-merge": "^6.0.0"
   },
