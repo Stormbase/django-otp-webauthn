@@ -21,7 +21,11 @@ from rest_framework.views import APIView
 from django_otp_webauthn import exceptions
 from django_otp_webauthn.models import AbstractWebAuthnCredential
 from django_otp_webauthn.settings import app_settings
-from django_otp_webauthn.utils import get_credential_model, rewrite_exceptions
+from django_otp_webauthn.utils import (
+    get_credential_model,
+    request_user_details_sync,
+    rewrite_exceptions,
+)
 
 WebAuthnCredential = get_credential_model()
 User = get_user_model()
@@ -153,6 +157,8 @@ class CompleteCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
             # change that indicator.
             if not self.request.user.is_verified():
                 otp_login(self.request, device)
+
+            request_user_details_sync(self.request)
         return Response(data={"id": device.pk}, content_type="application/json")
 
 
@@ -245,6 +251,7 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
 
         # Mark the user as having passed verification
         otp_login(self.request, device)
+        request_user_details_sync(self.request)
 
     success_url_allowed_hosts = set()
 

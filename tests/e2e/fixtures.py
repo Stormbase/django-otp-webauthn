@@ -13,7 +13,7 @@ class StatusEnum(enum.StrEnum):
     UNKNOWN_ERROR = "unknown-error"
     STATE_ERROR = "state-error"
     SECURITY_ERROR = "security-error"
-    GET_OPTIONS_FAILED = ("get-options-failed",)
+    GET_OPTIONS_FAILED = "get-options-failed"
     ABORTED = "aborted"
     NOT_ALLOWED_OR_ABORTED = "not-allowed-or-aborted"
     SERVER_ERROR = "server-error"
