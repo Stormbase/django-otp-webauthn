@@ -1,6 +1,5 @@
 [build-system]
 build-backend = "hatchling.build"
-
 requires = [ "hatchling" ]
 
 [project]
@@ -39,7 +38,6 @@ dependencies = [
   "djangorestframework>=3.14",
   "webauthn>=2.6,<3",
 ]
-
 optional-dependencies.docs = [
   "furo==2024.8.6",
   "pyspelling==2.10",
@@ -74,8 +72,8 @@ urls.Documentation = "https://django-otp-webauthn.readthedocs.io/en/latest/"
 urls.Issues = "https://github.com/Stormbase/django-otp-webauthn/issues"
 urls.Source = "https://github.com/Stormbase/django-otp-webauthn"
 
-[tool.hatch.build.targets.sdist]
-artifacts = [
+[tool.hatch]
+build.targets.sdist.artifacts = [
   # Include built static files that are gitignored and thus not included by default
   "src/django_otp_webauthn/static/django_otp_webauthn/*",
   # Include compiled translations that are gitignored and thus not included by default
@@ -83,7 +81,7 @@ artifacts = [
   "sandbox/locale/*/LC_MESSAGES/*.mo",
 ]
 # Manually specify what to include, otherwise it becomes a mess
-include = [
+build.targets.sdist.include = [
   "src/django_otp_webauthn",
   "sandbox/",
   "client/",
@@ -96,31 +94,22 @@ include = [
   "SECURITY.md",
   "pyproject.toml",
 ]
-
-[tool.hatch.build.targets.wheel]
-artifacts = [
+build.targets.wheel.artifacts = [
   # Include built static files that are gitignored and thus not included by default
   "src/django_otp_webauthn/static/django_otp_webauthn/*",
   # Include compiled translations that are gitignored and thus not included by default
   "src/django_otp_webauthn/locale/*/LC_MESSAGES/*.mo",
 ]
-
-[tool.hatch.envs.default]
-dependencies = [
+envs.default.dependencies = [
   "django-otp-webauthn[testing,docs]",
 ]
-
-[tool.hatch.envs.hatch-static-analysis]
 # Do not use Hatch default configuration
-config-path = "pyproject.toml"
-dependencies = [  ]
-
-[tool.hatch.version]
-path = "src/django_otp_webauthn/__init__.py"
+envs.hatch-static-analysis.config-path = "pyproject.toml"
+envs.hatch-static-analysis.dependencies = []
+version.path = "src/django_otp_webauthn/__init__.py"
 
 [tool.ruff]
-target-version = "py39" # minimum target version
-
+target-version = "py39"  # minimum target version
 lint.select = [
   "B",      # flake8-bugbear
   "BLE",    # flake8-blind-except
@@ -156,37 +145,35 @@ lint.per-file-ignores."tests/*" = [
 lint.fixable = [ "C4", "E", "F", "I", "UP" ]
 lint.isort.known-first-party = [ "django_otp_webauthn", "sandbox", "tests" ]
 
-[tool.pytest.ini_options]
-pythonpath = "sandbox"
-DJANGO_SETTINGS_MODULE = "settings"
-testpaths = "tests/"
-norecursedirs = [ "tests/e2e" ]
-addopts = "--reuse-db"
+[tool.pytest]
+ini_options.pythonpath = "sandbox"
+ini_options.DJANGO_SETTINGS_MODULE = "settings"
+ini_options.testpaths = "tests/"
+ini_options.norecursedirs = [ "tests/e2e" ]
+ini_options.addopts = "--reuse-db"
 
-[tool.coverage.report]
-exclude_lines = [
-  # Have to re-enable the standard pragma
-  "pragma: no cover",
+[tool.coverage]
+run.branch = true
+run.omit = [ "*/migrations/*", "*/tests/*" ]
+run.source_pkgs = [ "django_otp_webauthn" ]
+report.exclude_lines = [
+  # Don't complain about abstract methods, they aren't run:
+  "@(abc.)?abstractmethod",
 
   # Don't complain about missing debug-only code:
   "def __repr__",
+  "if __name__ == .__main__.:",
+
+  # Don't complain if non-runnable code isn't run:
+  "if 0:",
   "if self.debug",
+
+  # Nor complain about type checking
+  "if TYPE_CHECKING:",
+  # Have to re-enable the standard pragma
+  "pragma: no cover",
 
   # Don't complain if tests don't hit defensive assertion code:
   "raise AssertionError",
   "raise NotImplementedError",
-
-  # Don't complain if non-runnable code isn't run:
-  "if 0:",
-  "if __name__ == .__main__.:",
-
-  # Don't complain about abstract methods, they aren't run:
-  "@(abc.)?abstractmethod",
-
-  # Nor complain about type checking
-  "if TYPE_CHECKING:",
 ]
-[tool.coverage.run]
-source_pkgs = [ "django_otp_webauthn" ]
-branch = true
-omit = [ "*/migrations/*", "*/tests/*" ]
