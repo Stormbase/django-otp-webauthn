@@ -31,4 +31,5 @@ db.sqlite3
 *.mo
 
 src/django_otp_webauthn/static/*
+src/django_otp_webauthn/_version.py
 sandbox/collected_static/*
