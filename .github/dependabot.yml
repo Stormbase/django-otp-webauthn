@@ -3,10 +3,22 @@ updates:
   # all NPM packages
   - package-ecosystem: npm
     directory: "/"
+    groups:
+      npm:
+        patterns:
+          - "*" # Group all NPM updates into a single pull request
     open-pull-requests-limit: 1
+    cooldown:
+      default-days: 7
     schedule:
       interval: monthly
-  - package-ecosystem: "github-actions"
+  - package-ecosystem: github-actions
     directory: "/"
+    groups:
+      github-actions:
+        patterns:
+          - "*" # Group all Actions updates into a single pull request
     schedule:
-      interval: "monthly"
+      interval: monthly
+    cooldown:
+      default-days: 7
