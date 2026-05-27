@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Nothing yet
+- Internal: to improve security, the project now uses [zizmor](https://zizmor.sh/) for static security analysis of GitHub Actions
 
 ### Fixed
 
