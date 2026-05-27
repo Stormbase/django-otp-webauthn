@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Internal: the version exported in `django_otp_webauthn.__version__` is now automatically generated from git tags using `setuptools_scm`. This also means that attributes added by `hatchling-vcs` such as `django_otp_webauthn.version_tuple` and `django_otp_webauthn.commit_id` are now available.
 - Internal: to improve security, the project now uses [zizmor](https://zizmor.sh/) for static security analysis of GitHub Actions
 
 ### Fixed
