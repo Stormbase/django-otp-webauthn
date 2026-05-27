@@ -3,9 +3,12 @@ name: GitHub Actions Security Analysis with zizmor 🌈
 on:
   push:
     branches: ["main"]
+    paths:
+      - ".github/**" # only trigger when GitHub Actions workflow files or related configuration files change
   pull_request:
     branches: ["**"]
-
+    paths:
+      - ".github/**" # only trigger when GitHub Actions workflow files or related configuration files change
 permissions: {}
 
 concurrency:
