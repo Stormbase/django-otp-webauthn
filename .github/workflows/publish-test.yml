@@ -106,4 +106,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
-        run: gh release upload $RELEASE_TAG dist/** \ --clobber
+        run: gh release upload $RELEASE_TAG --clobber dist/**
