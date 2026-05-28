@@ -106,6 +106,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
-        run: gh release upload $RELEASE_TAG --clobber \
-          ./dist/*.tar.gz \
-          ./dist/*.whl
+        run: |
+          gh release upload "$RELEASE_TAG" dist/*.whl dist/*.tar.gz --clobber
+          gh release upload "$RELEASE_TAG" dist/*.sigstore.json --clobber
