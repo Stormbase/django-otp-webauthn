@@ -73,6 +73,30 @@ urls.Issues = "https://github.com/Stormbase/django-otp-webauthn/issues"
 urls.Source = "https://github.com/Stormbase/django-otp-webauthn"
 
 [tool.hatch]
+version.source = "vcs"
+build.hooks.vcs.version-file = "src/django_otp_webauthn/_version.py"
+build.targets.wheel.artifacts = [
+  # Version is generated during build and gitignored, make sure to include it
+  "src/django_otp_webauthn/_version.py",
+  # Include compiled translations that are gitignored and thus not included by default
+  "src/django_otp_webauthn/locale/*/LC_MESSAGES/*.mo",
+  # Include built static files that are gitignored and thus not included by default
+  "src/django_otp_webauthn/static/django_otp_webauthn/*",
+]
+# Manually specify what to include, otherwise it becomes a mess
+build.targets.sdist.include = [
+  "CHANGELOG.md",
+  "client/",
+  "CONTRIBUTORS.md",
+  "LICENSE",
+  "pyproject.toml",
+  "README.md",
+  "sandbox/",
+  "scripts/",
+  "SECURITY.md",
+  "src/django_otp_webauthn",
+  "tests/",
+]
 build.targets.sdist.artifacts = [
   # Include built static files that are gitignored and thus not included by default
   "src/django_otp_webauthn/static/django_otp_webauthn/*",
@@ -82,36 +106,12 @@ build.targets.sdist.artifacts = [
   # Version is generated during build and gitignored, make sure to include it
   "src/django_otp_webauthn/_version.py",
 ]
-# Manually specify what to include, otherwise it becomes a mess
-build.targets.sdist.include = [
-  "src/django_otp_webauthn",
-  "sandbox/",
-  "client/",
-  "tests/",
-  "scripts/",
-  "README.md",
-  "LICENSE",
-  "CHANGELOG.md",
-  "CONTRIBUTORS.md",
-  "SECURITY.md",
-  "pyproject.toml",
-]
-build.targets.wheel.artifacts = [
-  # Include built static files that are gitignored and thus not included by default
-  "src/django_otp_webauthn/static/django_otp_webauthn/*",
-  # Include compiled translations that are gitignored and thus not included by default
-  "src/django_otp_webauthn/locale/*/LC_MESSAGES/*.mo",
-  # Version is generated during build and gitignored, make sure to include it
-  "src/django_otp_webauthn/_version.py",
-]
-build.hooks.vcs.version-file = "src/django_otp_webauthn/_version.py"
 envs.default.dependencies = [
   "django-otp-webauthn[testing,docs]",
 ]
 # Do not use Hatch default configuration
-envs.hatch-static-analysis.config-path = "pyproject.toml"
 envs.hatch-static-analysis.dependencies = []
-version.source = "vcs"
+envs.hatch-static-analysis.config-path = "pyproject.toml"
 
 [tool.ruff]
 target-version = "py39"  # minimum target version
@@ -151,11 +151,11 @@ lint.fixable = [ "C4", "E", "F", "I", "UP" ]
 lint.isort.known-first-party = [ "django_otp_webauthn", "sandbox", "tests" ]
 
 [tool.pytest]
-ini_options.pythonpath = "sandbox"
-ini_options.DJANGO_SETTINGS_MODULE = "settings"
 ini_options.testpaths = "tests/"
+ini_options.pythonpath = "sandbox"
 ini_options.norecursedirs = [ "tests/e2e" ]
 ini_options.addopts = "--reuse-db"
+ini_options.DJANGO_SETTINGS_MODULE = "settings"
 
 [tool.coverage]
 run.branch = true
