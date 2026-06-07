@@ -14,7 +14,7 @@ from webauthn.helpers.structs import (
     UserVerificationRequirement,
 )
 
-from django_otp_webauthn.exceptions import CredentialNotFound
+from django_otp_webauthn.exceptions import CredentialNotFound, CredentialUserMismatch
 from django_otp_webauthn.helpers import WebAuthnHelper
 from django_otp_webauthn.models import WebAuthnCredential
 from tests.factories import (
@@ -857,3 +857,45 @@ def test_helper_authenticate_complete__user_verification_required_but_not_perfor
 
     with pytest.raises(InvalidAuthenticationResponse):
         helper.authenticate_complete(data=data, state=state, user=None)
+
+
+@pytest.mark.django_db
+def test_helper_authenticate_complete__user_mismatch(helper, settings, user):
+    settings.OTP_WEBAUTHN_RP_ID = "localhost"
+    settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = False
+    settings.OTP_WEBAUTHN_ALLOWED_ORIGINS = ["http://localhost:8000"]
+
+    credential = WebAuthnCredentialFactory(
+        sign_count=1,
+        last_used_at=None,
+        credential_id=bytes.fromhex(
+            "0afed23b93fd6930aa745545017ae25276bf9fdf1676a4b778421e30ac3bca50"
+        ),
+        public_key=bytes.fromhex(
+            "a5010203262001215820672cca16efa8b8596dc19b14a0cda4c0f7c2edb3aaad3748cfa23b69b1540e0f22582068b53d73bed8d3457aaece764fbd453afe9e1286cb907c112545af4509dda508"
+        ),
+    )
+
+    assert credential.user != user, (
+        "The credential should belong to a different user than the one we're trying to authenticate"
+    )
+
+    state = {
+        "challenge": "hkZ8860Jpu3q3RfHizxEABl-iI67_nP4c2CTddba3E4tJPVsIW_vnnfO4QFRR7s95HKPTWpzzAMy2UKRmrzchA",
+        "require_user_verification": False,
+    }
+    data = {
+        "id": "Cv7SO5P9aTCqdFVFAXriUna_n98WdqS3eEIeMKw7ylA",
+        "rawId": "Cv7SO5P9aTCqdFVFAXriUna_n98WdqS3eEIeMKw7ylA",
+        "response": {
+            "authenticatorData": "SZYN5YgOjGh0NBcPZHZgW4_krrmihjLHmVzzuoMdl2MBAAAAAg",
+            "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiaGtaODg2MEpwdTNxM1JmSGl6eEVBQmwtaUk2N19uUDRjMkNUZGRiYTNFNHRKUFZzSVdfdm5uZk80UUZSUjdzOTVIS1BUV3B6ekFNeTJVS1JtcnpjaEEiLCJvcmlnaW4iOiJodHRwOi8vbG9jYWxob3N0OjgwMDAiLCJjcm9zc09yaWdpbiI6ZmFsc2V9",
+            "signature": "MEYCIQCiQxft61oYb42wHeeX0iC2s42ZyptLsR4JmufpwVg5RQIhANVZt9lZIrAnfBUZVanlpnm-PHyTreWhSiEs_youYp0i",
+        },
+        "type": "public-key",
+        "clientExtensionResults": {},
+        "authenticatorAttachment": "cross-platform",
+    }
+
+    with pytest.raises(CredentialUserMismatch):
+        helper.authenticate_complete(data=data, state=state, user=user)

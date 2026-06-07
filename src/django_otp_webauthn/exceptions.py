@@ -44,3 +44,11 @@ class CredentialNotFound(OTPWebAuthnApiError):
         "The Passkey you tried to use was not found. Perhaps it was removed?"
     )
     default_code = "credential_not_found"
+
+
+class CredentialUserMismatch(OTPWebAuthnApiError):
+    status_code = 403
+    default_detail = _(
+        "The Passkey you tried to use does not belong to the currently logged-in user. Try using a different Passkey or logout first to use this Passkey."
+    )
+    default_code = "credential_user_mismatch"

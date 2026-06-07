@@ -496,6 +496,9 @@ class WebAuthnHelper:
         except WebAuthnCredential.DoesNotExist:
             raise exceptions.CredentialNotFound() from None
 
+        if user and device.user_id != user.pk:
+            raise exceptions.CredentialUserMismatch() from None
+
         expected_challenge = base64url_to_bytes(state["challenge"])
         expected_origins = self.get_allowed_origins()
         require_user_verification = state["require_user_verification"]
