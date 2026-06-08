@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-11 11:43+0000\n"
+"POT-Creation-Date: 2026-06-07 13:13+0000\n"
 "PO-Revision-Date: 2025-12-11 12:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -29,7 +29,7 @@ msgstr "Identität"
 
 #: src/django_otp_webauthn/admin.py:68
 msgid "Meta"
-msgstr ""
+msgstr "Meta"
 
 #: src/django_otp_webauthn/admin.py:74
 msgid "WebAuthn credential data"
@@ -37,7 +37,7 @@ msgstr "WebAuthn Berechtigungsdaten"
 
 #: src/django_otp_webauthn/apps.py:11
 msgid "OTP WebAuthn"
-msgstr ""
+msgstr "OTP WebAuthn"
 
 #: src/django_otp_webauthn/exceptions.py:12
 msgid ""
@@ -68,6 +68,15 @@ msgid "The Passkey you tried to use was not found. Perhaps it was removed?"
 msgstr ""
 "Der von Ihnen verwendete Passkey wurde nicht gefunden. Möglicherweise wurde "
 "er entfernt?"
+
+#: src/django_otp_webauthn/exceptions.py:52
+msgid ""
+"The Passkey you tried to use does not belong to the currently logged-in "
+"user. Try using a different Passkey or logout first to use this Passkey."
+msgstr ""
+"Der von Ihnen verwendete Passkey gehört nicht zum aktuell angemeldeten "
+"Benutzer. Versuchen Sie, einen anderen Passkey zu verwenden oder sich zuerst "
+"abzumelden, um diesen Passkey zu verwenden."
 
 #: src/django_otp_webauthn/models.py:86
 msgid "format"
