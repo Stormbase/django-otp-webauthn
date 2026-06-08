@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Nothing yet
+- Raise an error when an already authenticated user attempts to use a Passkey belonging to a different account, instead of showing a success message without any effect. ([#126](https://github.com/Stormbase/django-otp-webauthn/pull/126) by [Stormheg](https://github.com/Stormheg))
 
 ## [0.8.0] - 2026-01-09
 
