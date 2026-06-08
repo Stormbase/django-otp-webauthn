@@ -5,14 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.9.0] - UNRELEASED
-
-### Added
-
-- Nothing yet
+## [0.9.0] - 2026-06-08
 
 ### Changed
 
+- The default JavaScript implementation for interacting with the browser api has been updated to use [`@simplewebauthn/browser` v13.3.0](https://github.com/MasterKale/SimpleWebAuthn/releases/tag/v13.3.0)
 - Internal: the version exported in `django_otp_webauthn.__version__` is now automatically generated from git tags using `setuptools_scm`. This also means that attributes added by `hatchling-vcs` such as `django_otp_webauthn.version_tuple` and `django_otp_webauthn.commit_id` are now available.
 - Internal: to improve security, the project now uses [zizmor](https://zizmor.sh/) for static security analysis of GitHub Actions
 - Internal: release workflow revamped to be more secure, JavaScript is now build in isolation to prevent supply chain attacks, and release artifacts are now verified using SHA256 checksums before being published to PyPI.
@@ -20,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Raise an error when an already authenticated user attempts to use a Passkey belonging to a different account, instead of showing a success message without any effect. ([#126](https://github.com/Stormbase/django-otp-webauthn/pull/126) by [Stormheg](https://github.com/Stormheg))
+
+### Removed
+
+- Django 4.2 and 5.1 support was removed. Only Django 5.2 and above are supported in this release.
 
 ## [0.8.0] - 2026-01-09
 
