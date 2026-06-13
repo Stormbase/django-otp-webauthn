@@ -16,7 +16,7 @@
     "@babel/register": "^7.29.3",
     "@types/node": "^25.9.1",
     "all-contributors-cli": "^6.26.1",
-    "esbuild": "^0.28.0",
+    "esbuild": "^0.28.1",
     "prettier": "3.8.3",
     "ts-loader": "^9.5.7",
     "typescript": "^6.0.3",
