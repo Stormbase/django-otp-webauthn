@@ -6,7 +6,7 @@ A sandbox project is included in this repository to aid in development.
 
 - ...everything in the [compatibility section](./README.md#compatibility) on the main README.
 - [Hatch](https://hatch.pypa.io/)
-- [Node.js](https://nodejs.org/) v20
+- [Node.js](https://nodejs.org/) v26
 - [Yarn v1](https://classic.yarnpkg.com/en/docs)
 - [Pre-commit](https://pre-commit.com/)
 - [Caddy](https://caddyserver.com/) (optional, but recommended for https testing)

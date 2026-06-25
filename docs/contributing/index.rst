@@ -34,7 +34,7 @@ To set up the Django OTP WebAuthn on your local machine, follow these steps:
 1. Install the following dependencies:
     * All requirements listed in the :ref:`compatibility <compatibility>` section
     * `Hatch <https://hatch.pypa.io/>`_
-    * `Node.js <https://nodejs.org/>`_ v20
+    * `Node.js <https://nodejs.org/>`_ v26
     * `Yarn <https://yarnpkg.com/>`_
     * `pre-commit <https://pre-commit.com/>`_
     * `Caddy <https://caddyserver.com/>`_ (optional, recommended for HTTPS testing)
