@@ -96,7 +96,7 @@ class AppSettings:
     """A list of COSE algorithms supported by the server. Must be an integer
     value from https://www.iana.org/assignments/cose/cose.xhtml#algorithms.
 
-    Defaults to None, which defers to whatever the PyWebAuthn library defaults are."""
+    Defaults to None, which defers to whatever the py_webauthn library defaults are."""
 
     OTP_WEBAUTHN_TIMEOUT_SECONDS = 60 * 5  # 5 minutes
     """The timeout in seconds to request for client-side browser webauthn operations. Default is 5 minutes to
