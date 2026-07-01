@@ -20,7 +20,7 @@ def test_authentication__anonymous_user_passwordless_login_disallowed(
     settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = False
     response = api_client.post(url)
     assert response.status_code == 403
-    assert response.data["detail"].code == "passwordless_login_disabled"
+    assert response.json()["code"] == "passwordless_login_disabled"
 
 
 @pytest.mark.parametrize(
@@ -54,14 +54,6 @@ def test_authentication_begin__anonymous_user_passwordless_login_allowed(
 ):
     """Test that an anonymous user is allowed to begin authentication if passwordless login is enabled."""
     settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = True
-    # Even if the default permission class is set to IsAuthenticated, we should
-    # still be able to begin authentication.
-    # Ref: #19
-    settings.REST_FRAMEWORK = {
-        "DEFAULT_PERMISSION_CLASSES": [
-            "rest_framework.permissions.IsAuthenticated",
-        ]
-    }
     response = api_client.post(reverse("otp_webauthn:credential-authentication-begin"))
     assert response.status_code == 200
     data = response.json()
@@ -88,7 +80,7 @@ def test_authentication_begin__logged_in_user(
 ):
     """Test that an anonymous user are allowed to begin authentication if passwordless login is enabled."""
 
-    api_client.force_authenticate(user)
+    api_client.force_login(user)
     credential_id = b"existing_credential_id"
     hashed_credential_id = "ZXhpc3RpbmdfY3JlZGVudGlhbF9pZA"
     WebAuthnCredentialFactory(user=user, credential_id=credential_id)
@@ -122,7 +114,7 @@ def test_authentication_complete__no_state(api_client, user):
     api_client.force_login(user)
     response = api_client.post(url)
     assert response.status_code == 400
-    assert response.data["detail"].code == "invalid_state"
+    assert response.json()["code"] == "invalid_state"
 
 
 @pytest.mark.django_db
@@ -183,16 +175,6 @@ def test_authentication_complete__anonymous_user_passwordless_login_allowed(
 ):
     """Test that an anonymous user is allowed to complete authentication if passwordless login is enabled."""
     settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = True
-
-    # Even if the default permission class is set to IsAuthenticated, we should
-    # still be able to complete the authentication.
-    # Ref: #19
-    settings.REST_FRAMEWORK = {
-        "DEFAULT_PERMISSION_CLASSES": [
-            "rest_framework.permissions.IsAuthenticated",
-        ]
-    }
-
     payload, credential, session = setup_complete_authentication(
         api_client=api_client, user=user
     )
@@ -200,7 +182,7 @@ def test_authentication_complete__anonymous_user_passwordless_login_allowed(
     response = api_client.post(
         reverse("otp_webauthn:credential-authentication-complete"),
         data=payload,
-        format="json",
+        content_type="application/json",
     )
     assert response.status_code == 200
     data = response.json()
@@ -218,7 +200,7 @@ def test_authentication_complete__anonymous_user_passwordless_login_allowed(
 def test_authentication_complete__verify_existing_user(api_client, settings, user):
     """Test that an existing users' django-otp verification state is updated with the device ID."""
     settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = False
-    api_client.force_authenticate(user)
+    api_client.force_login(user)
 
     payload, credential, session = setup_complete_authentication(
         api_client=api_client, user=user
@@ -227,7 +209,7 @@ def test_authentication_complete__verify_existing_user(api_client, settings, use
     response = api_client.post(
         reverse("otp_webauthn:credential-authentication-complete"),
         data=payload,
-        format="json",
+        content_type="application/json",
     )
     assert response.status_code == 200
     data = response.json()
@@ -240,7 +222,7 @@ def test_authentication_complete__verify_existing_user(api_client, settings, use
 @pytest.mark.django_db
 def test_authentication_complete_device_usable__unconfirmed(api_client, user):
     """Test that the authentication complete view prevents the authentication from succeeding if the credential is not confirmed."""
-    api_client.force_authenticate(user)
+    api_client.force_login(user)
 
     payload, credential, session = setup_complete_authentication(
         api_client=api_client, user=user
@@ -251,10 +233,10 @@ def test_authentication_complete_device_usable__unconfirmed(api_client, user):
     response = api_client.post(
         reverse("otp_webauthn:credential-authentication-complete"),
         data=payload,
-        format="json",
+        content_type="application/json",
     )
     assert response.status_code == 403
-    assert response.data["detail"].code == "credential_disabled"
+    assert response.json()["code"] == "credential_disabled"
     session = api_client.session
     assert "otp_webauthn_authentication_state" not in session
     assert "otp_device_id" not in session
@@ -278,10 +260,10 @@ def test_authentication_complete_device_usable__user_disabled(
     response = api_client.post(
         reverse("otp_webauthn:credential-authentication-complete"),
         data=payload,
-        format="json",
+        content_type="application/json",
     )
     assert response.status_code == 403
-    assert response.data["detail"].code == "user_disabled"
+    assert response.json()["code"] == "user_disabled"
     session = api_client.session
     assert "otp_webauthn_authentication_state" not in session
     assert "otp_device_id" not in session
@@ -292,13 +274,13 @@ def test_authentication_complete_get_success_url__understands_next_url_parameter
     api_client, user
 ):
     """Test that the authentication complete view understands the `next` URL parameter and uses it to set the redirect url."""
-    api_client.force_authenticate(user)
+    api_client.force_login(user)
     payload, _, _ = setup_complete_authentication(api_client=api_client, user=user)
 
     response = api_client.post(
         reverse("otp_webauthn:credential-authentication-complete") + "?next=/admin",
         data=payload,
-        format="json",
+        content_type="application/json",
     )
     assert response.status_code == 200
     data = response.json()

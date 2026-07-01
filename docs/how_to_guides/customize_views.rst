@@ -35,7 +35,7 @@ For example, you can restrict :term:`passkey <passkey/discoverable credential>` 
             user = self.get_user()
 
         # Perform some checks that may stop a user from registering
-        # and raise a Django Rest Framework API error
+        # and raise a OTPWebAuthnApiError error
     	if your_function_that_does_something(user)...:
             raise PasskeyRegistrationUnavailableError()
 

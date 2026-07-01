@@ -3,7 +3,7 @@ import pathlib
 
 import pytest
 from django.conf import settings
-from rest_framework.test import APIClient
+from django.test import Client
 
 from django_otp_webauthn.models import (
     WebAuthnAttestation,
@@ -38,7 +38,7 @@ def begin_authentication_response_schema():
 
 @pytest.fixture
 def api_client():
-    return APIClient()
+    return Client()
 
 
 @pytest.fixture

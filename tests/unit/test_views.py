@@ -1,16 +1,35 @@
+import json
+
 import pytest
 from django.contrib.auth.models import AnonymousUser
-from rest_framework.renderers import JSONRenderer
+from django.contrib.sessions.middleware import SessionMiddleware
+from django.http import JsonResponse
 
 from django_otp_webauthn import exceptions
 from django_otp_webauthn.helpers import WebAuthnHelper
 from django_otp_webauthn.views import (
+    BaseWebAuthnView,
     BeginCredentialAuthenticationView,
     BeginCredentialRegistrationView,
     CompleteCredentialAuthenticationView,
     CompleteCredentialRegistrationView,
     _get_pywebauthn_logger,
 )
+
+
+class DummyCustomWebAuthnView(BaseWebAuthnView):
+    def get(self, request, *args, **kwargs):
+        raise ValueError("Dummy view")
+
+    def post(self, request, *args, **kwargs):
+        return JsonResponse({"message": "Dummy view"})
+
+
+def add_session(request):
+    middleware = SessionMiddleware(lambda request: None)
+    middleware.process_request(request)
+    request.session.save()
+    return request
 
 
 @pytest.mark.parametrize(
@@ -22,14 +41,14 @@ from django_otp_webauthn.views import (
         CompleteCredentialAuthenticationView,
     ],
 )
-def test_views__no_caching_headers_present(rf, view_class, user_in_memory):
+@pytest.mark.django_db
+def test_views__no_caching_headers_present(rf, view_class, user):
     request = rf.post("/")
-    request.user = user_in_memory
+    request.user = user
+    request = add_session(request)
 
-    view = view_class()
-    view.setup(request)
+    response = view_class.as_view()(request)
 
-    response = view.dispatch(request)
     assert (
         response.headers["Cache-Control"]
         == "max-age=0, no-cache, no-store, must-revalidate, private"
@@ -46,9 +65,61 @@ def test_views__no_caching_headers_present(rf, view_class, user_in_memory):
         CompleteCredentialAuthenticationView,
     ],
 )
-def test_views__no_html_render(view_class):
-    view = view_class()
-    assert view.renderer_classes == [JSONRenderer]
+@pytest.mark.django_db
+def test_views__json_content_type(rf, view_class, user):
+    request = rf.post("/")
+    request.user = user
+    request = add_session(request)
+
+    response = view_class.as_view()(request)
+    assert "application/json" in response.headers["Content-Type"]
+
+
+def test_base_view__raises_exception(rf):
+    request = rf.get("/")
+
+    with pytest.raises(ValueError):  # noqa: PT011
+        DummyCustomWebAuthnView.as_view()(request)
+
+
+def test_base_view__raises_invalid_json(rf):
+    request = rf.post(
+        "/",
+        data="invalid json",
+        content_type="text/plain",
+        headers={"Content-Type": "application/json"},
+    )
+
+    response = DummyCustomWebAuthnView.as_view()(request)
+    assert response.status_code == 400
+    assert response.headers["Content-Type"] == "application/json"
+    assert json.loads(response.content)["code"] == "malformed_request"
+
+
+def test_base_view__empty_json_body(rf):
+    request = rf.post(
+        "/",
+        data="",
+        headers={"Content-Type": "application/json"},
+        content_type="text/plain",
+    )
+
+    response = DummyCustomWebAuthnView.as_view()(request)
+    assert response.status_code == 200
+
+
+def test_base_view__raises_not_json(rf):
+    request = rf.post(
+        "/",
+        data="invalid json",
+        content_type="text/plain",
+        headers={"Content-Type": "application/json"},
+    )
+
+    response = DummyCustomWebAuthnView.as_view()(request)
+    assert response.status_code == 400
+    assert response.headers["Content-Type"] == "application/json"
+    assert json.loads(response.content)["code"] == "malformed_request"
 
 
 def test_pywebauthn_logger(settings):
