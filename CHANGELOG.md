@@ -13,7 +13,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Changed
 
-- **Django REST Framework no longer required**. This package no longer depends on Django REST Framework, in practice the only parts of DRF used were its `APIView`, `APIException` and permission classes, which have been replaced with lightweight custom implementations accomplishing the same. The schema of responses and errors remains unchanged, any customized frontend using the Authentication and Registration API views should continue to work as before. ([#137](https://github.com/Stormbase/django-otp-webauthn/pull/137) by [Stormheg](https://github.com/Stormheg))
+- **Django REST Framework no longer required.** This package no longer depends on Django REST Framework, in practice the only parts of DRF used were its `APIView`, `APIException` and permission classes, which have been replaced with lightweight custom implementations accomplishing the same. The schema of responses and errors remains unchanged, any customized frontend using the Authentication and Registration API views should continue to work as before. ([#137](https://github.com/Stormbase/django-otp-webauthn/pull/137) by [Stormheg](https://github.com/Stormheg))
+- **`py_webauthn` >= 3.0 is now required.** This library has some changes that may affect you:
+  - **`cryptography` >= 49 is now required.** [This version no longer supports Apple Mac computers with an Intel CPU (any Mac released before 2020)](https://cryptography.io/en/latest/changelog/#v49-0-0)
+  - PQC ML-DSA-44 (-48), ML-DSA-65 (-49), and ML-DSA-87 (-50) algorithm support has been added. These algorithms are believed to be resistant to quantum supercomputers.
+    - Note: these algorithms are not enabled by default. Configure `OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS` to include them if you want to use them.
+  - `py_webauthn` default algorithms have been changed. This signals to clients what public key algorithms are preferred when creating new credentials. The new preferred algorithms are based on guidance from the [WebAuthn Level 3 specification](https://www.w3.org/TR/2026/CR-webauthn-3-20260526/#dom-publickeycredentialcreationoptions-pubkeycredparams) and are as follows. These algorithms are very widespread and should not cause any compatibility issues.
+    - EdDSA (-8)
+    - ES256 (-7)
+    - RS256 (-257)
 
 ## Fixed
 

@@ -35,7 +35,7 @@ dynamic = [ "version" ]
 dependencies = [
   "django>=5.2",
   "django-otp>=1.4,<2",
-  "webauthn>=2.6,<3",
+  "webauthn>=3,<4",
 ]
 optional-dependencies.docs = [
   "furo==2024.8.6",
