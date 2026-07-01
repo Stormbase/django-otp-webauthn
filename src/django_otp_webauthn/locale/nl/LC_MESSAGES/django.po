@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-07 13:13+0000\n"
+"POT-Creation-Date: 2026-07-01 12:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,15 @@ msgstr "WebAuthn-gegevens"
 msgid "OTP WebAuthn"
 msgstr "OTP WebAuthn"
 
-#: src/django_otp_webauthn/exceptions.py:12
+#: src/django_otp_webauthn/exceptions.py:6
+msgid "Error processing WebAuthn request."
+msgstr "Fout bij het verwerken van WebAuthn-verzoek."
+
+#: src/django_otp_webauthn/exceptions.py:19
+msgid "Malformed request. JSON not parsable."
+msgstr "Ongeldige aanvraag. JSON kan niet worden gelezen."
+
+#: src/django_otp_webauthn/exceptions.py:26
 msgid ""
 "State is missing or invalid. Please begin the operation first before trying "
 "to complete it."
@@ -46,36 +54,40 @@ msgstr ""
 "Staat ontbreekt of is ongeldig. Begin de operatie eerst voordat u probeert "
 "deze te voltooien."
 
-#: src/django_otp_webauthn/exceptions.py:19
+#: src/django_otp_webauthn/exceptions.py:33
 msgid "Unprocessable Entity"
 msgstr "Onverwerkbare entiteit"
 
-#: src/django_otp_webauthn/exceptions.py:25
+#: src/django_otp_webauthn/exceptions.py:39
 msgid "Passwordless login is disabled."
 msgstr "Wachtwoordloze login is uitgeschakeld."
 
-#: src/django_otp_webauthn/exceptions.py:31
+#: src/django_otp_webauthn/exceptions.py:45
 msgid "This user account is marked as disabled."
 msgstr "Dit gebruikersaccount is gemarkeerd als uitgeschakeld."
 
-#: src/django_otp_webauthn/exceptions.py:37
+#: src/django_otp_webauthn/exceptions.py:51
 msgid "This Passkey has been marked as disabled."
 msgstr "Deze Passkey is gemarkeerd als uitgeschakeld."
 
-#: src/django_otp_webauthn/exceptions.py:44
+#: src/django_otp_webauthn/exceptions.py:58
 msgid "The Passkey you tried to use was not found. Perhaps it was removed?"
 msgstr ""
 "De Passkey die u probeert te gebruiken is niet gevonden. Misschien is deze "
 "verwijderd?"
 
-#: src/django_otp_webauthn/exceptions.py:52
+#: src/django_otp_webauthn/exceptions.py:66
 msgid ""
 "The Passkey you tried to use does not belong to the currently logged-in "
 "user. Try using a different Passkey or logout first to use this Passkey."
 msgstr ""
 "De Passkey die u probeert te gebruiken behoort niet tot de momenteel "
-"ingelogde gebruiker. Gebruik een andere Passkey of log eerst "
-"uit om deze Passkey te gebruiken."
+"ingelogde gebruiker. Gebruik een andere Passkey of log eerst uit om deze "
+"Passkey te gebruiken."
+
+#: src/django_otp_webauthn/exceptions.py:73
+msgid "Authentication required."
+msgstr "Authenticatie vereist."
 
 #: src/django_otp_webauthn/models.py:86
 msgid "format"
