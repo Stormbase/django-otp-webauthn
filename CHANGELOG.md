@@ -5,9 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - UNRELEASED
+
+### Added
+
+- Nothing yet
+
+### Changed
+
+- Nothing yet
+
+### Fixed
+
+- Nothing yet
+
+### Removed
+
+- Nothing yet
+
 ## [0.10.0] - 2026-07-01
 
-## Changed
+### Changed
 
 - **Django REST Framework no longer required.** This package no longer depends on Django REST Framework, in practice the only parts of DRF used were its `APIView`, `APIException` and permission classes, which have been replaced with lightweight custom implementations accomplishing the same. The schema of responses and errors remains unchanged, any customized frontend using the Authentication and Registration API views should continue to work as before. ([#137](https://github.com/Stormbase/django-otp-webauthn/pull/137) by [Stormheg](https://github.com/Stormheg))
 - **`py_webauthn` >= 3.0 is now required.** This library has some changes that may affect you:
