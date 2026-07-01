@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from functools import lru_cache
 from logging import getLogger
 
@@ -8,15 +9,13 @@ from django.contrib.auth import authenticate as auth_authenticate
 from django.contrib.auth import get_user_model
 from django.contrib.auth import login as auth_login
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.http import JsonResponse
 from django.shortcuts import resolve_url
 from django.utils.decorators import method_decorator
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.views import View
 from django.views.decorators.cache import cache_control, never_cache
 from django_otp import login as otp_login
-from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.renderers import JSONRenderer
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from django_otp_webauthn import exceptions
 from django_otp_webauthn.models import AbstractWebAuthnCredential
@@ -43,11 +42,50 @@ def _get_pywebauthn_logger():
         return getLogger(logger_name)
 
 
-class RegistrationCeremonyMixin:
-    permission_classes = [IsAuthenticated]
+class BaseWebAuthnView(View):
+    """Base class for WebAuthn API views.
+
+    Parses JSON request bodies into ``request.data`` and converts
+    :class:`~django_otp_webauthn.exceptions.OTPWebAuthnApiError` subclasses
+    into JSON error responses.
+    """
+
+    def handle_exception(self, exc):
+        if isinstance(exc, exceptions.OTPWebAuthnApiError):
+            return JsonResponse(
+                {"detail": str(exc), "code": exc.code},
+                status=exc.status_code,
+            )
+        raise exc from exc
+
+    def _parse_request_data(self, request):
+        if request.content_type.split(";", 1)[0] == "application/json":
+            if not request.body:
+                return {}
+            try:
+                return json.loads(request.body)
+            except json.JSONDecodeError as exc:
+                raise exceptions.MalformedRequest() from exc
+        return request.POST
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            request.data = self._parse_request_data(request)
+            self.request = request
+            self.initial(request, *args, **kwargs)
+            return super().dispatch(request, *args, **kwargs)
+        except Exception as exc:  # noqa: BLE001 - let the exception handler deal with it
+            return self.handle_exception(exc)
 
     def initial(self, request, *args, **kwargs):
+        """Hook called before the request handler. Override to add pre-dispatch logic."""
+
+
+class RegistrationCeremonyMixin:
+    def initial(self, request, *args, **kwargs):
         super().initial(request, *args, **kwargs)
+        if not request.user.is_authenticated:
+            raise exceptions.NotAuthenticated()
         self.check_can_register()
 
     def get_user(self) -> AbstractBaseUser | None:
@@ -63,8 +101,6 @@ class RegistrationCeremonyMixin:
 
 
 class AuthenticationCeremonyMixin:
-    permission_classes = [AllowAny]
-
     def initial(self, request, *args, **kwargs):
         super().initial(request, *args, **kwargs)
         self.check_can_authenticate()
@@ -92,13 +128,11 @@ class AuthenticationCeremonyMixin:
 
 
 @method_decorator(never_cache, name="dispatch")
-class BeginCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
+class BeginCredentialRegistrationView(RegistrationCeremonyMixin, BaseWebAuthnView):
     """View for starting webauthn credential registration. Requires the user to be logged in.
 
     This view will return a JSON response with the options for the client to use to register a credential.
     """
-
-    renderer_classes = [JSONRenderer]
 
     def post(self, *args, **kwargs):
         user = self.get_user()
@@ -107,17 +141,15 @@ class BeginCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
 
         self.request.session["otp_webauthn_register_state"] = state
 
-        return Response(data=data, content_type="application/json")
+        return JsonResponse(data)
 
 
 @method_decorator(never_cache, name="dispatch")
-class CompleteCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
+class CompleteCredentialRegistrationView(RegistrationCeremonyMixin, BaseWebAuthnView):
     """View for completing webauthn credential registration. Requires the user to be logged in and to have started the registration.
 
     This view accepts client data about the registered credential, validates it, and saves the credential to the database.
     """
-
-    renderer_classes = [JSONRenderer]
 
     def get_state(self):
         """Retrieve the registration state."""
@@ -153,19 +185,17 @@ class CompleteCredentialRegistrationView(RegistrationCeremonyMixin, APIView):
             # change that indicator.
             if not self.request.user.is_verified():
                 otp_login(self.request, device)
-        return Response(data={"id": device.pk}, content_type="application/json")
+        return JsonResponse({"id": device.pk})
 
 
 @method_decorator(never_cache, name="dispatch")
-class BeginCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView):
+class BeginCredentialAuthenticationView(AuthenticationCeremonyMixin, BaseWebAuthnView):
     """View for starting webauthn credential authentication. User does not necessarily need to be logged in.
 
     If the user is logged in, this view supplies more hints to the client about registered credentials.
 
     This view will return a JSON response with the options for the client to use to authenticate with a credential.
     """
-
-    renderer_classes = [JSONRenderer]
 
     def post(self, *args, **kwargs):
         user = self.get_user()
@@ -178,19 +208,19 @@ class BeginCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView):
         )
         self.request.session["otp_webauthn_authentication_state"] = state
 
-        return Response(data=data, content_type="application/json")
+        return JsonResponse(data)
 
 
 @method_decorator(never_cache, name="dispatch")
-class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView):
+class CompleteCredentialAuthenticationView(
+    AuthenticationCeremonyMixin, BaseWebAuthnView
+):
     """View for completing webauthn credential authentication. Requires the user to be
     logged in and to have started the authentication.
 
     This view accepts client data about the registered webauthn , validates it,
     and logs the user in.
     """
-
-    renderer_classes = [JSONRenderer]
 
     def get_state(self):
         """Retrieve the authentication state."""
@@ -286,15 +316,12 @@ class CompleteCredentialAuthenticationView(AuthenticationCeremonyMixin, APIView)
         self.check_device_usable(device)
         self.complete_auth(device)
 
-        return Response(self.get_success_data(device))
+        return JsonResponse(self.get_success_data(device))
 
 
-class WellKnownWebAuthnView(APIView):
+class WellKnownWebAuthnView(BaseWebAuthnView):
     """View for serving the `.well-known/webauthn` configuration file."""
 
-    authentication_classes = []
-    permission_classes = [AllowAny]
-    renderer_classes = [JSONRenderer]
     http_method_names = ["get"]
 
     def get_related_origins(self):
@@ -306,4 +333,4 @@ class WellKnownWebAuthnView(APIView):
             # https://www.w3.org/TR/webauthn-3/#sctn-related-origins
             "origins": self.get_related_origins(),
         }
-        return Response(data=data, content_type="application/json")
+        return JsonResponse(data)

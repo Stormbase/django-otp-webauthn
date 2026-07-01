@@ -17,8 +17,7 @@ if TYPE_CHECKING:
 
 class rewrite_exceptions:
     """Context manager that swallows py_webauthn exceptions and raises
-    appropriate django_otp_webauthn api exceptions that are handled nicely by rest
-    framework.
+    appropriate django_otp_webauthn api exceptions.
 
     To aid in debugging, this context manager accepts an optional logger
     argument that will be used to log the py_webauthn exceptions raised.

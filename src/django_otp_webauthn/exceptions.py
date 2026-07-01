@@ -1,9 +1,23 @@
 from django.utils.translation import gettext_lazy as _
-from rest_framework.exceptions import APIException
 
 
-class OTPWebAuthnApiError(APIException):
-    pass
+class OTPWebAuthnApiError(Exception):
+    status_code = 500
+    default_detail = _("Error processing WebAuthn request.")
+    default_code = "error"
+
+    def __init__(self, detail=None, code=None):
+        self.detail = detail or self.default_detail
+        self.code = code or self.default_code
+
+    def __str__(self):
+        return str(self.detail)
+
+
+class MalformedRequest(OTPWebAuthnApiError):
+    status_code = 400
+    default_detail = _("Malformed request. JSON not parsable.")
+    default_code = "malformed_request"
 
 
 class InvalidState(OTPWebAuthnApiError):
@@ -52,3 +66,9 @@ class CredentialUserMismatch(OTPWebAuthnApiError):
         "The Passkey you tried to use does not belong to the currently logged-in user. Try using a different Passkey or logout first to use this Passkey."
     )
     default_code = "credential_user_mismatch"
+
+
+class NotAuthenticated(OTPWebAuthnApiError):
+    status_code = 403
+    default_detail = _("Authentication required.")
+    default_code = "not_authenticated"

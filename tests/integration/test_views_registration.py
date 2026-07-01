@@ -1,3 +1,5 @@
+import json
+
 import jsonschema
 import pytest
 from django.urls import reverse
@@ -179,7 +181,7 @@ def test_registration_complete__no_state(api_client, user):
     api_client.force_login(user)
     response = api_client.post(url)
     assert response.status_code == 400
-    assert response.data["detail"].code == "invalid_state"
+    assert response.json()["code"] == "invalid_state"
     assert api_client.session.get("otp_device_id") is None
 
 
@@ -229,11 +231,13 @@ def test_registration_complete__valid_response_but_already_verified(
         "api_clientExtensionResults": {},
         "authenticatorAttachment": "platform",
     }
-    response = api_client.post(url, data=payload, format="json")
+    response = api_client.post(
+        url, data=json.dumps(payload), content_type="application/json"
+    )
     assert response.status_code == 200
 
     cred = credential_model.objects.last()
-    assert cred.pk == response.data["id"]
+    assert cred.pk == response.json()["id"]
     assert cred.user == user
     assert cred.transports == ["internal", "hybrid"]
 
@@ -269,11 +273,13 @@ def test_registration_complete__valid_response(api_client, user, credential_mode
         "api_clientExtensionResults": {},
         "authenticatorAttachment": "platform",
     }
-    response = api_client.post(url, data=payload, format="json")
+    response = api_client.post(
+        url, data=json.dumps(payload), content_type="application/json"
+    )
     assert response.status_code == 200
 
     cred = credential_model.objects.first()
-    assert cred.pk == response.data["id"]
+    assert cred.pk == response.json()["id"]
     assert cred.user == user
     assert cred.transports == ["internal", "hybrid"]
 

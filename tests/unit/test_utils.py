@@ -139,7 +139,7 @@ def test_rewrite_exceptions_context_manager(exception, expected_code):
         with rewrite_exceptions():
             raise exception()
 
-    assert exc_info.value.detail.code == expected_code
+    assert exc_info.value.code == expected_code
 
 
 @pytest.mark.parametrize(
@@ -158,7 +158,7 @@ def test_rewrite_exceptions_context_manager_with_logger(
         with rewrite_exceptions(logger=mock_logger):
             raise exception()
 
-    assert exc_info.value.detail.code == expected_code
+    assert exc_info.value.code == expected_code
     mock_logger.exception.assert_called_once()
 
 
