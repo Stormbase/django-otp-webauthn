@@ -229,9 +229,7 @@ def test_registration_complete__valid_response_but_already_verified(
         "api_clientExtensionResults": {},
         "authenticatorAttachment": "platform",
     }
-    response = api_client.post(
-        url, data=payload, content_type="application/json"
-    )
+    response = api_client.post(url, data=payload, content_type="application/json")
     assert response.status_code == 200
 
     cred = credential_model.objects.last()
@@ -274,9 +272,7 @@ def test_registration_complete__valid_response(api_client, user, credential_mode
         "api_clientExtensionResults": {},
         "authenticatorAttachment": "platform",
     }
-    response = api_client.post(
-        url, data=payload, content_type="application/json"
-    )
+    response = api_client.post(url, data=payload, content_type="application/json")
     assert response.status_code == 200
 
     cred = credential_model.objects.first()
