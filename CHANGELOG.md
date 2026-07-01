@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Changed
 
-- Nothing yet.
+- **Django REST Framework no longer required**. This package no longer depends on Django REST Framework, in practice the only parts of DRF used were its `APIView`, `APIException` and permission classes, which have been replaced with lightweight custom implementations accomplishing the same. The schema of responses and errors remains unchanged, any customized frontend using the Authentication and Registration API views should continue to work as before. ([#137](https://github.com/Stormbase/django-otp-webauthn/pull/137) by [Stormheg](https://github.com/Stormheg))
 
 ## Fixed
 
