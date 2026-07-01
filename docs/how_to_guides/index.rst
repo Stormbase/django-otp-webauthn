@@ -25,6 +25,10 @@ Here are what you will find in this section:
 
        Learn how to configure WebAuthn to work across multiple domains. For example, if your main application runs on ``https://example.com`` and you have a localized version on ``https://example.co.uk``.
 
+   .. grid-item-card:: :ref:`Keeping Passkeys up-to-date with changing user details <keeping_passkeys_in_sync>`
+
+       Learn how to keep Passkey user details saved in users' browsers up-to-date when details like email or username change.
+
 .. toctree::
     :maxdepth: 2
     :hidden:
@@ -33,3 +37,4 @@ Here are what you will find in this section:
     Customize helper class <customize_helper_class.rst>
     Customize models <customize_models.rst>
     Configure related origins <configure_related_origins.rst>
+    Keeping Passkeys up-to-date with changing user details <keeping_passkeys_in_sync.rst>

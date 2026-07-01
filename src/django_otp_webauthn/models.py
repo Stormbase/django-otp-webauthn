@@ -13,7 +13,7 @@ from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
 from django_otp.models import Device, DeviceManager, TimestampMixin
-from webauthn.helpers import parse_attestation_object
+from webauthn.helpers import bytes_to_base64url, parse_attestation_object
 from webauthn.helpers.structs import (
     AttestationObject,
     AuthenticatorTransport,
@@ -383,6 +383,11 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         helper = import_string(app_settings.OTP_WEBAUTHN_HELPER_CLASS)
         return helper(request=request)
 
+    @property
+    def credential_id_base64url(self) -> str:
+        """Return the base64url-encoded credential id."""
+        return bytes_to_base64url(self.credential_id)
+
 
 class WebAuthnCredential(AbstractWebAuthnCredential):
     """A OTP device that validates against a user's credential.
@@ -453,6 +458,10 @@ class WebAuthnUserHandle(models.Model):
     @property
     def handle(self) -> bytes:
         return bytes.fromhex(self.handle_hex)
+
+    @property
+    def handle_base64url(self) -> str:
+        return bytes_to_base64url(self.handle)
 
     @classmethod
     def get_handle_for_user(cls, user: AbstractBaseUser) -> bytes:

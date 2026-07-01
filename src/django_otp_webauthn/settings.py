@@ -106,6 +106,14 @@ class AppSettings:
     accessibility guidelines regarding timeouts. See https://www.w3.org/TR/WCAG22/#enough-time.
     """
 
+    OTP_WEBAUTHN_SIGNAL_UNKNOWN_CREDENTIAL = True
+    """If ``True``, when the user tries to
+    authenticate using a credential that does not exist on the
+    server, the client-side script will signal the browser the Passkey does not
+    exist anymore. It is up to browsers to implement this signal, but the
+    intention is for them to (automatically) remove the Passkey from the user's
+    device and not have show it as an option to the user again."""
+
     def __getattribute__(self, __name: str):
         # Check if a Django project settings should override the app default.
         # In order to avoid returning any random properties of the django settings, we inspect the prefix firstly.
