@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - EdDSA (-8)
     - ES256 (-7)
     - RS256 (-257)
-- The default JavaScript implementation is now built using Node 24
+- The default JavaScript implementation is now built using Node 26
 
 ## [0.9.0] - 2026-06-08
 
