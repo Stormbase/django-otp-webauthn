@@ -58,7 +58,7 @@ optional-dependencies.testing = [
   "django-debug-toolbar>=6,<7",
   "jsonschema~=4.23",
   # Update as necessary, prevent sudden breakage
-  "pytest>8,<9",
+  "pytest>9,<10",
   "pytest-django>4.5,<5",
   "pytest-env>=1,<2",
   "pytest-factoryboy>=2,<3",
