@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.11.0] - UNRELEASED
+## v0.11.0 - UNRELEASED
 
 ### Added
 
@@ -39,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Python 3.9 support has been removed. The code has been updated to Python 3.10+ syntax and features, and is no longer compatible with Python 3.9.
 
-## [0.10.0] - 2026-07-01
+## v0.10.0 - 2026-07-01
 
 ### Changed
 
@@ -47,14 +47,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`py_webauthn` >= 3.0 is now required.** This library has some changes that may affect you:
   - **`cryptography` >= 49 is now required.** [This version no longer supports Apple Mac computers with an Intel CPU (any Mac released before 2020)](https://cryptography.io/en/latest/changelog/#v49-0-0)
   - PQC ML-DSA-44 (-48), ML-DSA-65 (-49), and ML-DSA-87 (-50) algorithm support has been added. These algorithms are believed to be resistant to quantum supercomputers.
-    - Note: these algorithms are not enabled by default. Configure `OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS` to include them if you want to use them.
+    - Note: these algorithms are not enabled by default. Configure {django_otp_webauthn:setting}`OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS` to include them if you want to use them.
   - `py_webauthn` default algorithms have been changed. This signals to clients what public key algorithms are preferred when creating new credentials. The new preferred algorithms are based on guidance from the [WebAuthn Level 3 specification](https://www.w3.org/TR/2026/CR-webauthn-3-20260526/#dom-publickeycredentialcreationoptions-pubkeycredparams) and are as follows. These algorithms are very widespread and should not cause any compatibility issues.
     - EdDSA (-8)
     - ES256 (-7)
     - RS256 (-257)
 - The default JavaScript implementation is now built using Node 26
 
-## [0.9.0] - 2026-06-08
+## v0.9.0 - 2026-06-08
 
 ### Changed
 
@@ -71,7 +71,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Django 4.2 and 5.1 support was removed. Only Django 5.2 and above are supported in this release.
 
-## [0.8.0] - 2026-01-09
+## v0.8.0 - 2026-01-09
 
 ### Added
 
@@ -83,7 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improve translation update script ([#105](https://github.com/Stormbase/django-otp-webauthn/pull/105) by [bprobian](https://github.com/bprobian))
 
-## [0.7.0] - 2025-10-09
+## v0.7.0 - 2025-10-09
 
 ### Added
 
@@ -107,7 +107,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Maintenance: the documentation is now spell-checked using `pyspelling` ([#77](https://github.com/Stormbase/django-otp-webauthn/pull/77) by [activus-d](https://github.com/activus-d))
 - Avoid wasteful json deserialization and subsequent serialization by utilizing `py_webauthn.helpers.options_to_json_dict`, requires `py_webauthn>=2.6` ([#87](https://github.com/Stormbase/django-otp-webauthn/pull/87) by [Stormheg](https://github.com/Stormheg))
 
-## [0.6.0] - 2025-05-03
+## v0.6.0 - 2025-05-03
 
 ### Added
 
@@ -115,7 +115,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add support for [Related Origin Requests](https://www.w3.org/TR/webauthn-3/#sctn-related-origins), a feature defined in the level 3 working draft of the WebAuthn specification. It makes simple, cross-domain sharing of Passkeys possible ([#62](https://github.com/Stormbase/django-otp-webauthn/pull/62) by [Stormheg](https://github.com/Stormheg))
 - Add support for redirecting after Passkey authentication by reading a `next` url parameter from the current view ([#64](https://github.com/Stormbase/django-otp-webauthn/pull/64) by [atlasrealm](https://github.com/atlasrealm))
 
-## [0.5.0] - 2025-02-27
+## v0.5.0 - 2025-02-27
 
 ### Added
 
@@ -136,7 +136,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The default JavaScript implementation is now built using Node 22
 - The default JavaScript implementation for interacting with the browser api has been updated to use [`@simplewebauthn/browser` v13.1.0](https://github.com/MasterKale/SimpleWebAuthn/releases/tag/v13.1.0)
 
-## [0.4.0] - 2024-10-27
+## v0.4.0 - 2024-10-27
 
 ### Added
 
@@ -167,7 +167,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     admin.site.register(WebAuthnCredential, WebAuthnCredentialAdmin)
     ```
 
-## [0.3.0] - 2024-08-03
+## v0.3.0 - 2024-08-03
 
 ### Changed
 
@@ -183,14 +183,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The unused `RegistrationDisabled`, `AuthenticationDisabled`, and `LoginRequired` exceptions are removed. ([#12](https://github.com/Stormbase/django-otp-webauthn/pull/12) by [Stormheg](https://github.com/Stormheg))
 
-## [0.2.0] - 2024-07-18
+## v0.2.0 - 2024-07-18
 
 ### Changed
 
 - Support for having multiple `AUTHENTICATION_BACKENDS` was added. ([#8](https://github.com/Stormbase/django-otp-webauthn/pull/8) by [jmichalicek](https://github.com/jmichalicek))
   - **Action required:** add `django_otp_webauthn.backends.WebAuthnBackend` to your `AUTHENTICATION_BACKENDS` setting if you want to use passwordless login.
 
-## [0.1.3] - 2024-07-01
+## v0.1.3 - 2024-07-01
 
 ### Added
 
@@ -206,7 +206,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Use more appropriate examples for the `OTP_WEBAUTHN_*` settings in the README.
 - Update admonition in the README to reflect the current state of the project. We have moved from don't use in production to use at your own risk.
 
-## [0.1.2] - 2024-06-12
+## v0.1.2 - 2024-06-12
 
 ### Fixed
 
@@ -220,7 +220,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Make is easier to override the helper class using the new `OTP_WEBAUTHN_HELPER_CLASS` setting. Pass it a dotted path to your custom helper class and it will be used instead of the default one.
 
-## [0.1.1] - 2024-05-26
+## v0.1.1 - 2024-05-26
 
 ### Fixed
 
@@ -234,6 +234,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Switch to [`hatch`](https://hatch.pypa.io/) for managing the project.
 
-## [0.1.0] - 2024-05-12
+## v0.1.0 - 2024-05-12
 
 - Initial release.
