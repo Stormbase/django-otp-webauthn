@@ -38,6 +38,7 @@ dependencies = [
   "webauthn>=3,<4",
 ]
 optional-dependencies.docs = [
+  "django-otp-webauthn[testing]",
   "furo==2025.12.19",
   "myst-parser>=5.1,<6",
   "pyspelling==2.12.1",
