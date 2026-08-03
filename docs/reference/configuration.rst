@@ -18,6 +18,7 @@ effect they have. Configure these options in your Django settings file, for exam
     :noindex:
 
     .. autoclass:: django_otp_webauthn.settings.AppSettings
+        :noindex:
         :exclude-members: __init__, __new__
         :members:
         :member-order: bysource
