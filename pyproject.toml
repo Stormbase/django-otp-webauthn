@@ -38,10 +38,7 @@ dependencies = [
   "webauthn>=3,<4",
 ]
 optional-dependencies.docs = [
-  "furo==2024.8.6",
-  "pyspelling==2.10",
-  "sphinx==8.0.2",
-  "sphinx-autobuild==2024.10.3",
+  "myst-parser>=5.1,<6",
   "sphinx-copybutton==0.5.2",
   "sphinx-design==0.6.1",
 ]
