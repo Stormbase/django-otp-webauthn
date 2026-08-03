@@ -16,25 +16,22 @@ settings_prefix = "OTP_WEBAUTHN"
 class AppSettings:
     """Access this instance as ``django_otp_webauthn.settings.app_settings``."""
 
-    OTP_WEBAUTHN_EXCEPTION_LOGGER_NAME = "django_otp_webauthn"
-    """The logger name to use for exceptions. Leave blank to disable logging."""
+    OTP_WEBAUTHN_ALLOWED_ORIGINS = []
+    """A list of allowed origins for WebAuthn authentication. An origin should be
+    in the format 'https://example.com'.
 
-    OTP_WEBAUTHN_CREDENTIAL_MODEL = "django_otp_webauthn.WebAuthnCredential"
-    """Format: 'app_label.model_name'. The model to use for webauthn
-    credential."""
+    - Origins must be the same as the relying party ID domain, or a subdomain of
+      the relying party ID. For example: ["https://example.com", "https://sub.example.com"]
+      are valid if the relying party ID is "example.com".
+    - Origins must be secure (https://).
 
-    OTP_WEBAUTHN_ATTESTATION_MODEL = "django_otp_webauthn.WebAuthnAttestation"
-    """Format: 'app_label.model_name'. The model to use for webauthn
-    attestation."""
+    :tip: Want to allow cross-domain WebAuthn ceremonies? See :ref:`configure_related_origins` for more information.
 
-    OTP_WEBAUTHN_HELPER_CLASS = "django_otp_webauthn.helpers.WebAuthnHelper"
-    """The class to use for webauthn operations. This should be a class that subclasses
-    ``django_otp_webauthn.helpers.WebAuthnHelper``."""
-
-    OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = True
-    """If true, the default views will allow users to login with just a webauthn
-    credential. No username or password required. The user will be marked as
-    having passed MFA authentication."""
+    :warning: WebAuthn does not function on domains that are considered a `public suffix <https://publicsuffix.org/>`_!
+        Shared hosting domains like '**.herokuapp.com**' or '**.compute.amazonaws.com**' are
+        considered public suffixes and will not work with WebAuthn. You must use a
+        custom domain name for your application.
+    """
 
     OTP_WEBAUTHN_RP_ID: str = ""
     """The relying party ID for webauthn ceremonies. This should be the main
@@ -42,12 +39,12 @@ class AppSettings:
 
     **Important:** registered WebAuthn credentials will be scoped to this
     domain and its subdomains. Changing it will require users to re-register
-    their credentials. Migration is NOT possible.
+    their credentials. Migration is **NOT** possible.
     """
 
     OTP_WEBAUTHN_RP_ID_CALLABLE: Callable[[HttpRequest], str] = ""
     """Advanced usage. Import path to a callable that returns the relying party ID for webauthn
-    ceremonies. The callable should accept a single ``HttpRequest`` argument
+    ceremonies. The callable should accept a single ``HttpRequest`` argument.
 
     For example: 'my_project.utils.get_rp_id'
 
@@ -70,6 +67,14 @@ class AppSettings:
     This takes precedence over the ``OTP_WEBAUTHN_RP_NAME`` setting.
     """
 
+    OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = True
+    """Defaults to true. When enabled, the default views will allow users to login with just a webauthn
+    credential. No username or password required. The user will be marked as
+    having passed MFA authentication.
+
+    **Important** requires that ``django_otp_webauthn.backends.WebAuthnBackend`` is in your :setting:`AUTHENTICATION_BACKENDS` setting. Otherwise, the user will not be marked as having passed MFA authentication.
+    """
+
     OTP_WEBAUTHN_RP_RELATED_ORIGINS = []
     """A list of related origins for webauthn authentication. An origin should be
     in the format 'https://example.com'.
@@ -81,21 +86,13 @@ class AppSettings:
     adding both origins to this list, you can allow the same credentials to work
     on both domains.
 
-    Requires configuring the `.well-known/webauthn` endpoint to return the
-    related origins. See the documentation for details.
-    """
-
-    OTP_WEBAUTHN_ALLOWED_ORIGINS = []
-    """A list of allowed origins for webauthn authentication. An origin should be
-    in the format 'https://example.com'.
-
-    - Origins must be the same as the relying party ID domain, or a subdomain of the relying party ID.
-    - Origins must be secure (https://).
+    Requires configuring the :ref:`.well-known/webauthn <wellknown_webauthn_view>` endpoint to return the
+    related origins. See :ref:`configure_related_origins` for the full guide.
     """
 
     OTP_WEBAUTHN_SUPPORTED_COSE_ALGORITHMS = None
-    """A list of COSE algorithms supported by the server. Must be an integer
-    value from https://www.iana.org/assignments/cose/cose.xhtml#algorithms.
+    """A list of COSE algorithms supported by the server. Must be integer values
+    from https://www.iana.org/assignments/cose/cose.xhtml#algorithms.
 
     Defaults to None, which defers to whatever the py_webauthn library defaults are."""
 
@@ -138,6 +135,21 @@ class AppSettings:
     server. This is intended to inform the browser that the Passkey is no longer
     valid, allowing it to remove the Passkey from the user's device and prevent
     it from being presented as an option in future authentication attempts."""
+
+    OTP_WEBAUTHN_CREDENTIAL_MODEL = "django_otp_webauthn.WebAuthnCredential"
+    """Format: 'app_label.model_name'. The model to use for webauthn
+    credential."""
+
+    OTP_WEBAUTHN_ATTESTATION_MODEL = "django_otp_webauthn.WebAuthnAttestation"
+    """Format: 'app_label.model_name'. The model to use for webauthn
+    attestation."""
+
+    OTP_WEBAUTHN_HELPER_CLASS = "django_otp_webauthn.helpers.WebAuthnHelper"
+    """The class to use for webauthn operations. This should be a class that subclasses
+    ``django_otp_webauthn.helpers.WebAuthnHelper``."""
+
+    OTP_WEBAUTHN_EXCEPTION_LOGGER_NAME = "django_otp_webauthn"
+    """The logger name to use for exceptions. Leave blank to disable logging."""
 
     def __getattribute__(self, __name: str):
         # Check if a Django project settings should override the app default.

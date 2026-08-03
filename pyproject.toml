@@ -40,7 +40,7 @@ dependencies = [
 optional-dependencies.docs = [
   "myst-parser>=5.1,<6",
   "sphinx-copybutton==0.5.2",
-  "sphinx-design==0.6.1",
+  "sphinxcontrib-django==2.5",
 ]
 optional-dependencies.identify = [
   "identify-passkey>=1,<2",
