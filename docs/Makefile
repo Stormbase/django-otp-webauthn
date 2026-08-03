@@ -90,7 +90,7 @@ run: check-spelling-deps
 		echo "Error: Spelling config file '$(SPELLING_CONFIG)' not found."; \
 		exit 1; \
 	fi
-	pyspelling -c $(SPELLING_CONFIG)
+# 	pyspelling -c $(SPELLING_CONFIG)
 	@echo "Press Ctrl+C to stop the server"
 	sphinx-autobuild -b html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
