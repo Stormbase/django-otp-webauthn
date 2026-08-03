@@ -33,6 +33,9 @@ extensions = [
     "django_otp_webauthn_settings",
 ]
 
+if on_rtd or os.environ.get("BUILD_LLMS_TXT", ""):
+    extensions.append("sphinx_llm.txt")
+
 ogp_social_cards = {
     "enable": os.environ.get("ENABLE_SOCIAL_CARDS", "1" if on_rtd else "0") == "1",
 }
