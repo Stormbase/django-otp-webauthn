@@ -16,6 +16,8 @@ from tests.factories import (
     WebAuthnUserHandleFactory,
 )
 
+CORRECT_PASSWORD = "password"  # noqa: S105
+
 
 def _load_json_schema(path):
     json_schema_path = pathlib.Path(settings.BASE_DIR) / path
@@ -62,6 +64,13 @@ def credential():
 
 
 @pytest.fixture
+def credential_with_password(credential):
+    credential.user.set_password(CORRECT_PASSWORD)
+    credential.user.save()
+    return credential
+
+
+@pytest.fixture
 def user_handle():
     return WebAuthnUserHandleFactory()
 
@@ -69,6 +78,13 @@ def user_handle():
 @pytest.fixture
 def user():
     return UserFactory()
+
+
+@pytest.fixture
+def user_with_password(user):
+    user.set_password(CORRECT_PASSWORD)
+    user.save()
+    return user
 
 
 @pytest.fixture

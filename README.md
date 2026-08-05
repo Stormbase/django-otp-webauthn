@@ -119,18 +119,33 @@ To quickly start using Passkeys in your Django project, follow these steps:
 
 6. Add `django_otp_webauthn.backends.WebAuthnBackend` to `AUTHENTICATION_BACKENDS` in your Django settings. This step is required to make 'passwordless authentication' work.
 
-If you are exclusively using Passkeys as a secondary verification step, you don't have to add this backend.
+   If you are exclusively using Passkeys as a secondary verification step, you don't have to add this backend.
 
-```python
-# settings.py
+   ```python
+   # settings.py
 
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",  # This is Django's default backend, you likely want to keep it.
-    ...
-    "django_otp_webauthn.backends.WebAuthnBackend",
-    ...
-]
-```
+   AUTHENTICATION_BACKENDS = [
+       "django.contrib.auth.backends.ModelBackend",  # This is Django's default backend, you likely want to keep it.
+       ...
+       "django_otp_webauthn.backends.WebAuthnBackend",
+       ...
+   ]
+   ```
+
+   ### Optional: prevent password login for users with passkeys
+
+   By default, a user who has registered a Passkey can still log in with their password. To disable this, replace `django.contrib.auth.backends.ModelBackend` with `django_otp_webauthn.backends.UnenrolledModelBackend`:
+
+   ```python
+   # settings.py
+
+   AUTHENTICATION_BACKENDS = [
+       "django_otp_webauthn.backends.WebAuthnBackend",
+       "django_otp_webauthn.backends.UnenrolledModelBackend",
+   ]
+   ```
+
+   Password authentication will then only work for users who have not yet registered a Passkey, allowing them to log in to register their first one. Once a user has a confirmed Passkey, password login will fail for that account as though a wrong password was used.
 
 7. Add the registration code to your logged-in user template.
 
