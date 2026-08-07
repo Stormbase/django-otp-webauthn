@@ -92,6 +92,7 @@ class PasskeyDescriptor(NamedTuple):
         if picture_attrs is None:
             picture_attrs = {}
 
+        img_attrs = {} if img_attrs is None else img_attrs.copy()
         img_attrs.setdefault("width", "32")
         img_attrs.setdefault("alt", escape(self.name))
 
