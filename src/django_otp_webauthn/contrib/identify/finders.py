@@ -4,6 +4,8 @@ from pathlib import Path
 from django.contrib.staticfiles.finders import FileSystemFinder
 from django.core.files.storage import FileSystemStorage
 
+from django_otp_webauthn.contrib.identify import utils
+
 PACKAGE = "identify_passkey.icons"
 STATIC_PATH_PREFIX = "django_otp_webauthn/passkey-icons"
 
@@ -18,13 +20,14 @@ class PasskeyIconsFinder(FileSystemFinder):
     """
 
     def __init__(self, *args, **kwargs):
-        # No need to check for import errors, there is a system check in place
-        # that will warn if the package is not installed.
-        spec = find_spec(PACKAGE)
-        self.locations = [
-            (STATIC_PATH_PREFIX, Path(location))
-            for location in spec.submodule_search_locations
-        ]
+        if not utils.is_identify_passkey_package_installed():
+            self.locations = []
+        else:
+            spec = find_spec(PACKAGE)
+            self.locations = [
+                (STATIC_PATH_PREFIX, Path(location))
+                for location in spec.submodule_search_locations
+            ]
 
         self.storages = {}
 
