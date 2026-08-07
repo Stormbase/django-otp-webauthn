@@ -9,6 +9,10 @@ Here are what you will find in this section:
    :gutter: 3
    :margin: 0
 
+   .. grid-item-card:: :ref:`Identifying Passkeys <howto-identifying-passkeys>`
+
+       Learn how to identify the authenticator that created a Passkey, for example Apple Passwords, Yubikey, Android etc. This is useful context to give your users when presenting them with a list of their registered Passkeys.
+
    .. grid-item-card:: :ref:`Customize views <customize-views>`
 
        Learn how to subclass Django OTP WebAuthn's built-in views to customize registration and authentication behavior. For example, adding restrictions or logging mechanisms.
@@ -29,6 +33,7 @@ Here are what you will find in this section:
     :maxdepth: 2
     :hidden:
 
+    Identifying Passkeys <identifying_passkeys.rst>
     Customize views <customize_views.rst>
     Customize helper class <customize_helper_class.rst>
     Customize models <customize_models.rst>

@@ -30,6 +30,8 @@ Here are what you will find in this section:
     :maxdepth: 2
     :hidden:
 
+    Configuration <configuration.rst>
+    Identifying Passkeys <identifying_passkeys.rst>
     Views <views.rst>
     Helper <helper.rst>
     Models <models.rst>
