@@ -8,6 +8,7 @@ from django_otp_webauthn.contrib.identify import (
     identify_passkey as get_passkey_descriptor,
 )
 from django_otp_webauthn.contrib.identify.types import PasskeyDescriptor, PasskeyIcon
+from django_otp_webauthn.utils import is_contrib_identify_module_enabled
 from tests.factories import APPLE_AAGUID
 
 
@@ -35,6 +36,7 @@ def test_passkey_icon():
 
 def test_passkey_descriptor():
     """Test that PasskeyDescriptor correctly wraps the identify_passkey.PasskeyDescriptor."""
+    assert is_contrib_identify_module_enabled()
     descriptor = identify_passkey(APPLE_AAGUID)
     passkey_descriptor = PasskeyDescriptor(
         aaguid=descriptor.aaguid,
@@ -108,6 +110,7 @@ def test_passkey_descriptor():
 @pytest.mark.parametrize("theme", ["light", "dark"])
 def test_passkey_descriptor_picture_html_with_only_one_icon(theme):
     """Test that PasskeyDescriptor.picture_html() correctly handles cases where only one icon is provided."""
+    assert is_contrib_identify_module_enabled()
     # Request with only a light icon to test that no <source> tag is generated for dark mode
     descriptor = identify_passkey(APPLE_AAGUID)
     passkey_descriptor = PasskeyDescriptor(

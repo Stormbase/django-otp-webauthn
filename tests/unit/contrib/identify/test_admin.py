@@ -1,5 +1,6 @@
 import pytest
 from bs4 import BeautifulSoup
+from django.apps import apps
 from django.contrib.admin import AdminSite
 
 from django_otp_webauthn.admin import WebAuthnCredentialAdmin
@@ -23,6 +24,7 @@ class AdminWithMixins(
 @pytest.mark.django_db
 def test_webauthn_credential_modeladmin_mixins__apple(credential):
     """Verify that the admin mixins works correctly for Apple credentials."""
+    assert apps.is_installed("django_otp_webauthn.contrib.identify")
 
     credential.aaguid = APPLE_AAGUID
     credential.save()

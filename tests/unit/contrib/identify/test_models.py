@@ -1,4 +1,5 @@
 import pytest
+from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
 
 from django_otp_webauthn.contrib.identify import PasskeyDescriptor
@@ -30,7 +31,7 @@ def test_credential_identify():
 
 
 @pytest.mark.django_db
-def test_credential_inferred_name():
+def test_credential_inferred_name(enable_contrib_identify_app):
     """Verify that a WebAuthnCredential has a populated inferred_name property when it can be identified."""
     credential_unknown = WebAuthnCredentialFactory(
         aaguid="00000000-0000-0000-0000-000000000000"
@@ -74,11 +75,13 @@ def test_credential_identify__identify_app_not_installed(
     settings,
 ):
     # Remove the identify app from INSTALLED_APPS to simulate it not being installed
-    settings.INSTALLED_APPS = [
-        app
-        for app in settings.INSTALLED_APPS
-        if app != "django_otp_webauthn.contrib.identify"
-    ]
+    apps.set_installed_apps(
+        [
+            app
+            for app in settings.INSTALLED_APPS
+            if app != "django_otp_webauthn.contrib.identify"
+        ]
+    )
     assert not is_contrib_identify_module_enabled()
 
     credential = WebAuthnCredentialFactory(
@@ -89,3 +92,5 @@ def test_credential_identify__identify_app_not_installed(
         match="django_otp_webauthn.contrib.identify is not installed. Add it to your INSTALLED_APPS to use the identify feature.",
     ):
         credential.identify()
+
+    apps.unset_installed_apps()  # Reset installed apps to original state
