@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from typing import TYPE_CHECKING
 
 from django_otp_webauthn.contrib.identify.finders import PasskeyIconsFinder
@@ -14,7 +15,7 @@ __all__ = [
 ]
 
 
-def _identify_passkey() -> "_InternalPasskeyDescriptor | None":
+def _identify_passkey() -> "Callable[[str], _InternalPasskeyDescriptor | None]":
     from identify_passkey import identify_passkey as _id_passkey
 
     return _id_passkey
