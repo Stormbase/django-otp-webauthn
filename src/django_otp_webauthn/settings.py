@@ -2,6 +2,7 @@
 # https://overtag.dk/v2/blog/a-settings-pattern-for-reusable-django-apps/
 from collections.abc import Callable
 from dataclasses import dataclass
+from typing import Literal
 
 from django.conf import settings as django_settings
 from django.core.exceptions import ImproperlyConfigured
@@ -104,6 +105,29 @@ class AppSettings:
 
     Take care to keep this value reasonable. You ought to follow WCAG 2.2
     accessibility guidelines regarding timeouts. See https://www.w3.org/TR/WCAG22/#enough-time.
+    """
+
+    OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE: Literal[
+        "direct", "indirect", "enterprise", "none"
+    ] = "none"
+    """.. versionadded:: v0.11.0
+
+    Controls whether we, the relying party, want to receive :term:`attestation`
+    information from the :term:`authenticator` when registering a new credential.
+    Supported values are: ``direct``, ``indirect``, ``enterprise``, or ``none``.
+
+    Attestation conveys cryptographically-verifiable proof information about the
+    authenticator, such as its manufacturer and model. The purpose is to prove
+    that the authenticator really comes from the claimed manufacturer.
+
+    :admonition: Setting this to a value like ``indirect`` or ``direct`` may cause browsers
+        to prompt the user that the website requests to read their device's make and
+        model information, which can be rejected in which case no attestation
+        information will be sent. Registration will still succeed, but no
+        attestation information will be available to you.
+
+    For more information about attestation in general, see the `MDN documentation <https://developer.mozilla.org/en-US/docs/Web/API/Web_Authentication_API/Attestation_and_Assertion#attestation>`_
+    For more information about the specific values, see the `WebAuthn specification <https://www.w3.org/TR/webauthn-3/#enumdef-attestationconveyancepreference>`_
     """
 
     def __getattribute__(self, __name: str):

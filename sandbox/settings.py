@@ -180,6 +180,7 @@ if USE_CONTRIB_IDENTIFY:
         "django_otp_webauthn.contrib.identify.PasskeyIconsFinder",
     )
 
+OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE = "indirect"
 
 LOGIN_URL = "auth:login"
 LOGIN_REDIRECT_URL = "index"

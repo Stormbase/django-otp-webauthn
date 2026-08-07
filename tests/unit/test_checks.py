@@ -13,7 +13,6 @@ def test_check_settings_relying_party_id__not_set(settings):
     """Verify that a SystemCheckError is raised when the relying party ID is not set."""
     settings.OTP_WEBAUTHN_RP_ID_CALLABLE = None
     settings.OTP_WEBAUTHN_RP_ID = None
-
     with pytest.raises(SystemCheckError, match="Relying party ID not configured"):
         call_command("check")
 
@@ -202,4 +201,29 @@ def test_check_settings_dangerous_session_backend_used(settings):
     call_command("check")
 
     settings.SESSION_ENGINE = "django.contrib.sessions.backends.db"
+    call_command("check")
+
+
+@pytest.mark.django_db
+def test_check_settings_attestation_conveyance_preference(settings):
+    """Verify that a SystemCheckError is raised when the attestation conveyance preference is invalid."""
+
+    settings.OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE = "invalid_value"
+
+    with pytest.raises(
+        SystemCheckError,
+        match="Invalid attestation conveyance preference",
+    ):
+        call_command("check")
+
+    settings.OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE = "none"
+    call_command("check")
+
+    settings.OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE = "indirect"
+    call_command("check")
+
+    settings.OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE = "direct"
+    call_command("check")
+
+    settings.OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE = "enterprise"
     call_command("check")

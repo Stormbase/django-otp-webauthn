@@ -13,6 +13,7 @@ ERR_ALLOWED_ORIGINS_MALFORMED = "otp_webauthn.E031"
 ERR_DANGEROUS_SESSION_BACKEND = "otp_webauthn.E040"
 ERR_ATTESTATION_MISSING_CREDENTIAL_FIELD = "otp_webauthn.E050"
 ERR_RP_RELATED_ORIGINS_MALFORMED = "otp_webauthn.E060"
+ERR_FAULTY_CONVEYANCE_PREFERENCE = "otp_webauthn.E070"
 
 
 def check_settings_relying_party(app_configs, **kwargs):
@@ -41,6 +42,23 @@ def check_settings_relying_party(app_configs, **kwargs):
                 hint="Set the OTP_WEBAUTHN_RP_NAME setting to a human-readable name for the relying party, like: 'Acme Corp.'.",
                 obj=None,
                 id=ERR_NO_RP_NAME,
+            )
+        )
+
+    return errors
+
+
+def check_settings_attestation_conveyance_preference(app_configs, **kwargs):
+    errors = []
+    conveyance_preference = app_settings.OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE
+
+    if conveyance_preference not in ["direct", "indirect", "enterprise", "none"]:
+        errors.append(
+            Error(
+                f"Invalid attestation conveyance preference: {conveyance_preference!r}",
+                hint="Set the OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE setting to one of 'direct', 'indirect', 'enterprise', or 'none'.",
+                obj=None,
+                id=ERR_FAULTY_CONVEYANCE_PREFERENCE,
             )
         )
 
