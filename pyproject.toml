@@ -80,10 +80,10 @@ urls.Source = "https://github.com/Stormbase/django-otp-webauthn"
 version.source = "vcs"
 build.hooks.vcs.version-file = "src/django_otp_webauthn/_version.py"
 build.targets.wheel.artifacts = [
+  # Include compiled translations that are gitignored and thus not included by default
+  "src/django_otp_webauthn/**/locale/*/LC_MESSAGES/*.mo",
   # Version is generated during build and gitignored, make sure to include it
   "src/django_otp_webauthn/_version.py",
-  # Include compiled translations that are gitignored and thus not included by default
-  "src/django_otp_webauthn/locale/*/LC_MESSAGES/*.mo",
   # Include built static files that are gitignored and thus not included by default
   "src/django_otp_webauthn/static/django_otp_webauthn/*",
 ]
@@ -105,7 +105,7 @@ build.targets.sdist.artifacts = [
   # Include built static files that are gitignored and thus not included by default
   "src/django_otp_webauthn/static/django_otp_webauthn/*",
   # Include compiled translations that are gitignored and thus not included by default
-  "src/django_otp_webauthn/locale/*/LC_MESSAGES/*.mo",
+  "src/django_otp_webauthn/**/locale/*/LC_MESSAGES/*.mo",
   "sandbox/locale/*/LC_MESSAGES/*.mo",
   # Version is generated during build and gitignored, make sure to include it
   "src/django_otp_webauthn/_version.py",
