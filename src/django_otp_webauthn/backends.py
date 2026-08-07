@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
@@ -15,22 +15,22 @@ class WebAuthnBackend:
     def authenticate(
         self,
         request: HttpRequest,
-        webauthn_credential: Optional[AbstractWebAuthnCredential] = None,
+        webauthn_credential: AbstractWebAuthnCredential | None = None,
         **kwargs: Any,
-    ) -> Optional[AbstractBaseUser]:
+    ) -> AbstractBaseUser | None:
         if webauthn_credential:
             user = webauthn_credential.user
             return user if self.user_can_authenticate(user) else None
         return None
 
-    def get_user(self, user_id) -> Optional[AbstractBaseUser]:
+    def get_user(self, user_id) -> AbstractBaseUser | None:
         try:
             user = UserModel._default_manager.get(pk=user_id)
         except UserModel.DoesNotExist:
             return None
         return user if self.user_can_authenticate(user) else None
 
-    def user_can_authenticate(self, user: Optional[AbstractBaseUser]) -> bool:
+    def user_can_authenticate(self, user: AbstractBaseUser | None) -> bool:
         """
         Reject users with is_active=False. Custom user models that don't have
         that attribute are allowed.

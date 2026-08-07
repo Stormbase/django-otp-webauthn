@@ -1,7 +1,7 @@
 # Settings pattern adapted from
 # https://overtag.dk/v2/blog/a-settings-pattern-for-reusable-django-apps/
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Callable, Union
 
 from django.conf import settings as django_settings
 from django.core.exceptions import ImproperlyConfigured
@@ -114,7 +114,7 @@ class AppSettings:
 
         return super().__getattribute__(__name)
 
-    def _get_callable_setting(self, key: str) -> Union[Callable, None]:
+    def _get_callable_setting(self, key: str) -> Callable | None:
         """Imports and returns a callable setting."""
 
         value = self.__getattribute__(key)

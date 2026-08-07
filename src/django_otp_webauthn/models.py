@@ -1,6 +1,5 @@
 import hashlib
 from secrets import token_bytes
-from typing import Optional
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -461,7 +460,7 @@ class WebAuthnUserHandle(models.Model):
         return obj.handle
 
     @classmethod
-    def get_user_by_handle(cls, handle: bytes) -> Optional[AbstractBaseUser]:
+    def get_user_by_handle(cls, handle: bytes) -> AbstractBaseUser | None:
         """Return the user associated with the given handle."""
         try:
             return cls.objects.get(handle_hex=handle.hex()).user
