@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.checks import Error
 from django.utils.module_loading import import_string
 
+from django_otp_webauthn import utils as package_utils
 from django_otp_webauthn.contrib.identify import utils
 from django_otp_webauthn.contrib.identify.finders import PasskeyIconsFinder
 
@@ -10,6 +11,8 @@ ERR_IDENTIFY_PASSKEY_PACKAGE_NOT_INSTALLED = "otp_webauthn_identify.E001"
 
 def check_identify_passkey_package_installed(app_configs, **kwargs):
     """Check if the 'identify_passkey' package is installed."""
+    if not package_utils.is_contrib_identify_module_enabled():
+        return []
 
     errors = []
     if not utils.is_identify_passkey_package_installed():
@@ -26,6 +29,8 @@ def check_identify_passkey_package_installed(app_configs, **kwargs):
 
 def check_passkey_icon_finder_enabled(app_configs, **kwargs):
     """Check if ``django_otp_webauthn.contrib.identify.PasskeyIconsFinder`` (or a subclass) is enabled."""
+    if not package_utils.is_contrib_identify_module_enabled():
+        return []
 
     errors = []
     # Look for subclasses of PasskeyIconsFinder

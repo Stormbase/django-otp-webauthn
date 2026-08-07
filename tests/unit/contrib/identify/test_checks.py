@@ -3,6 +3,24 @@ from django.core.management import call_command
 from django.core.management.base import SystemCheckError
 
 
+@pytest.mark.django_db
+def test_checks_noop_when_contrib_identify_not_installed(mocker, settings):
+    """Verify that the checks no-ops when the contrib.identify module is not installed, even if the check is registered."""
+    assert "django_otp_webauthn.contrib.identify" in settings.INSTALLED_APPS
+    mocker.patch(
+        "django_otp_webauthn.utils.is_contrib_identify_module_enabled",
+        return_value=False,
+    )
+
+    # Mock not installed, but still the check passes because the identify app is
+    # supposedly not installed (but checks are still registered)
+    mocker.patch(
+        "django_otp_webauthn.contrib.identify.utils.is_identify_passkey_package_installed",
+        return_value=False,
+    )
+    call_command("check")
+
+
 def test_check_identify_passkey_package_installed(mocker, settings):
     """Verify that a SystemCheckError is raised when the 'identify_passkey' package is not installed."""
     assert "django_otp_webauthn.contrib.identify" in settings.INSTALLED_APPS
