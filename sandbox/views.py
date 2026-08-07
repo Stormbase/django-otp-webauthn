@@ -16,6 +16,11 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         ctx = super().get_context_data(**kwargs)
         ctx["2fa_verified"] = self.request.user.is_verified()
+        if self.request.user.is_authenticated:
+            passkeys = WebAuthnCredential.objects.filter(user=self.request.user)
+        else:
+            passkeys = WebAuthnCredential.objects.none()
+        ctx["passkeys"] = passkeys
         return ctx
 
 

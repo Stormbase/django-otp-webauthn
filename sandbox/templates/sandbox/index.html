@@ -41,8 +41,15 @@
                 <button type="submit">{% translate "Logout" %}</button>
             </form>
         </div>
+
+        <h2>{% trans "Registered Passkeys" %}</h2>
+        {% if passkeys %}
+            {% include "sandbox/passkey_table.html" with object_list=passkeys %}
+        {% else %}
+            <p>{% translate "No registered Passkeys." %}</p>
+        {% endif %}
+
     {% else %}
         <a href="{% url "auth:login" %}">Login</a>
     {% endif %}
-
 {% endblock content %}

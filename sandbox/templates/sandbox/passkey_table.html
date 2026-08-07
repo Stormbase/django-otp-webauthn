@@ -1,0 +1,21 @@
+{% load i18n sandbox_tags %}{% spaceless %}
+    {% if object_list %}
+        <table>
+            <thead>
+                <tr>
+                    <th>{% trans "ID" %}</th>
+                    <th>{% trans "Given name" %}</th>
+                    <th><abbr title="{% trans "Authenticator Attestation Globally Unique Identifier, identifier indicating the type (e.g. make and model) of the authenticator." %}">{% trans "AAGUID" %}</abbr></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for obj in object_list %}
+                    <tr>
+                        <td>{{ obj.id }}</td>
+                        <td>{{ obj.name|default:"<i>unnamed</i>" }}</td>
+                        <td>{{ obj.aaguid }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}{% endspaceless %}
