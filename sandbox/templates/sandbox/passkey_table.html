@@ -1,11 +1,16 @@
 {% load i18n sandbox_tags %}{% spaceless %}
     {% if object_list %}
         <table>
+            {% contrib_identify_enabled as use_contrib_identify %}
             <thead>
                 <tr>
                     <th>{% trans "ID" %}</th>
                     <th>{% trans "Given name" %}</th>
                     <th><abbr title="{% trans "Authenticator Attestation Globally Unique Identifier, identifier indicating the type (e.g. make and model) of the authenticator." %}">{% trans "AAGUID" %}</abbr></th>
+                    {% if use_contrib_identify %}
+                        <th>{% trans "Authenticator name inferred from AAGUID" %}</th>
+                        <th>{% trans "Authenticator logo" %}</th>
+                    {% endif %}
                 </tr>
             </thead>
             <tbody>
@@ -14,6 +19,10 @@
                         <td>{{ obj.id }}</td>
                         <td>{{ obj.name|default:"<i>unnamed</i>" }}</td>
                         <td>{{ obj.aaguid }}</td>
+                        {% if use_contrib_identify %}
+                            <td>{{ obj.inferred_name|default:"<i>unknown</i>" }}</td>
+                            <td>{{ obj.identify.picture_html|default:"<i>no logo</i>" }}</td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>

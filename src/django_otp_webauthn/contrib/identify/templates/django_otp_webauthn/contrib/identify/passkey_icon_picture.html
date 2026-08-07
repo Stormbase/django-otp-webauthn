@@ -1,0 +1,13 @@
+{% spaceless %}{% with fallback_icon_url=icon_light_url|default:icon_dark_url %}
+    <picture{{ picture_attrs|default:"" }}>
+    {% comment %} Only include source elements if the light and dark icons are different {% endcomment %}
+        {% if icon_light_url != icon_dark_url %}
+            {% if icon_light_url %}
+                <source srcset="{{ icon_light_url }}" media="(prefers-color-scheme: light)" />
+            {% endif %} {% if icon_dark_url %}
+                <source srcset="{{ icon_dark_url }}" media="(prefers-color-scheme: dark)" />
+            {% endif %}
+        {% endif %}
+        <img{{ img_attrs|default:"" }} src="{{ fallback_icon_url }}"/>
+    </picture>
+{% endwith %}{% endspaceless %}

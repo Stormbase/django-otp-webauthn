@@ -10,6 +10,8 @@ from django_otp_webauthn.models import (
 
 from .fuzzy import FuzzyBytes
 
+APPLE_AAGUID = "fbfc3007-154e-4ecc-8c0b-6e020557d7bd"
+
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -29,7 +31,10 @@ class WebAuthnCredentialFactory(factory.django.DjangoModelFactory):
 
     class Params:
         attested = factory.Trait(
-            attestation=factory.SubFactory("tests.factories.WebAuthnAttestationFactory")
+            attestation=factory.SubFactory(
+                "tests.factories.WebAuthnAttestationFactory"
+            ),
+            aaguid=APPLE_AAGUID,
         )
 
     @factory.lazy_attribute

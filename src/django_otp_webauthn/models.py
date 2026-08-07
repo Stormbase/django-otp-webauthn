@@ -1,12 +1,13 @@
 import hashlib
 from secrets import token_bytes
+from typing import TYPE_CHECKING
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.core import checks
+from django.core.exceptions import ImproperlyConfigured
 from django.db import models
-from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.functional import cached_property
 from django.utils.module_loading import import_string
@@ -21,13 +22,26 @@ from webauthn.helpers.structs import (
 
 from django_otp_webauthn import checks as otp_webauthn_checks
 from django_otp_webauthn.settings import app_settings
-from django_otp_webauthn.utils import get_credential_model_string
+from django_otp_webauthn.utils import (
+    get_credential_model_string,
+    is_contrib_identify_module_enabled,
+)
 
 User = get_user_model()
 
+if TYPE_CHECKING and is_contrib_identify_module_enabled():
+    from django_otp_webauthn.contrib.identify.types import PasskeyDescriptor
+
+
+def _identify_passkey():
+    # To avoid importing django_otp_webauthn.contrib.identify at the top level (when not enabled)
+    import django_otp_webauthn.contrib.identify
+
+    return django_otp_webauthn.contrib.identify.identify_passkey
+
 
 def as_credential_descriptors(
-    queryset: QuerySet["AbstractWebAuthnCredential"],
+    queryset: models.QuerySet["AbstractWebAuthnCredential"],
 ) -> list[PublicKeyCredentialDescriptor]:
     descriptors = []
     for id, raw_transports in queryset.values_list("credential_id", "transports"):
@@ -146,6 +160,23 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
         ]
         verbose_name = _("WebAuthn credential")
         verbose_name_plural = _("WebAuthn credentials")
+
+    def __str__(self):
+        if not self.name and self.inferred_name:
+            return f"{self.inferred_name} ({self.user})"
+        return super().__str__()
+
+    @property
+    def inferred_name(self):
+        """Automatically inferred name for this device. Uses ``django_otp_webauthn.contrib.identify``
+        to identify the device based on its AAGUID.
+
+        Will return None if the device cannot be identified (for example if the
+        AAGUID is zeroed out or not known).
+        """
+        if is_contrib_identify_module_enabled() and (ident := self.identify()):
+            return ident.name
+        return None
 
     objects = WebAuthnCredentialManager.from_queryset(WebAuthnCredentialQuerySet)()
 
@@ -332,6 +363,13 @@ class AbstractWebAuthnCredential(TimestampMixin, Device):
             )
         super().save(*args, **kwargs)
 
+    def identify(self) -> "PasskeyDescriptor | None":
+        if not is_contrib_identify_module_enabled():
+            raise ImproperlyConfigured(
+                "django_otp_webauthn.contrib.identify is not installed. Add it to your INSTALLED_APPS to use the identify feature."
+            )
+        return _identify_passkey()(self.aaguid)
+
     @classmethod
     def get_by_credential_id(cls, credential_id: bytes) -> "WebAuthnCredential":
         """Return a WebAuthnCredential instance by its credential id.
@@ -411,7 +449,7 @@ class WebAuthnUserHandle(models.Model):
     have a credential for a given user. In practice this is used to avoid having
     multiple credentials for the same user on the same authenticator.
 
-    This models follows the recommendation [^2] in the WebAuthn Level 3
+    This model follows the recommendation [^2] in the WebAuthn Level 3
     specification to let the user handle be 64 random bytes, stored with the
     user account.
 
