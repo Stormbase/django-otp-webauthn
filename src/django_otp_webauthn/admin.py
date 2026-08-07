@@ -8,6 +8,7 @@ credential_model = app_settings.OTP_WEBAUTHN_CREDENTIAL_MODEL
 
 
 class WebAuthnCredentialAdmin(admin.ModelAdmin):
+    list_display_links = ["aaguid"]
     list_display = [
         "user",
         "name",
@@ -66,9 +67,7 @@ class WebAuthnCredentialAdmin(admin.ModelAdmin):
             ),
             (
                 _("Meta"),
-                {
-                    "fields": ["last_used_at", "created_at"],
-                },
+                {"fields": ["last_used_at", "created_at"]},
             ),
             (
                 _("WebAuthn credential data"),
