@@ -69,6 +69,7 @@ optional-dependencies.testing = [
   "pytest-mock>=3.14,<4",
   "pytest-randomly>=4,<5",
   "pytest-rerunfailures>=16,<17",
+  "servestatic>=4,<5",             # For testing static file serving using a manifest - not the static file finders
 ]
 urls.Changelog = "https://github.com/Stormbase/django-otp-webauthn/blob/main/CHANGELOG.md"
 urls.Documentation = "https://django-otp-webauthn.readthedocs.io/en/latest/"
