@@ -92,6 +92,10 @@ class rewrite_exceptions:
         return False
 
 
+def is_contrib_identify_module_enabled() -> bool:
+    return apps.is_installed("django_otp_webauthn.contrib.identify")
+
+
 def get_exempt_urls() -> list:
     """Returns the list of urls that should be allowed without 2FA verification."""
     return [
