@@ -45,6 +45,9 @@ optional-dependencies.docs = [
   "sphinx-copybutton==0.5.2",
   "sphinx-design==0.6.1",
 ]
+optional-dependencies.identify = [
+  "identify-passkey>=1,<2",
+]
 optional-dependencies.playwright = [
   "playwright>=1.49,<2",
   "pytest-playwright>=0.5.2,<1",
@@ -56,6 +59,7 @@ optional-dependencies.testing = [
   # To test functionality with a strict Content Security Policy
   "django-csp>=4,<5",
   "django-debug-toolbar>=6,<7",
+  "django-otp-webauthn[identify]", # The identify tests require the identify-passkey package
   "jsonschema~=4.23",
   # Update as necessary, prevent sudden breakage
   "pytest>9,<10",
@@ -171,9 +175,8 @@ report.exclude_lines = [
   # Don't complain if non-runnable code isn't run:
   "if 0:",
   "if self.debug",
-
   # Nor complain about type checking
-  "if TYPE_CHECKING:",
+  "if TYPE_CHECKING *",
   # Have to re-enable the standard pragma
   "pragma: no cover",
 
