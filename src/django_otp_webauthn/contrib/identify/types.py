@@ -97,7 +97,7 @@ class PasskeyDescriptor(NamedTuple):
         img_attrs.setdefault("alt", escape(self.name))
 
         if self.icon_light is None and self.icon_dark is None:
-            return ""
+            return SafeString("")
 
         icon_light_url = None
         icon_dark_url = None
