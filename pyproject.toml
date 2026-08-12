@@ -157,7 +157,7 @@ lint.isort.known-first-party = [ "django_otp_webauthn", "sandbox", "tests" ]
 [tool.pytest]
 ini_options.testpaths = "tests/"
 ini_options.pythonpath = "sandbox"
-ini_options.norecursedirs = [ "tests/e2e" ]
+ini_options.norecursedirs = [ "tests/contrib", "tests/e2e" ]
 ini_options.addopts = "--reuse-db"
 ini_options.DJANGO_SETTINGS_MODULE = "settings"
 

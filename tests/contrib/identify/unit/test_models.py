@@ -31,7 +31,7 @@ def test_credential_identify():
 
 
 @pytest.mark.django_db
-def test_credential_inferred_name(enable_contrib_identify_app):
+def test_credential_inferred_name():
     """Verify that a WebAuthnCredential has a populated inferred_name property when it can be identified."""
     credential_unknown = WebAuthnCredentialFactory(
         aaguid="00000000-0000-0000-0000-000000000000"
