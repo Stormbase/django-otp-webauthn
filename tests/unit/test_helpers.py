@@ -97,10 +97,19 @@ def test_helper_get_discoverable_credentials_preference(helper, settings):
     )
 
 
-def test_helper_get_attestation_conveyance_preference(helper):
+def test_helper_get_attestation_conveyance_preference(helper, settings):
+    del (
+        settings.OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE
+    )  # Explicitly unset the setting to test the default value
     assert (
         helper.get_attestation_conveyance_preference()
-        == AttestationConveyancePreference.NONE
+        == AttestationConveyancePreference.NONE  # Default value
+    )
+
+    settings.OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE = "direct"
+    assert (
+        helper.get_attestation_conveyance_preference()
+        == AttestationConveyancePreference.DIRECT
     )
 
 

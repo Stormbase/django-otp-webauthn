@@ -169,7 +169,9 @@ class WebAuthnHelper:
         https://www.w3.org/TR/webauthn-2/#sctn-attestation -
         https://developers.yubico.com/WebAuthn/WebAuthn_Developer_Guide/Attestation.html
         """
-        return AttestationConveyancePreference.NONE
+        return AttestationConveyancePreference(
+            app_settings.OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE
+        )
 
     def get_authenticator_attachment_preference(
         self,

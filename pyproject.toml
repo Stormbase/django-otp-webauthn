@@ -45,6 +45,9 @@ optional-dependencies.docs = [
   "sphinx-copybutton==0.5.2",
   "sphinx-design==0.6.1",
 ]
+optional-dependencies.identify = [
+  "identify-passkey>=1,<2",
+]
 optional-dependencies.playwright = [
   "playwright>=1.49,<2",
   "pytest-playwright>=0.5.2,<1",
@@ -56,6 +59,7 @@ optional-dependencies.testing = [
   # To test functionality with a strict Content Security Policy
   "django-csp>=4,<5",
   "django-debug-toolbar>=6,<7",
+  "django-otp-webauthn[identify]", # The identify tests require the identify-passkey package
   "jsonschema~=4.23",
   # Update as necessary, prevent sudden breakage
   "pytest>9,<10",
@@ -65,6 +69,7 @@ optional-dependencies.testing = [
   "pytest-mock>=3.14,<4",
   "pytest-randomly>=4,<5",
   "pytest-rerunfailures>=16,<17",
+  "servestatic>=4,<5",             # For testing static file serving using a manifest - not the static file finders
 ]
 urls.Changelog = "https://github.com/Stormbase/django-otp-webauthn/blob/main/CHANGELOG.md"
 urls.Documentation = "https://django-otp-webauthn.readthedocs.io/en/latest/"
@@ -75,10 +80,10 @@ urls.Source = "https://github.com/Stormbase/django-otp-webauthn"
 version.source = "vcs"
 build.hooks.vcs.version-file = "src/django_otp_webauthn/_version.py"
 build.targets.wheel.artifacts = [
+  # Include compiled translations that are gitignored and thus not included by default
+  "src/django_otp_webauthn/**/locale/*/LC_MESSAGES/*.mo",
   # Version is generated during build and gitignored, make sure to include it
   "src/django_otp_webauthn/_version.py",
-  # Include compiled translations that are gitignored and thus not included by default
-  "src/django_otp_webauthn/locale/*/LC_MESSAGES/*.mo",
   # Include built static files that are gitignored and thus not included by default
   "src/django_otp_webauthn/static/django_otp_webauthn/*",
 ]
@@ -100,7 +105,7 @@ build.targets.sdist.artifacts = [
   # Include built static files that are gitignored and thus not included by default
   "src/django_otp_webauthn/static/django_otp_webauthn/*",
   # Include compiled translations that are gitignored and thus not included by default
-  "src/django_otp_webauthn/locale/*/LC_MESSAGES/*.mo",
+  "src/django_otp_webauthn/**/locale/*/LC_MESSAGES/*.mo",
   "sandbox/locale/*/LC_MESSAGES/*.mo",
   # Version is generated during build and gitignored, make sure to include it
   "src/django_otp_webauthn/_version.py",
@@ -171,9 +176,8 @@ report.exclude_lines = [
   # Don't complain if non-runnable code isn't run:
   "if 0:",
   "if self.debug",
-
   # Nor complain about type checking
-  "if TYPE_CHECKING:",
+  "if TYPE_CHECKING *",
   # Have to re-enable the standard pragma
   "pragma: no cover",
 

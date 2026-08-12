@@ -11,6 +11,9 @@ class OtpWebauthnConfig(AppConfig):
     verbose_name = _("OTP WebAuthn")
 
     def ready(self):
+        register(
+            checks.check_settings_attestation_conveyance_preference, Tags.compatibility
+        )
         register(checks.check_settings_supported_cose_algorithms, Tags.security)
         register(checks.check_settings_dangerous_session_backend_used, Tags.security)
         register(checks.check_settings_allowed_origins_missing, Tags.compatibility)

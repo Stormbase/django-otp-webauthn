@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 import dj_database_url
@@ -20,6 +21,8 @@ PROJECT_DIR = Path(__file__).resolve().parent
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+USE_STATIC = os.environ.get("USE_STATIC", "0") == "1"
+USE_CONTRIB_IDENTIFY = os.environ.get("USE_CONTRIB_IDENTIFY", "0") == "1"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -28,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-btdx7xg!bigxep%=qw=r%nvvm4nfpx1gpuh4ci%@#@7m14=hjq"  # noqa: S105 (known false positive)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "1") == "1"
 
 ALLOWED_HOSTS = ["*"]
 
@@ -53,6 +56,12 @@ INSTALLED_APPS = [
     "sandbox",
 ]
 
+if USE_STATIC:
+    INSTALLED_APPS.insert(0, "servestatic")
+
+if USE_CONTRIB_IDENTIFY:
+    INSTALLED_APPS.append("django_otp_webauthn.contrib.identify")
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -65,6 +74,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+if USE_STATIC:
+    # Insert after SecurityMiddleware to ensure that static files are served before any security checks
+    pos = MIDDLEWARE.index("django.middleware.security.SecurityMiddleware") + 1
+    MIDDLEWARE.insert(pos, "servestatic.middleware.ServeStaticMiddleware")
+    SERVESTATIC_KEEP_ONLY_HASHED_FILES = True
 
 # SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
@@ -124,6 +139,18 @@ AUTHENTICATION_BACKENDS = [
     "django_otp_webauthn.backends.WebAuthnBackend",
 ]
 
+# Storages
+# https://docs.djangoproject.com/en/6.0/ref/settings/#std-setting-STORAGES
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
+        if not USE_STATIC
+        else "servestatic.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -142,6 +169,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = PROJECT_DIR / "public" / "static"
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
+if USE_CONTRIB_IDENTIFY:
+    STATICFILES_FINDERS.append(
+        "django_otp_webauthn.contrib.identify.PasskeyIconsFinder",
+    )
+
+OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE = "indirect"
 
 LOGIN_URL = "auth:login"
 LOGIN_REDIRECT_URL = "index"
