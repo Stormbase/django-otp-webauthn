@@ -17,7 +17,7 @@ class PasskeyIcon(NamedTuple):
 
     @property
     def static_url(self) -> str:
-        """Django static file url to the icon file, using your configured staticfiles storage. Example: ``/static/django_otp_webauthn/.png``"""
+        """Django static file url to the icon file, using your configured staticfiles storage. Example: ``/static/django_otp_webauthn/passkey-icons/apple-passwords-icon.svg``"""
         return staticfiles_storage.url(f"{STATIC_PATH_PREFIX}/{self.ref.path.name}")
 
     @property

@@ -33,12 +33,12 @@ class AuthenticatorThumbnailMixin:
 
         Returns:
             :class:`~django.utils.safestring.SafeString`: An HTML ``<picture>``
-            tag with the credential icon thumbnail or a placeholder if not available.
+            tag with the credential icon thumbnail or nothing if not available.
         """
 
         passkey_descriptor = _identify()(obj.aaguid)
         if not passkey_descriptor:
-            return ""
+            return SafeString("")  # No icon for unknown AAGUID
 
         return passkey_descriptor.picture_html(
             picture_attrs={"class": "credential-icon-thumbnail"}
