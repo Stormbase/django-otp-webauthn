@@ -29,7 +29,7 @@ from django_otp_webauthn.utils import (
 
 User = get_user_model()
 
-if TYPE_CHECKING and is_contrib_identify_module_enabled():
+if TYPE_CHECKING:
     from django_otp_webauthn.contrib.identify.types import PasskeyDescriptor
 
 
