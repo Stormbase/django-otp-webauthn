@@ -20,4 +20,4 @@ else
   EXTRA_ARGS="--headed"
 fi
 
-DJANGO_ALLOW_ASYNC_UNSAFE=1 python -m pytest --browser chromium $EXTRA_ARGS tests/e2e/ $@
+DJANGO_ALLOW_ASYNC_UNSAFE=1 python -m pytest --ds=tests.testapp.settings_with_identify --browser chromium $EXTRA_ARGS tests/e2e/ $@
