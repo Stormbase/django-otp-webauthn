@@ -9,7 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Nothing yet
+- **New identify contrib module.** a new `django_otp_webauthn.contrib.identify` module has been added to allow identifying the authenticator that created the Passkey (such as Apple Passwords, Windows Hello, Yubikey etc.). The intent behind this feature is to allow developers to show the icon and name of the authenticator to the user in their list of registered Passkeys. ([#149](https://github.com/Stormbase/django-otp-webauthn/pull/149) by [Stormheg](https://github.com/Stormheg))
+- Added {django_otp_webauthn:setting}`OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE` to control whether the authenticator should provide attestation information during Passkey registration. It remains `none` by default, but can be set to `direct` or `indirect` to request attestation information.
+- Django 6.1 support
+- Python 3.15 support (provisional, pending final release)
 
 ### Changed
 
@@ -21,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Nothing yet
+- Python 3.9 support has been removed. The code has been updated to Python 3.10+ syntax and features, and is no longer compatible with Python 3.9.
 
 ## [0.10.0] - 2026-07-01
 
