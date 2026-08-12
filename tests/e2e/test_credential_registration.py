@@ -185,6 +185,70 @@ def test_register_credential__internal_success(
     assert res["id"] == credential.pk
 
 
+def test_register_credential__internal_attestation(
+    live_server,
+    django_db_serialized_rollback,
+    page,
+    playwright_force_login,
+    user,
+    cdpsession,
+    settings,
+    virtual_authenticator,
+    event_waiter,
+    credential_model,
+    wait_for_javascript_event,
+    mocker,
+):
+    playwright_force_login(user)
+    settings.OTP_WEBAUTHN_ATTESTATION_CONVEYANCE_PREFERENCE = "indirect"
+    mocker.patch(
+        "identify_passkey.PASSKEYS",
+        new_callable=lambda: {
+            "01020304-0506-0708-0102-030405060708": (
+                "Test Attestation Authenticator",
+                None,
+                None,
+            )  # Add the test AAGUID so it can be identified
+        },
+    )
+
+    # Create a virtual authenticator
+    virtual_authenticator(VirtualAuthenticator.internal())
+
+    page.goto(live_server.url)
+    register_button = page.locator("button#passkey-register-button")
+    expect(register_button).to_be_visible()
+
+    register_button.click()
+    # Wait for the page to display a success message, afterwards it is likely
+    # safe to get the credential without being trapped waiting for eternity..
+    page.wait_for_selector(
+        f"#passkey-register-status-message[data-status-enum='{StatusEnum.SUCCESS}']",
+        timeout=2000,
+    )
+
+    credential = credential_model.objects.first()
+    attestation = credential.attestation
+    assert attestation.fmt != "none", (
+        "Expected attestation format to be something other than 'none' when attestation conveyance preference is set to 'indirect'."
+    )
+
+    # Check AAGUID
+    assert credential.aaguid == "01020304-0506-0708-0102-030405060708", (
+        "Expected AAGUID to match the virtual authenticator's AAGUID."
+    )
+    # Check inferred name matches the mocked identify_passkey mapping for the AAGUID
+    assert credential.inferred_name == "Test Attestation Authenticator", (
+        "Expected inferred name to match the mocked identify_passkey mapping for the AAGUID."
+    )
+
+    # Check credential.identify()
+    descriptor = credential.identify()
+    assert descriptor is not None
+    assert descriptor.name == "Test Attestation Authenticator"
+    assert not descriptor.has_icon
+
+
 def test_register_credential__fail_bad_user_presence(
     live_server,
     django_db_serialized_rollback,
