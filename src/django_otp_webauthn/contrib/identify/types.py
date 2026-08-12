@@ -3,7 +3,6 @@ from typing import TYPE_CHECKING, Literal, NamedTuple
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.forms.utils import flatatt
 from django.template.loader import render_to_string
-from django.utils.html import escape
 from django.utils.safestring import SafeString
 
 from .finders import STATIC_PATH_PREFIX
@@ -94,7 +93,7 @@ class PasskeyDescriptor(NamedTuple):
 
         img_attrs = {} if img_attrs is None else img_attrs.copy()
         img_attrs.setdefault("width", "32")
-        img_attrs.setdefault("alt", escape(self.name))
+        img_attrs.setdefault("alt", self.name)
 
         if self.icon_light is None and self.icon_dark is None:
             return SafeString("")
@@ -109,7 +108,7 @@ class PasskeyDescriptor(NamedTuple):
         return render_to_string(
             "django_otp_webauthn/contrib/identify/passkey_icon_picture.html",
             {
-                "name": escape(self.name),
+                "name": self.name,
                 "icon_light_url": icon_light_url,
                 "icon_dark_url": icon_dark_url,
                 "picture_attrs": flatatt(picture_attrs),
