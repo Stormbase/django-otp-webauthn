@@ -27,7 +27,7 @@ msgstr "Er is een fout opgetreden tijdens de verificatie."
 msgid "Verify with Passkey"
 msgstr "Verifieren met Passkey"
 
-msgid "Verifying..."
+msgid "Verifying…"
 msgstr "Verifiëren..."
 
 msgid "Verification failed. Could not retrieve parameters from the server."

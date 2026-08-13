@@ -219,7 +219,7 @@ import {
         await setPasskeyVerifyState({
           buttonDisabled: true,
           statusEnum: StatusEnum.BUSY,
-          buttonLabel: gettext("Verifying..."),
+          buttonLabel: gettext("Verifying…"),
         });
 
         // Begin authentication: fetch options and challenge

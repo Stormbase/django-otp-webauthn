@@ -29,7 +29,7 @@ msgstr "Bei der Überprüfung ist ein Fehler aufgetreten."
 msgid "Verify with Passkey"
 msgstr "Mit Passkey verifizieren"
 
-msgid "Verifying..."
+msgid "Verifying…"
 msgstr "Überprüfung läuft..."
 
 msgid "Verification failed. Could not retrieve parameters from the server."

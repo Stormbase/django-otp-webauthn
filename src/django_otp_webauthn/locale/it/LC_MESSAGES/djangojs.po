@@ -28,7 +28,7 @@ msgstr "Si è verificato un errore durante la verifica."
 msgid "Verify with Passkey"
 msgstr "Verifica con Passkey"
 
-msgid "Verifying..."
+msgid "Verifying…"
 msgstr "Verifica in corso…"
 
 msgid "Verification failed. Could not retrieve parameters from the server."
