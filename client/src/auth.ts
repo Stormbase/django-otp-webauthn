@@ -312,7 +312,7 @@ import {
         await setPasskeyVerifyState({
           buttonDisabled: true,
           statusEnum: StatusEnum.BUSY,
-          buttonLabel: gettext("Finishing verification..."),
+          buttonLabel: gettext("Finishing verification…"),
         });
 
         // Find out if there is a hidden 'next' field on the page,
