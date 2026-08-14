@@ -59,7 +59,9 @@ msgstr "Verifica avvenuta con successo!"
 msgid "Register a Passkey"
 msgstr "Registra una passkey"
 
-msgid "Registering..."
+#, fuzzy
+#| msgid "Registering..."
+msgid "Registering…"
 msgstr "Registrazione in corso…"
 
 msgid "Registration failed. Unable to fetch registration options from server."
@@ -90,7 +92,9 @@ msgstr ""
 msgid "Registration failed. An unknown error occurred."
 msgstr "Registrazione fallita. Si è verificato un errore sconosciuto."
 
-msgid "Finishing registration..."
+#, fuzzy
+#| msgid "Finishing registration..."
+msgid "Finishing registration…"
 msgstr "Completamento della registrazione…"
 
 msgid "Registration failed. The server was unable to verify this passkey."

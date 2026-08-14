@@ -42,7 +42,7 @@ import {
         );
         await setPasskeyRegisterState({
           buttonDisabled: true,
-          buttonLabel: gettext("Registering..."),
+          buttonLabel: gettext("Registering…"),
         });
 
         // Begin registration: fetch options and challenge
@@ -153,7 +153,7 @@ import {
         setPasskeyRegisterState({
           buttonDisabled: true,
           statusEnum: StatusEnum.BUSY,
-          buttonLabel: gettext("Finishing registration..."),
+          buttonLabel: gettext("Finishing registration…"),
         });
 
         // Complete

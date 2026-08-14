@@ -59,7 +59,9 @@ msgstr "Verificatie voltooid!"
 msgid "Register a Passkey"
 msgstr "Registreer een Passkey"
 
-msgid "Registering..."
+#, fuzzy
+#| msgid "Registering..."
+msgid "Registering…"
 msgstr "Registreren..."
 
 msgid "Registration failed. Unable to fetch registration options from server."
@@ -88,7 +90,9 @@ msgstr ""
 msgid "Registration failed. An unknown error occurred."
 msgstr "Registratie mislukt. Er is een onbekende fout opgetreden."
 
-msgid "Finishing registration..."
+#, fuzzy
+#| msgid "Finishing registration..."
+msgid "Finishing registration…"
 msgstr "Registratie afronden..."
 
 msgid "Registration failed. The server was unable to verify this passkey."
