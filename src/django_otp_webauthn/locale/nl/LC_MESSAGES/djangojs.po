@@ -9,7 +9,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-08-14 13:13+0000\n"
 "PO-Revision-Date: 2026-08-14 13:19+0000\n"
-"Last-Translator: Anonymous <noreply@weblate.org>\n"
+"Last-Translator: Storm Heg <storm@stormbase.digital>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/django-otp-"
 "webauthn/frontend/nl/>\n"
 "Language: nl\n"
@@ -28,10 +28,8 @@ msgstr "Er is een fout opgetreden tijdens de verificatie."
 msgid "Verify with Passkey"
 msgstr "Verifieren met Passkey"
 
-#, fuzzy
-#| msgid "Verifying…"
 msgid "Verifying…"
-msgstr "Verifiëren..."
+msgstr "Verifiëren…"
 
 msgid "Verification failed. Could not retrieve parameters from the server."
 msgstr ""
@@ -46,10 +44,8 @@ msgstr "Verificatie geannuleerd of niet toegestaan."
 msgid "Verification failed. An unknown error occurred."
 msgstr "Verificatie mislukt. Er is een onbekende fout opgetreden."
 
-#, fuzzy
-#| msgid "Finishing verification..."
 msgid "Finishing verification…"
-msgstr "Verificatie afronden..."
+msgstr "Verificatie afronden…"
 
 msgid "Verification failed. An unknown server error occurred."
 msgstr "Verificatie mislukt. Er is een onbekende serverfout opgetreden."
