@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-01 12:17+0000\n"
+"POT-Creation-Date: 2026-08-14 12:33+0000\n"
 "PO-Revision-Date: 2026-01-06 13:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,19 +19,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.4.4\n"
 
-#: src/django_otp_webauthn/admin.py:38
+#: src/django_otp_webauthn/admin.py:39
 msgid "COSE public key"
 msgstr "Chiave pubblica COSE"
 
-#: src/django_otp_webauthn/admin.py:62
+#: src/django_otp_webauthn/admin.py:63
 msgid "Identity"
 msgstr "Identità"
 
-#: src/django_otp_webauthn/admin.py:68
+#: src/django_otp_webauthn/admin.py:69
 msgid "Meta"
 msgstr "Meta"
 
-#: src/django_otp_webauthn/admin.py:74
+#: src/django_otp_webauthn/admin.py:73
 msgid "WebAuthn credential data"
 msgstr "Dati delle credenziali WebAuthn"
 
@@ -90,94 +90,94 @@ msgstr ""
 msgid "Authentication required."
 msgstr "Autenticazione richiesta."
 
-#: src/django_otp_webauthn/models.py:86
+#: src/django_otp_webauthn/models.py:99
 msgid "format"
 msgstr "formato"
 
-#: src/django_otp_webauthn/models.py:90
+#: src/django_otp_webauthn/models.py:103
 msgid "data"
 msgstr "dati"
 
-#: src/django_otp_webauthn/models.py:94
+#: src/django_otp_webauthn/models.py:107
 msgid "client data JSON"
 msgstr "dati del cliente JSON"
 
-#: src/django_otp_webauthn/models.py:106
+#: src/django_otp_webauthn/models.py:119
 msgid "WebAuthn attestation"
 msgstr "Attestazione WebAuthn"
 
-#: src/django_otp_webauthn/models.py:107
+#: src/django_otp_webauthn/models.py:120
 msgid "WebAuthn attestations"
 msgstr "Attestazioni WebAuthn"
 
-#: src/django_otp_webauthn/models.py:148
+#: src/django_otp_webauthn/models.py:161
 msgid "WebAuthn credential"
 msgstr "Credenziale WebAuthn"
 
-#: src/django_otp_webauthn/models.py:149
+#: src/django_otp_webauthn/models.py:162
 msgid "WebAuthn credentials"
 msgstr "Credenziali WebAuthn"
 
-#: src/django_otp_webauthn/models.py:156
+#: src/django_otp_webauthn/models.py:186
 msgid "Public Key"
 msgstr "Chiave pubblica"
 
-#: src/django_otp_webauthn/models.py:161
+#: src/django_otp_webauthn/models.py:191
 msgid "credential type"
 msgstr "Tipo di autorizzazione"
 
-#: src/django_otp_webauthn/models.py:174
+#: src/django_otp_webauthn/models.py:204
 msgid "credential id data"
 msgstr "Dati dell’ID di autorizzazione"
 
-#: src/django_otp_webauthn/models.py:191
+#: src/django_otp_webauthn/models.py:221
 msgid "COSE public key data"
 msgstr "Dati della chiave pubblica COSE"
 
-#: src/django_otp_webauthn/models.py:199
+#: src/django_otp_webauthn/models.py:229
 msgid "transports"
 msgstr "trasporti"
 
-#: src/django_otp_webauthn/models.py:219
+#: src/django_otp_webauthn/models.py:249
 msgid "sign count"
 msgstr "conteggio delle firme"
 
-#: src/django_otp_webauthn/models.py:237
+#: src/django_otp_webauthn/models.py:267
 msgid "backup eligible"
 msgstr "idoneo al backup"
 
-#: src/django_otp_webauthn/models.py:247
+#: src/django_otp_webauthn/models.py:277
 msgid "backup state"
 msgstr "stato del backup"
 
-#: src/django_otp_webauthn/models.py:270
+#: src/django_otp_webauthn/models.py:300
 msgid "AAGUID"
 msgstr "AAGUID"
 
-#: src/django_otp_webauthn/models.py:287
+#: src/django_otp_webauthn/models.py:317
 msgid "hashed credential id"
 msgstr "ID della credenziale con hash"
 
-#: src/django_otp_webauthn/models.py:296
+#: src/django_otp_webauthn/models.py:326
 msgid "discoverable"
 msgstr "individuabile"
 
-#: src/django_otp_webauthn/models.py:402
+#: src/django_otp_webauthn/models.py:439
 msgid "credential"
 msgstr "credenziale"
 
-#: src/django_otp_webauthn/models.py:428
+#: src/django_otp_webauthn/models.py:465
 msgid "handle hex"
 msgstr "User Handle esadecimale"
 
-#: src/django_otp_webauthn/models.py:438
+#: src/django_otp_webauthn/models.py:475
 msgid "user"
 msgstr "utente"
 
-#: src/django_otp_webauthn/models.py:442
+#: src/django_otp_webauthn/models.py:479
 msgid "WebAuthn user handle"
 msgstr "Utente Handle WebAuthn"
 
-#: src/django_otp_webauthn/models.py:443
+#: src/django_otp_webauthn/models.py:480
 msgid "WebAuthn user handles"
 msgstr "Utenti Handles WebAuthn"

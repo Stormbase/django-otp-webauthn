@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-06 12:33+0000\n"
+"POT-Creation-Date: 2026-08-14 12:33+0000\n"
 "PO-Revision-Date: 2026-01-06 13:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -28,7 +28,9 @@ msgstr "Si è verificato un errore durante la verifica."
 msgid "Verify with Passkey"
 msgstr "Verifica con Passkey"
 
-msgid "Verifying…"
+#, fuzzy
+#| msgid "Verifying…"
+msgid "Verifying..."
 msgstr "Verifica in corso…"
 
 msgid "Verification failed. Could not retrieve parameters from the server."
@@ -39,6 +41,17 @@ msgstr "Verifica interrotta."
 
 msgid "Verification canceled or not allowed."
 msgstr "Verifica annullata o non consentita."
+
+#, fuzzy
+#| msgid ""
+#| "Registration failed. A technical problem occurred that prevents you from "
+#| "registering a Passkey for this site."
+msgid ""
+"Passkey authentication failed. A technical problem prevents the verification "
+"process for beginning. Please try another method."
+msgstr ""
+"Registrazione fallita. Si è verificato un problema tecnico che impedisce la "
+"registrazione di una Passkey per questo sito."
 
 msgid "Verification failed. An unknown error occurred."
 msgstr "Verifica non riuscita. Si è verificato un errore sconosciuto."

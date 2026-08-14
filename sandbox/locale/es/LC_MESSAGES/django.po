@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-09 14:34+0000\n"
+"POT-Creation-Date: 2026-08-14 12:33+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,6 +84,40 @@ msgstr ""
 
 #: sandbox/templates/sandbox/index.html:41
 msgid "Logout"
+msgstr ""
+
+#: sandbox/templates/sandbox/index.html:45
+msgid "Registered Passkeys"
+msgstr ""
+
+#: sandbox/templates/sandbox/index.html:49
+msgid "No registered Passkeys."
+msgstr ""
+
+#: sandbox/templates/sandbox/passkey_table.html:7
+msgid "ID"
+msgstr ""
+
+#: sandbox/templates/sandbox/passkey_table.html:8
+msgid "Given name"
+msgstr ""
+
+#: sandbox/templates/sandbox/passkey_table.html:9
+msgid ""
+"Authenticator Attestation Globally Unique Identifier, identifier indicating "
+"the type (e.g. make and model) of the authenticator."
+msgstr ""
+
+#: sandbox/templates/sandbox/passkey_table.html:9
+msgid "AAGUID"
+msgstr ""
+
+#: sandbox/templates/sandbox/passkey_table.html:11
+msgid "Authenticator name inferred from AAGUID"
+msgstr ""
+
+#: sandbox/templates/sandbox/passkey_table.html:12
+msgid "Authenticator logo"
 msgstr ""
 
 #: sandbox/templates/sandbox/second_factor_verification.html:6

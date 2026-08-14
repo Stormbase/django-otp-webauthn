@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-01 12:17+0000\n"
+"POT-Creation-Date: 2026-08-14 12:33+0000\n"
 "PO-Revision-Date: 2025-12-11 12:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,19 +19,19 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 3.8\n"
 
-#: src/django_otp_webauthn/admin.py:38
+#: src/django_otp_webauthn/admin.py:39
 msgid "COSE public key"
 msgstr "COSE Public Key"
 
-#: src/django_otp_webauthn/admin.py:62
+#: src/django_otp_webauthn/admin.py:63
 msgid "Identity"
 msgstr "Identität"
 
-#: src/django_otp_webauthn/admin.py:68
+#: src/django_otp_webauthn/admin.py:69
 msgid "Meta"
 msgstr "Meta"
 
-#: src/django_otp_webauthn/admin.py:74
+#: src/django_otp_webauthn/admin.py:73
 msgid "WebAuthn credential data"
 msgstr "WebAuthn Berechtigungsdaten"
 
@@ -90,94 +90,94 @@ msgstr ""
 msgid "Authentication required."
 msgstr "Authentifizierung erforderlich."
 
-#: src/django_otp_webauthn/models.py:86
+#: src/django_otp_webauthn/models.py:99
 msgid "format"
 msgstr "Format"
 
-#: src/django_otp_webauthn/models.py:90
+#: src/django_otp_webauthn/models.py:103
 msgid "data"
 msgstr "Data"
 
-#: src/django_otp_webauthn/models.py:94
+#: src/django_otp_webauthn/models.py:107
 msgid "client data JSON"
 msgstr "Client Data JSON"
 
-#: src/django_otp_webauthn/models.py:106
+#: src/django_otp_webauthn/models.py:119
 msgid "WebAuthn attestation"
 msgstr "WebAuthn Attestation"
 
-#: src/django_otp_webauthn/models.py:107
+#: src/django_otp_webauthn/models.py:120
 msgid "WebAuthn attestations"
 msgstr "WebAuthn Attestations"
 
-#: src/django_otp_webauthn/models.py:148
+#: src/django_otp_webauthn/models.py:161
 msgid "WebAuthn credential"
 msgstr "WebAuthn Berechtigung"
 
-#: src/django_otp_webauthn/models.py:149
+#: src/django_otp_webauthn/models.py:162
 msgid "WebAuthn credentials"
 msgstr "WebAuthn Berechtigungen"
 
-#: src/django_otp_webauthn/models.py:156
+#: src/django_otp_webauthn/models.py:186
 msgid "Public Key"
 msgstr "Öffentlicher Schlüssel"
 
-#: src/django_otp_webauthn/models.py:161
+#: src/django_otp_webauthn/models.py:191
 msgid "credential type"
 msgstr "Berechtigungstyp"
 
-#: src/django_otp_webauthn/models.py:174
+#: src/django_otp_webauthn/models.py:204
 msgid "credential id data"
 msgstr "Berechtigung-ID Daten"
 
-#: src/django_otp_webauthn/models.py:191
+#: src/django_otp_webauthn/models.py:221
 msgid "COSE public key data"
 msgstr "COSE Public Key Data"
 
-#: src/django_otp_webauthn/models.py:199
+#: src/django_otp_webauthn/models.py:229
 msgid "transports"
 msgstr "Transports"
 
-#: src/django_otp_webauthn/models.py:219
+#: src/django_otp_webauthn/models.py:249
 msgid "sign count"
 msgstr "Signierungen"
 
-#: src/django_otp_webauthn/models.py:237
+#: src/django_otp_webauthn/models.py:267
 msgid "backup eligible"
 msgstr "Backup-fähig"
 
-#: src/django_otp_webauthn/models.py:247
+#: src/django_otp_webauthn/models.py:277
 msgid "backup state"
 msgstr "Backup Status"
 
-#: src/django_otp_webauthn/models.py:270
+#: src/django_otp_webauthn/models.py:300
 msgid "AAGUID"
 msgstr "AAGUID"
 
-#: src/django_otp_webauthn/models.py:287
+#: src/django_otp_webauthn/models.py:317
 msgid "hashed credential id"
 msgstr "Gehashte Berechtigungs-ID"
 
-#: src/django_otp_webauthn/models.py:296
+#: src/django_otp_webauthn/models.py:326
 msgid "discoverable"
 msgstr "Auffindbar"
 
-#: src/django_otp_webauthn/models.py:402
+#: src/django_otp_webauthn/models.py:439
 msgid "credential"
 msgstr "Berechtigung"
 
-#: src/django_otp_webauthn/models.py:428
+#: src/django_otp_webauthn/models.py:465
 msgid "handle hex"
 msgstr "Handle Hex"
 
-#: src/django_otp_webauthn/models.py:438
+#: src/django_otp_webauthn/models.py:475
 msgid "user"
 msgstr "Benutzer"
 
-#: src/django_otp_webauthn/models.py:442
+#: src/django_otp_webauthn/models.py:479
 msgid "WebAuthn user handle"
 msgstr "WebAuthn Benutzer Handle"
 
-#: src/django_otp_webauthn/models.py:443
+#: src/django_otp_webauthn/models.py:480
 msgid "WebAuthn user handles"
 msgstr "WebAuthn Benutzer Handle"
