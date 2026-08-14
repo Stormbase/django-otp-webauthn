@@ -8,9 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-08-14 13:13+0000\n"
-"PO-Revision-Date: 2026-08-14 13:19+0000\n"
-"Last-Translator: GitHub webhook <noreply-webhook-github-"
-"integration@weblate.org>\n"
+"PO-Revision-Date: 2026-08-14 13:26+0000\n"
+"Last-Translator: Storm Heg <storm@stormbase.digital>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/django-otp-"
 "webauthn/frontend/it/>\n"
 "Language: it\n"
@@ -56,8 +55,6 @@ msgstr "Verifica avvenuta con successo!"
 msgid "Register a Passkey"
 msgstr "Registra una passkey"
 
-#, fuzzy
-#| msgid "Registering..."
 msgid "Registering…"
 msgstr "Registrazione in corso…"
 
@@ -89,8 +86,6 @@ msgstr ""
 msgid "Registration failed. An unknown error occurred."
 msgstr "Registrazione fallita. Si è verificato un errore sconosciuto."
 
-#, fuzzy
-#| msgid "Finishing registration..."
 msgid "Finishing registration…"
 msgstr "Completamento della registrazione…"
 
