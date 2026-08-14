@@ -23,7 +23,7 @@ jobs:
     uses: ./.github/workflows/test.yml
   build-js:
     name: Build JavaScript assets
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     permissions:
       contents: read # Need to checkout source code to compile message catalogs
     steps:
@@ -53,7 +53,7 @@ jobs:
 
   compile-message-catalogs:
     name: Compile message catalogs
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     permissions:
       contents: read # Need to checkout source code to compile message catalogs
     steps:
@@ -91,7 +91,7 @@ jobs:
   build:
     needs: ["build-js", "compile-message-catalogs"]
     name: Build package distributions
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -142,7 +142,7 @@ jobs:
   check-release:
     needs: ["build"]
     name: Check release artifacts
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     permissions:
       contents: read # Need to download release artifacts
     steps:
@@ -174,7 +174,7 @@ jobs:
   prepare-release:
     needs: ["test", "check-release"]
     name: Prepare GitHub Release
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     permissions:
       contents: write # Need to create/update release and upload assets
       id-token: write # Need to sign artifacts with Sigstore
