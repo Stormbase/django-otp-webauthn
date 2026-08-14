@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-14 12:33+0000\n"
+"POT-Creation-Date: 2026-08-14 12:51+0000\n"
 "PO-Revision-Date: 2025-12-11 12:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -31,7 +31,7 @@ msgstr "Mit Passkey verifizieren"
 
 #, fuzzy
 #| msgid "Verifying…"
-msgid "Verifying..."
+msgid "Verifying…"
 msgstr "Überprüfung läuft..."
 
 msgid "Verification failed. Could not retrieve parameters from the server."
@@ -44,17 +44,6 @@ msgstr "Überprüfung abgebrochen."
 
 msgid "Verification canceled or not allowed."
 msgstr "Verifizierung abgebrochen oder nicht zugelassen."
-
-#, fuzzy
-#| msgid ""
-#| "Registration failed. A technical problem occurred that prevents you from "
-#| "registering a Passkey for this site."
-msgid ""
-"Passkey authentication failed. A technical problem prevents the verification "
-"process for beginning. Please try another method."
-msgstr ""
-"Registrierung fehlgeschlagen. Es ist ein technisches Problem aufgetreten, "
-"das die Registrierung eines Passkeys für diese Webseite verhindert."
 
 msgid "Verification failed. An unknown error occurred."
 msgstr ""
