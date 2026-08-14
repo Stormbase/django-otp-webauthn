@@ -6,6 +6,7 @@
 [![Build Status](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/test.yml/badge.svg)](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/test.yml)
 [![Nightly tests](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/nightly-tests.yml/badge.svg)](https://github.com/Stormbase/django-otp-webauthn/actions/workflows/nightly-tests.yml)
 [![codecov](https://codecov.io/gh/Stormbase/django-otp-webauthn/graph/badge.svg?token=09ZH5DHPMK)](https://codecov.io/gh/Stormbase/django-otp-webauthn)
+[![translation status](https://hosted.weblate.org/widget/django-otp-webauthn/frontend/language-badge.svg?threshold=90)](https://hosted.weblate.org/engage/django-otp-webauthn/)
 [![All Contributors](https://img.shields.io/github/all-contributors/Stormbase/django-otp-webauthn?color=ee8449)](#contributors)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
 [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/Stormbase/django-otp-webauthn/badge)](https://scorecard.dev/viewer/?uri=github.com/Stormbase/django-otp-webauthn)
@@ -55,6 +56,14 @@ For a complete list, see [caniuse.com/webauthn](https://caniuse.com/webauthn).
 - **Batteries included.** comes with a default frontend JavaScript implementation that works out of the box and removes complexity for you.
 - **Flexible frontend.** you can style the frontend implementation to fit your brand. Or roll your own frontend implementation if you need something more custom.
 - **Compatible with strict [Content Security Policy (CSP)](https://content-security-policy.com/).** The frontend implementation does not rely on inline scripts and is compatible with strict CSP settings.
+
+## Localization support
+
+Django OTP WebAuthn is translated into many languages. If you want to help translate it into your language, please visit [Weblate](https://hosted.weblate.org/engage/django-otp-webauthn/).
+
+The most important strings (end user visible) have been translated into the following languages:
+
+[![Translation status per language](https://hosted.weblate.org/widget/django-otp-webauthn/frontend/matrix-blue.svg)](https://hosted.weblate.org/engage/django-otp-webauthn/)
 
 ## Quick start guide - how to use Passkeys in your Django project
 
