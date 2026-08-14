@@ -17,7 +17,7 @@ permissions: {}
 jobs:
   publish:
     name: Publish to Test PyPI
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     permissions:
       contents: read # Needed to download release artifacts
       id-token: write # Needed for Trusted Publishing to PyPI

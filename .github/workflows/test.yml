@@ -23,7 +23,7 @@ env:
 jobs:
   qa_javascript:
     name: Build JavaScript
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -41,7 +41,7 @@ jobs:
 
   test_python:
     name: Test on Python ${{ matrix.python}}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     strategy:
       matrix:
         python: ["3.10", "3.11", "3.12", "3.13", "3.14"]
