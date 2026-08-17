@@ -224,7 +224,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.ref_name }}
-          ATTESTATION_BUNDLE_PATH: ${{ steps.attest.outputs.bundle-path }}
         run: |
-          cp "$ATTESTATION_BUNDLE_PATH" dist/attestation-bundle.json
-          gh release upload "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" dist/*.whl dist/*.tar.gz dist/sha256sums.txt dist/attestation-bundle.json --clobber
+          gh release upload "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" dist/*.whl dist/*.tar.gz dist/sha256sums.txt --clobber
