@@ -1,13 +1,19 @@
 Reference
 =========
 
-Welcome to the Reference section of the Django OTP WebAuthn documentation. This section provides detailed information about the built-in components that facilitate :term:`WebAuthn` integration.
+Welcome to the Reference section of the Django OTP WebAuthn documentation.
+This section provides detailed information about the built-in components that
+facilitate :term:`WebAuthn` integration.
 
 Here are what you will find in this section:
 
 .. grid:: 1 1 2 2
    :gutter: 3
    :margin: 0
+
+   .. grid-item-card:: :ref:`Configuration <ref_configuration>`
+
+       View the reference of configuration options and their effects.
 
    .. grid-item-card:: :ref:`Views <views>`
 
@@ -30,6 +36,8 @@ Here are what you will find in this section:
     :maxdepth: 2
     :hidden:
 
+    Configuration <configuration.rst>
+    Identifying Passkeys <identifying_passkeys.rst>
     Views <views.rst>
     Helper <helper.rst>
     Models <models.rst>

@@ -3,7 +3,8 @@
 Quickstart
 ==========
 
-You can start using Django OTP WebAuthn in your Django projects by following these steps:
+You can start using Django OTP WebAuthn in your Django projects by following
+these steps:
 
 Install Django OTP WebAuthn from PyPI
 -------------------------------------
@@ -17,7 +18,8 @@ First, install Django OTP WebAuthn from PyPI by running the following command:
 Add it to installed apps
 ------------------------
 
-Go to your ``<project>/settings.py`` file and add ``django_otp_webauthn`` and ``django_otp`` to ``INSTALLED_APPS``:
+Go to your ``<project>/settings.py`` file and add ``django_otp_webauthn`` and
+``django_otp`` to :setting:`INSTALLED_APPS`:
 
 .. code-block:: py
 
@@ -31,7 +33,9 @@ Go to your ``<project>/settings.py`` file and add ``django_otp_webauthn`` and ``
 Add OTPMiddleware
 -----------------
 
-Add the ``django_otp.middleware.OTPMiddleware`` to the ``MIDDLEWARE`` setting in your ``<project>/settings.py`` file. Ensure you place it after the ``AuthenticationMiddleware``:
+Add the ``django_otp.middleware.OTPMiddleware`` to the :setting:`MIDDLEWARE`
+setting in your ``<project>/settings.py`` file. Ensure you place it after the
+:class:`django.contrib.auth.middleware.AuthenticationMiddleware`:
 
 .. code-block:: py
 
@@ -63,7 +67,8 @@ Modify your ``<project>/urls.py`` file and add the required URL configuration:
 Configure settings for local and production environments
 --------------------------------------------------------
 
-If you are configuring Django OTP WebAuthn for a production environment, update your ``<project>/settings.py`` file as follows:
+If you are configuring Django OTP WebAuthn for a production environment, update
+your ``<project>/settings.py`` file as follows:
 
 .. code-block:: py
 
@@ -85,7 +90,8 @@ If you are configuring Django OTP WebAuthn for a production environment, update 
         "https://subdomain.your-domain.com"
     ]
 
-However, if you’re configuring Django OTP WebAuthn for local development, use the following settings in your ``<project>/settings.py`` file:
+However, if you’re configuring Django OTP WebAuthn for local development, use
+the following settings in your ``<project>/settings.py`` file:
 
 .. code-block:: py
 
@@ -107,7 +113,9 @@ However, if you’re configuring Django OTP WebAuthn for local development, use 
 Update authentication backends
 ------------------------------
 
-Modify your ``<project>/settings.py`` file to use ``django_otp_webauthn.backends.WebAuthnBackend`` in ``AUTHENTICATION_BACKENDS``:
+Modify your ``<project>/settings.py`` file to use
+``django_otp_webauthn.backends.WebAuthnBackend`` in :setting:`AUTHENTICATION_BACKENDS`.
+This allows your application to authenticate users using passkeys:
 
 .. code-block:: py
 
@@ -122,7 +130,9 @@ Modify your ``<project>/settings.py`` file to use ``django_otp_webauthn.backends
 Add registration code
 ---------------------
 
-Now add your Django OTP WebAuthn registration snippet into your project. For example, add the following code in ``account_settings.html`` or a similar page where users manage their authentication methods:
+Now add your Django OTP WebAuthn registration snippet into your project.
+For example, add the following code in ``account_settings.html`` or a similar
+page where users manage their authentication methods:
 
 .. code-block:: html
 
@@ -241,10 +251,20 @@ If you configured your project for local environment, run your server:
 
 .. note::
 
-    When running the development server, ensure you access your site using http://localhost:8000, as WebAuthn doesn't work on IP addresses such as ``http://127.0.0.1:8000``.
+    When running the development server, ensure you access your site using
+    http://localhost:8000, as WebAuthn doesn't work on IP addresses
+    such as ``http://127.0.0.1:8000``.
 
 Once you’ve done this, you will see the following on your login page:
 
 * a **Register Passkey** button on the login page
 
 * a **Login using a Passkey** button on the login page
+
+Next steps
+----------
+
+Now that you have Django OTP WebAuthn set up, you can explore additional features such as:
+
+* :ref:`keeping_passkeys_in_sync`, to improve your users' experience.
+* :ref:`configure_related_origins`, for when your application is active on multiple domains and you want to share Passkeys across them.

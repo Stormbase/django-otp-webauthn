@@ -1,12 +1,24 @@
 .. _configure_related_origins:
 
-Configure related origins
-=========================
+.. index::
+    single: related origin
 
-You can use ``WellKnownWebAuthnView`` to configure your application to use the same :term:`WebAuthn credentials <WebAuthn credential>` across multiple domains. For example, if your main application runs on ``https://example.com`` and you have localized versions on ``https://example.co.uk`` and ``https://example.de``.
+Sharing passkeys between domains (related origins)
+==================================================
 
-Set up the URL
---------------
+You can use ``WellKnownWebAuthnView`` to configure your application to use the
+same :term:`WebAuthn credentials <WebAuthn credential>` across multiple domains.
+For example, if your main application runs on ``https://example.com`` and you
+have localized versions on ``https://example.co.uk`` and ``https://example.de``.
+
+This uses a feature in the WebAuthn L3 specification called
+`related origin requests <https://www.w3.org/TR/webauthn-3/#sctn-related-origins>`_.
+Most browsers support this feature.
+
+.. _wellknown_webauthn_view:
+
+Create the ``.well-known/webauthn`` url route
+---------------------------------------------
 
 Modify your ``<project>/urls.py`` file and add the required URL configuration:
 
@@ -23,7 +35,10 @@ Modify your ``<project>/urls.py`` file and add the required URL configuration:
 Add related origins to your Django settings
 -------------------------------------------
 
-Now in your ``<project>/settings.py`` file, add your related origins to ``OTP_WEBAUTHN_RP_RELATED_ORIGINS``. The related origins must use ``HTTPS``, except for localhost origins, which can use ``HTTP`` for local development:
+Now in your ``<project>/settings.py`` file, add your related origins to
+:django_otp_webauthn:setting:`OTP_WEBAUTHN_RP_RELATED_ORIGINS`.
+The related origins must use ``HTTPS``, except for localhost origins, which
+can use ``HTTP`` for local development:
 
 .. code-block:: py
 
