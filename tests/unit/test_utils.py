@@ -9,6 +9,7 @@ from django_otp_webauthn.utils import (
     get_attestation_model_string,
     get_credential_model,
     get_credential_model_string,
+    request_user_details_sync,
     rewrite_exceptions,
 )
 
@@ -167,3 +168,15 @@ def test_rewrite_exceptions_uncaught_exception():
     with pytest.raises(Exception):  # noqa: B017, PT011
         with rewrite_exceptions():
             raise Exception()
+
+
+def test_request_user_details_sync(client):
+    """Test that the ``utils.request_user_details_sync`` function sets the sync needed flag in the session."""
+    request = client.request().wsgi_request
+
+    assert "otp_webauthn_sync_needed" not in request.session
+
+    request_user_details_sync(request)
+
+    assert "otp_webauthn_sync_needed" in request.session
+    assert request.session["otp_webauthn_sync_needed"] is True

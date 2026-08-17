@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-14 12:33+0000\n"
+"POT-Creation-Date: 2026-08-17 12:13+0000\n"
 "PO-Revision-Date: 2026-01-06 13:49+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -160,22 +160,22 @@ msgstr "ID de credencial hash"
 msgid "discoverable"
 msgstr "localizable"
 
-#: src/django_otp_webauthn/models.py:439
+#: src/django_otp_webauthn/models.py:444
 msgid "credential"
 msgstr "credencial"
 
-#: src/django_otp_webauthn/models.py:465
+#: src/django_otp_webauthn/models.py:470
 msgid "handle hex"
 msgstr "mango hexagonal"
 
-#: src/django_otp_webauthn/models.py:475
+#: src/django_otp_webauthn/models.py:480
 msgid "user"
 msgstr "usuario"
 
-#: src/django_otp_webauthn/models.py:479
+#: src/django_otp_webauthn/models.py:484
 msgid "WebAuthn user handle"
 msgstr "Identificador de usuario de WebAuthn"
 
-#: src/django_otp_webauthn/models.py:480
+#: src/django_otp_webauthn/models.py:485
 msgid "WebAuthn user handles"
 msgstr "Identificadores de usuarios de WebAuthn"

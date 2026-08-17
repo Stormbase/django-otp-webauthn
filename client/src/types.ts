@@ -32,4 +32,13 @@ export type Config = {
   nextFieldSelector: string;
 
   csrfToken: string;
+  removeUnknownCredential: boolean;
+};
+
+export type SyncSignalConfig = {
+  rpId: string;
+  userId: string;
+  name: string;
+  displayName: string;
+  credentialIds: string[];
 };

@@ -1,5 +1,3 @@
-import json
-
 import jsonschema
 import pytest
 from django.urls import reverse
@@ -20,18 +18,18 @@ def test_registration_begin__http_verbs(api_client, user):
 
     # OPTIONS should be allowed
     response = api_client.options(url)
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
 
     # POST should be allowed
     response = api_client.post(url)
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
 
 
 @pytest.mark.django_db
 def test_registration_begin__user_not_authenticated(api_client):
     url = reverse("otp_webauthn:credential-registration-begin")
     response = api_client.post(url)
-    assert response.status_code == 403
+    assert response.status_code == 403, response.json()
 
 
 @pytest.mark.django_db
@@ -44,7 +42,7 @@ def test_registration_begin__no_existing_credentials(
     url = reverse("otp_webauthn:credential-registration-begin")
     api_client.force_login(user)
     response = api_client.post(url)
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
 
     data = response.json()
     # Response should conform to the schema we established
@@ -76,7 +74,7 @@ def test_registration_begin__has_existing_credentials(
     url = reverse("otp_webauthn:credential-registration-begin")
     api_client.force_login(user)
     response = api_client.post(url)
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
 
     data = response.json()
     # Response should conform to the schema we established
@@ -99,7 +97,7 @@ def test_registration_begin__passwordless_login_enabled(
     url = reverse("otp_webauthn:credential-registration-begin")
     api_client.force_login(user)
     response = api_client.post(url)
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
 
     data = response.json()
     # Response should conform to the schema we established
@@ -119,7 +117,7 @@ def test_registration_begin__passwordless_login_disabled(
     url = reverse("otp_webauthn:credential-registration-begin")
     api_client.force_login(user)
     response = api_client.post(url)
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
 
     data = response.json()
     # Response should conform to the schema we established
@@ -136,7 +134,7 @@ def test_registration_begin__keeps_state(
     url = reverse("otp_webauthn:credential-registration-begin")
     api_client.force_login(user)
     response = api_client.post(url)
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
 
     data = response.json()
     # Response should conform to the schema we established
@@ -161,18 +159,18 @@ def test_registration_complete__http_verbs(api_client, user):
 
     # OPTIONS should be allowed
     response = api_client.options(url)
-    assert response.status_code == 200
+    assert response.status_code == 200, response.json()
 
     # POST should be allowed, though this response will be a 400 because we're not sending the right data
     response = api_client.post(url)
-    assert response.status_code == 400
+    assert response.status_code == 400, response.json()
 
 
 @pytest.mark.django_db
 def test_registration_complete__user_not_authenticated(api_client):
     url = reverse("otp_webauthn:credential-registration-complete")
     response = api_client.post(url)
-    assert response.status_code == 403
+    assert response.status_code == 403, response.json()
 
 
 @pytest.mark.django_db
@@ -180,7 +178,7 @@ def test_registration_complete__no_state(api_client, user):
     url = reverse("otp_webauthn:credential-registration-complete")
     api_client.force_login(user)
     response = api_client.post(url)
-    assert response.status_code == 400
+    assert response.status_code == 400, response.json()
     assert response.json()["code"] == "invalid_state"
     assert api_client.session.get("otp_device_id") is None
 
@@ -191,7 +189,7 @@ def test_registration_complete__no_reusing_state(api_client, user):
     api_client.force_login(user)
     api_client.session["otp_webauthn_register_state"] = {"challenge": "challenge"}
     response = api_client.post(url)
-    assert response.status_code == 400
+    assert response.status_code == 400, response.json()
 
     # The state should be removed from the session - there is no reusing it
     assert not api_client.session.get("otp_webauthn_register_state")
@@ -231,9 +229,7 @@ def test_registration_complete__valid_response_but_already_verified(
         "api_clientExtensionResults": {},
         "authenticatorAttachment": "platform",
     }
-    response = api_client.post(
-        url, data=json.dumps(payload), content_type="application/json"
-    )
+    response = api_client.post(url, data=payload, content_type="application/json")
     assert response.status_code == 200
 
     cred = credential_model.objects.last()
@@ -244,6 +240,9 @@ def test_registration_complete__valid_response_but_already_verified(
     # The user session was 2FA verified before with a different credential, that should not have changed
     assert cred.persistent_id != credential.persistent_id
     assert api_client.session["otp_device_id"] == credential.persistent_id
+
+    # Signaled that user details sync is needed
+    assert api_client.session["otp_webauthn_sync_needed"] is True
 
 
 @pytest.mark.django_db
@@ -273,9 +272,7 @@ def test_registration_complete__valid_response(api_client, user, credential_mode
         "api_clientExtensionResults": {},
         "authenticatorAttachment": "platform",
     }
-    response = api_client.post(
-        url, data=json.dumps(payload), content_type="application/json"
-    )
+    response = api_client.post(url, data=payload, content_type="application/json")
     assert response.status_code == 200
 
     cred = credential_model.objects.first()
@@ -285,3 +282,6 @@ def test_registration_complete__valid_response(api_client, user, credential_mode
 
     # The user session wasn't 2FA verified before, so now it should be
     assert api_client.session["otp_device_id"] == cred.persistent_id
+
+    # Signaled that user details sync is needed
+    assert api_client.session["otp_webauthn_sync_needed"] is True

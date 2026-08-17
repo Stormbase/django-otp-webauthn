@@ -1,0 +1,6 @@
+{% load static %}{% spaceless %}
+    {% if configuration %}
+        {{ configuration|json_script:"otp_webauthn_sync_signals_config"}}
+        <script async type="module" src="{% static "django_otp_webauthn/otp_webauthn_sync_signals.js" %}"></script>
+    {% endif %}
+{% endspaceless %}
