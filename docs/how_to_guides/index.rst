@@ -29,9 +29,9 @@ Here are what you will find in this section:
 
        Learn how to create custom Django OTP WebAuthn models if the base models don't suit your needs.
 
-   .. grid-item-card:: :ref:`Configure related origins <configure_related_origins>`
+   .. grid-item-card:: :ref:`Keep passkeys up-to-date with changing user details <keep_passkeys_in_sync>`
 
-       Learn how to configure WebAuthn to work across multiple domains. For example, if your main application runs on ``https://example.com`` and you have a localized version on ``https://example.co.uk``.
+       Learn how to keep Passkey user details saved in users' browsers up-to-date when details like email or username change.
 
 .. toctree::
     :maxdepth: 2
@@ -42,4 +42,4 @@ Here are what you will find in this section:
     Customize views <customize_views.rst>
     Customize helper class <customize_helper_class.rst>
     Customize models <customize_models.rst>
-    Configure related origins <configure_related_origins.rst>
+    Keep passkeys up-to-date with changing user details <keep_passkeys_in_sync.rst>
