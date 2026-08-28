@@ -15,6 +15,10 @@ Here are what you will find in this section:
 
        View the reference of configuration options and their effects.
 
+   .. grid-item-card:: :ref:`Identify passkeys <ref_identify_passkeys>`
+
+       View the reference of ``contrib.identify`` module.
+
    .. grid-item-card:: :ref:`Views <views>`
 
        Explore the API views in Django OTP WebAuthn for credential registration and authentication.
@@ -37,6 +41,7 @@ Here are what you will find in this section:
     :hidden:
 
     Configuration <configuration.rst>
+    Identify passkeys <identify_passkeys.rst>
     Views <views.rst>
     Helper <helper.rst>
     Models <models.rst>
