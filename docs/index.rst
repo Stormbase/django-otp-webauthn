@@ -67,3 +67,4 @@ Head over to the :ref:`Getting started <getting-started>` section to learn about
    glossary.rst
    FAQ <faq.rst>
    Contributing <contributing/index.rst>
+   Changelog <changelog.md>
