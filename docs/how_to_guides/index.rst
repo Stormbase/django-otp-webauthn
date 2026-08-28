@@ -13,6 +13,10 @@ Here are what you will find in this section:
 
        Learn how to configure WebAuthn to work across multiple domains. For example, if your main application runs on ``https://example.com`` and you have a localized version on ``https://example.co.uk``.
 
+   .. grid-item-card:: :ref:`Identify passkeys <howto-identify-passkeys>`
+
+       Learn how to identify the authenticator that created a Passkey, for example Apple Passwords, Yubikey, Android etc. This is useful context to give your users when presenting them with a list of their registered Passkeys.
+
    .. grid-item-card:: :ref:`Customize views <customize-views>`
 
        Learn how to subclass Django OTP WebAuthn's built-in views to customize registration and authentication behavior. For example, adding restrictions or logging mechanisms.
