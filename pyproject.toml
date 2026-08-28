@@ -46,7 +46,9 @@ optional-dependencies.docs = [
   "sphinx-autobuild==2025.8.25",
   "sphinx-copybutton==0.5.2",
   "sphinx-design==0.7",
+  "sphinx-llm>=0.2.1",
   "sphinxcontrib-django==2.5",
+  "sphinxext-opengraph[social_cards]==0.13",
 ]
 optional-dependencies.identify = [
   "identify-passkey>=1,<2",

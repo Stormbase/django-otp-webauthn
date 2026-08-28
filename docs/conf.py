@@ -17,12 +17,15 @@ copyright = (
 )
 author = "Stormbase and individual contributors"
 
+on_rtd = os.environ.get("READTHEDOCS", None) == "True"
+
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.intersphinx",
+    "sphinxext.opengraph",
     "sphinxcontrib_django",
     "sphinx_design",
     "sphinx_copybutton",
@@ -30,6 +33,15 @@ extensions = [
     "django_otp_webauthn_settings",
 ]
 
+if on_rtd or os.environ.get("BUILD_LLMS_TXT", ""):
+    extensions.append("sphinx_llm.txt")
+
+ogp_social_cards = {
+    "enable": os.environ.get("ENABLE_SOCIAL_CARDS", "1" if on_rtd else "0") == "1",
+}
+ogp_site_url = os.environ.get(
+    "OGP_SITE_URL", "https://django-otp-webauthn.readthedocs.io/en/stable/"
+)
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "venv"]
