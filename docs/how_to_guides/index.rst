@@ -9,6 +9,10 @@ Here are what you will find in this section:
    :gutter: 3
    :margin: 0
 
+   .. grid-item-card:: :ref:`Sharing passkeys between domains <configure_related_origins>`
+
+       Learn how to configure WebAuthn to work across multiple domains. For example, if your main application runs on ``https://example.com`` and you have a localized version on ``https://example.co.uk``.
+
    .. grid-item-card:: :ref:`Customize views <customize-views>`
 
        Learn how to subclass Django OTP WebAuthn's built-in views to customize registration and authentication behavior. For example, adding restrictions or logging mechanisms.
@@ -29,6 +33,8 @@ Here are what you will find in this section:
     :maxdepth: 2
     :hidden:
 
+    Share passkeys between domains <configure_related_origins.rst>
+    Identify passkeys <identify_passkeys.rst>
     Customize views <customize_views.rst>
     Customize helper class <customize_helper_class.rst>
     Customize models <customize_models.rst>
