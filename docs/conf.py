@@ -16,7 +16,7 @@ author = "Stormbase and individual contributors"
 extensions = [
     "sphinx_design",
     "sphinx_copybutton",
-]
+    "myst_parser",
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "venv"]
