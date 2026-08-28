@@ -39,6 +39,7 @@ dependencies = [
 ]
 optional-dependencies.docs = [
   "myst-parser>=5.1,<6",
+  # "pyspelling==2.12.1",
   "sphinx-copybutton==0.5.2",
   "sphinx-design==0.6.1",
 ]
