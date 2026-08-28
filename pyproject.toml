@@ -38,6 +38,7 @@ dependencies = [
   "webauthn>=3,<4",
 ]
 optional-dependencies.docs = [
+  "django-otp-webauthn[testing]",
   "furo==2025.12.19",
   "myst-parser>=5.1,<6",
   # "pyspelling==2.12.1",
@@ -45,6 +46,7 @@ optional-dependencies.docs = [
   "sphinx-autobuild==2025.8.25",
   "sphinx-copybutton==0.5.2",
   "sphinx-design==0.7",
+  "sphinxcontrib-django==2.5",
 ]
 optional-dependencies.identify = [
   "identify-passkey>=1,<2",
