@@ -28,7 +28,7 @@ class DummyCustomWebAuthnView(BaseWebAuthnView):
 def add_session(request):
     middleware = SessionMiddleware(lambda request: None)
     middleware.process_request(request)
-    request.session.save()
+
     return request
 
 
@@ -45,6 +45,7 @@ def add_session(request):
 def test_views__no_caching_headers_present(rf, view_class, user):
     request = rf.post("/")
     request.user = user
+    request.user.is_verified = lambda: True  # Yes of course we are verified
     request = add_session(request)
 
     response = view_class.as_view()(request)
@@ -69,6 +70,7 @@ def test_views__no_caching_headers_present(rf, view_class, user):
 def test_views__json_content_type(rf, view_class, user):
     request = rf.post("/")
     request.user = user
+    request.user.is_verified = lambda: True  # Yes of course we are verified
     request = add_session(request)
 
     response = view_class.as_view()(request)
@@ -193,6 +195,28 @@ def test_registration__check_can_register(rf, view_class, user_in_memory):
     view = view_class()
     view.setup(request)
     view.check_can_register()
+
+
+@pytest.mark.parametrize(
+    ("view_class"),
+    [
+        BeginCredentialRegistrationView,
+        CompleteCredentialRegistrationView,
+    ],
+)
+@pytest.mark.parametrize("mfa_enrolled", [True, False])
+def test_registration__user_is_mfa_enrolled(
+    rf, view_class, user_in_memory, mocker, mfa_enrolled
+):
+    request = rf.post("/")
+    request.user = user_in_memory
+    mocker.patch(
+        "django_otp_webauthn.utils.user_has_any_otp_device", return_value=mfa_enrolled
+    )
+
+    view = view_class()
+    view.setup(request)
+    assert view.user_is_mfa_enrolled(user_in_memory) == mfa_enrolled
 
 
 # AUTHENTICATION MIXIN TESTS

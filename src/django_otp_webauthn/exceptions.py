@@ -72,3 +72,9 @@ class NotAuthenticated(OTPWebAuthnApiError):
     status_code = 403
     default_detail = _("Authentication required.")
     default_code = "not_authenticated"
+
+
+class NotVerified(OTPWebAuthnApiError):
+    status_code = 403
+    default_detail = _("User is not verified.")
+    default_code = "user_not_verified"

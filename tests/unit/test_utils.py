@@ -1,6 +1,8 @@
 import pytest
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import resolve
+from django_otp import devices_for_user
+from django_otp.plugins.otp_totp.models import TOTPDevice
 from webauthn.helpers import exceptions as pywebauthn_exceptions
 
 from django_otp_webauthn import exceptions
@@ -11,7 +13,9 @@ from django_otp_webauthn.utils import (
     get_credential_model_string,
     request_user_details_sync,
     rewrite_exceptions,
+    user_has_any_otp_device,
 )
+from tests.factories import WebAuthnCredentialFactory
 
 
 def test_get_exempt_urls():
@@ -180,3 +184,37 @@ def test_request_user_details_sync(client):
 
     assert "otp_webauthn_sync_needed" in request.session
     assert request.session["otp_webauthn_sync_needed"] is True
+
+
+@pytest.mark.django_db
+def test_user_has_any_otp_device(user):
+    """Test that the ``utils.user_has_any_otp_device`` function returns True if the user has any OTP device."""
+
+    # Ensure the user has no devices
+    devices = devices_for_user(user=user)
+    for device in devices:
+        device.delete()
+
+    assert not user_has_any_otp_device(user)
+
+    # Add an unconfirmed TOTP device to the user
+    TOTPDevice.objects.create(user=user, confirmed=False)
+
+    assert not user_has_any_otp_device(user), (
+        "Unconfirmed TOTP device should not count as an OTP device"
+    )
+    TOTPDevice.objects.filter(user=user).update(confirmed=True)
+
+    assert user_has_any_otp_device(user), (
+        "Confirmed TOTP device should count as an OTP device"
+    )
+    TOTPDevice.objects.filter(user=user).delete()
+    assert not user_has_any_otp_device(user)
+
+    credential = WebAuthnCredentialFactory(user=user)
+    assert user_has_any_otp_device(user), (
+        "WebAuthn credential should count as an OTP device"
+    )
+    credential.delete()
+
+    assert not user_has_any_otp_device(user)

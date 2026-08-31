@@ -1,6 +1,7 @@
 import jsonschema
 import pytest
 from django.urls import reverse
+from django_otp import DEVICE_ID_SESSION_KEY
 
 from tests.factories import WebAuthnCredentialFactory
 
@@ -30,6 +31,34 @@ def test_registration_begin__user_not_authenticated(api_client):
     url = reverse("otp_webauthn:credential-registration-begin")
     response = api_client.post(url)
     assert response.status_code == 403, response.json()
+
+
+@pytest.mark.django_db
+def test_registration_begin__user_mfa_enrolled_but_not_verified(api_client, credential):
+    url = reverse("otp_webauthn:credential-registration-begin")
+    user = credential.user
+    api_client.force_login(user)
+    response = api_client.post(url)
+    # Response should be 403 because the user is MFA enrolled but not verified
+    # this is a security measure to prevent attackers from bypassing MFA by
+    # registering a new WebAuthn credential without first verifying their
+    # identity with an existing MFA method
+    assert response.status_code == 403, response.json()
+    assert response.json()["code"] == "user_not_verified"
+
+
+@pytest.mark.django_db
+def test_registration_begin__user_mfa_enrolled_and_verified(api_client, credential):
+    url = reverse("otp_webauthn:credential-registration-begin")
+    user = credential.user
+    api_client.force_login(user)
+    session = api_client.session
+    # Mark as verified with an existing Passkey
+    session[DEVICE_ID_SESSION_KEY] = credential.persistent_id
+    session.save()
+
+    response = api_client.post(url)
+    assert response.status_code == 200, response.json()
 
 
 @pytest.mark.django_db
@@ -70,6 +99,9 @@ def test_registration_begin__has_existing_credentials(
     existing_credential = WebAuthnCredentialFactory(
         user=user, credential_id=credential_id
     )
+    session = api_client.session
+    session[DEVICE_ID_SESSION_KEY] = existing_credential.persistent_id
+    session.save()
 
     url = reverse("otp_webauthn:credential-registration-begin")
     api_client.force_login(user)

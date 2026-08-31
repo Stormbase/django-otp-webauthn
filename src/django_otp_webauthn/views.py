@@ -13,11 +13,12 @@ from django.http import JsonResponse
 from django.shortcuts import resolve_url
 from django.utils.decorators import method_decorator
 from django.utils.http import url_has_allowed_host_and_scheme
+from django.utils.translation import gettext_lazy as _
 from django.views import View
 from django.views.decorators.cache import cache_control, never_cache
 from django_otp import login as otp_login
 
-from django_otp_webauthn import exceptions
+from django_otp_webauthn import exceptions, utils
 from django_otp_webauthn.models import AbstractWebAuthnCredential
 from django_otp_webauthn.settings import app_settings
 from django_otp_webauthn.utils import (
@@ -88,9 +89,43 @@ class BaseWebAuthnView(View):
 class RegistrationCeremonyMixin:
     def initial(self, request, *args, **kwargs):
         super().initial(request, *args, **kwargs)
-        if not request.user.is_authenticated:
+        user = self.get_user()
+        if not user:
             raise exceptions.NotAuthenticated()
+
+        self._check_user_verified(user)
         self.check_can_register()
+
+    messages = {
+        "user_not_verified": _(
+            "You must verify your identity first with an existing MFA device before you can register a new passkey."
+        )
+    }
+
+    def _check_user_verified(self, user: AbstractBaseUser) -> None:
+        """Checks if the user is MFA-enrolled and is MFA verified (user.is_verified == True).
+
+        If this check fails, raises
+        :class:`~django_otp_webauthn.exceptions.NotVerified`. This is to prevent
+        attackers from bypassing MFA by registering a new WebAuthn credential
+        without first verifying their identity with an existing MFA method.
+
+        Verification is done separately from :meth:`check_can_register` so that
+        it can't accidentally be overridden by a subclass. The check is always
+        performed for any registration ceremony, regardless of whether the
+        subclass overrides :meth:`check_can_register` or not.
+
+        :hint: do not override this method. If you want to add additional
+            checks, override :meth:`check_can_register` instead. If you want to
+            change the behavior of this check, override
+            :meth:`user_is_mfa_enrolled` instead.
+        """
+        if not user.is_verified() and self.user_is_mfa_enrolled(user):
+            raise exceptions.NotVerified(detail=self.messages["user_not_verified"])
+
+    def user_is_mfa_enrolled(self, user: AbstractBaseUser) -> bool:
+        """Checks if the user is MFA-enrolled (has any confirmed django_otp devices registered)."""
+        return utils.user_has_any_otp_device(user)
 
     def get_user(self) -> AbstractBaseUser | None:
         if self.request.user.is_authenticated:
@@ -101,7 +136,25 @@ class RegistrationCeremonyMixin:
         return WebAuthnCredential.get_webauthn_helper(request=self.request)
 
     def check_can_register(self):
-        """Perform any necessary pre-checks to see if the registration ceremony can proceed."""
+        """Perform any necessary pre-checks to see if the registration ceremony can proceed.
+
+        If a pre-condition is not met, raise an appropriate
+        :class:`~django_otp_webauthn.exceptions.OTPWebAuthnApiError` exception.
+
+        Example: a user may be required to have a verified email address before
+        they can register a new WebAuthn credential.
+
+        .. code-block:: python
+
+            class EmailNotVerified(exceptions.OTPWebAuthnApiError):
+                status_code = 403
+                code = "email_not_verified"
+                # Detail is visible to the end user, so don't include technical or sensitive information
+                default_detail="You must verify your email address before registering a new passkey."
+
+            if not user.email_verified:
+                raise EmailNotVerified()
+        """
 
 
 class AuthenticationCeremonyMixin:

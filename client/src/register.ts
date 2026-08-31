@@ -56,14 +56,22 @@ import {
         });
 
         if (!response.ok) {
+          const serverErrorDetail =
+            (response.headers
+              .get("content-type")
+              ?.includes("application/json") &&
+              (await response.json())) ||
+            {};
           setPasskeyRegisterState({
             buttonDisabled: false,
             buttonLabel,
             requestFocus: true,
             statusEnum: StatusEnum.GET_OPTIONS_FAILED,
-            status: gettext(
-              "Registration failed. Unable to fetch registration options from server.",
-            ),
+            status:
+              serverErrorDetail?.detail ||
+              gettext(
+                "Registration failed. Unable to fetch registration options from server.",
+              ),
           });
           passkeyRegisterButton.dispatchEvent(
             new CustomEvent(EVENT_REGISTER_FAILED, {
