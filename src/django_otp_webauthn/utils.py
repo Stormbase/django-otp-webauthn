@@ -6,12 +6,15 @@ from typing import TYPE_CHECKING
 from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse
+from django_otp import devices_for_user
 from webauthn.helpers import exceptions as pywebauthn_exceptions
 
 from django_otp_webauthn import exceptions
 from django_otp_webauthn.settings import app_settings
 
 if TYPE_CHECKING:
+    from django.contrib.auth.models import AbstractUser
+
     from .models import AbstractWebAuthnAttestation, AbstractWebAuthnCredential
 
 
@@ -148,3 +151,8 @@ def get_attestation_model_string() -> str:
     """Returns the string representation of the WebAuthnAttestation model
     that is active in this project."""
     return app_settings.OTP_WEBAUTHN_ATTESTATION_MODEL
+
+
+def user_has_any_otp_device(user: AbstractUser) -> bool:
+    """Checks whether the given user has any confirmed `django_otp.models.Device` devices registered."""
+    return any(devices_for_user(user=user, confirmed=True))

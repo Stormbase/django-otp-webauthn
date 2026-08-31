@@ -2,6 +2,7 @@ import pytest
 from playwright.sync_api import expect
 from webauthn import base64url_to_bytes
 
+from django_otp_webauthn.views import RegistrationCeremonyMixin
 from tests.e2e.fixtures import StatusEnum, VirtualAuthenticator
 
 JS_EVENT_REGISTER_START = "otp_webauthn.register_start"
@@ -258,3 +259,36 @@ def test_register_credential__fail_bad_rpid(
     # Did the right events fire?
     await_start_event()
     await_failure_event()
+
+
+def test_register_credential__fail_not_mfa_verified(
+    live_server,
+    django_db_serialized_rollback,
+    page,
+    playwright_force_login,
+    virtual_authenticator,
+    credential,
+):
+    """Verify that credential registration fails and an error is shown when the
+    user is not MFA verified AND is MFA enrolled."""
+    playwright_force_login(credential.user)
+
+    # Create a virtual authenticator and listen for the credentialAdded event
+    virtual_authenticator(VirtualAuthenticator.internal())
+
+    page.goto(live_server.url)
+    register_button = page.locator("button#passkey-register-button")
+    expect(register_button).to_be_visible()
+
+    register_button.click()
+    # Wait for the page to display the options failed message, then check the message itself.
+    page.wait_for_selector(
+        f"#passkey-register-status-message[data-status-enum='{StatusEnum.GET_OPTIONS_FAILED}']",
+        timeout=2000,
+    )
+
+    # Check that the status message is the expected one for a user that is not MFA verified.
+    status_message = page.locator("#passkey-register-status-message")
+    expect(status_message).to_have_text(
+        str(RegistrationCeremonyMixin.messages["user_not_verified"])
+    )
