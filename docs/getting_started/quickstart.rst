@@ -122,6 +122,15 @@ Modify your ``<project>/settings.py`` file to use ``django_otp_webauthn.backends
 Add registration code
 ---------------------
 
+.. note::
+
+    Once a user has registered a passkey or has a confirmed django_otp
+    `device <https://django-otp.readthedocs.io/en/latest/overview/#term-device>`_,
+    you should only render below template when they are `verified <https://django-otp.readthedocs.io/en/latest/overview/#term-verified>`_.
+    Any attempts to register a new passkey while the user is authenticated but
+    unverified will be rejected. This is to prevent an attacker from bypassing
+    a victim's MFA.
+
 Now add your Django OTP WebAuthn registration snippet into your project. For example, add the following code in ``account_settings.html`` or a similar page where users manage their authentication methods:
 
 .. code-block:: html
