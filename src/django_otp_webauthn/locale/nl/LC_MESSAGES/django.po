@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-01 12:17+0000\n"
+"POT-Creation-Date: 2026-09-02 08:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,6 +88,10 @@ msgstr ""
 #: src/django_otp_webauthn/exceptions.py:73
 msgid "Authentication required."
 msgstr "Authenticatie vereist."
+
+#: src/django_otp_webauthn/exceptions.py:79
+msgid "User is not verified."
+msgstr "De gebruiker is niet geverifieerd."
 
 #: src/django_otp_webauthn/models.py:86
 msgid "format"
@@ -180,3 +184,11 @@ msgstr "WebAuthn user handle"
 #: src/django_otp_webauthn/models.py:443
 msgid "WebAuthn user handles"
 msgstr "WebAuthn user handles"
+
+#: src/django_otp_webauthn/views.py:97
+msgid ""
+"You must verify your identity first with an existing MFA device before you "
+"can register a new passkey."
+msgstr ""
+"U moet eerst uw identiteit verifiëren met een bestaand MFA-apparaat voordat "
+"u een nieuwe passkey kunt registreren."
