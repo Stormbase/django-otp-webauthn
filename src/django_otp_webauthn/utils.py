@@ -7,12 +7,15 @@ from django.apps import apps
 from django.core.exceptions import ImproperlyConfigured
 from django.http import HttpRequest
 from django.urls import reverse
+from django_otp import devices_for_user
 from webauthn.helpers import exceptions as pywebauthn_exceptions
 
 from django_otp_webauthn import exceptions
 from django_otp_webauthn.settings import app_settings
 
 if TYPE_CHECKING:
+    from django.contrib.auth.models import AbstractUser
+
     from .models import AbstractWebAuthnAttestation, AbstractWebAuthnCredential
 
 
@@ -169,3 +172,8 @@ def request_user_details_sync(request: HttpRequest) -> None:
     """
     request.session["otp_webauthn_sync_needed"] = True
     request.session.save()
+
+
+def user_has_any_otp_device(user: AbstractUser) -> bool:
+    """Checks whether the given user has any confirmed `django_otp.models.Device` devices registered."""
+    return any(devices_for_user(user=user, confirmed=True))
