@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.1] - 2026-09-02
+
+> [!IMPORTANT]
+> This release fixes a high severity issue ([GHSA-8r76-c459-ww98](https://github.com/Stormbase/django-otp-webauthn/security/advisories/GHSA-8r76-c459-ww98)) that allowed attackers to trivially bypass multi-factor authentication by registering a new passkey while the user was authenticated but unverified. If you are using `django_otp_webauthn` in production, you should upgrade to this version immediately.
+
+- Don't allow new passkeys to be registered when a user has confirmed django_otp devices and their session is unverified. It remains possible to register new passkeys while the user has no confirmed devices. (reported by [EQSTLab](https://github.com/EQSTLab), fixed by [Stormheg](https://github.com/Stormheg))
+
 ## [0.10.0] - 2026-07-01
 
 ## Changed
