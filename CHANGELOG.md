@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.11.0a4] - 2026-08-01
+## [0.11.0a5] - 2026-09-02
+
+### Security
+
+- Don't allow new passkeys to be registered when a user has confirmed django_otp devices and their session is unverified. It remains possible to register new passkeys while the user has no confirmed devices. (reported by [EQSTLab](https://github.com/EQSTLab), fixed by [Stormheg](https://github.com/Stormheg))
 
 ### Added
 
