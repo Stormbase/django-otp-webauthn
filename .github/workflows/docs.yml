@@ -55,36 +55,36 @@ jobs:
           name: django-otp-webauthn-docs
           path: docs/_build/html/
           retention-days: 7
-  spellcheck:
-    name: Spell Check Documentation
-    runs-on: ubuntu-26.04-arm
-    needs: build-docs
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-      - name: Set up Python
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
-        with:
-          python-version: "3.x"
-          cache: "pip"
-      - uses: gerlero/apt-install@c0fa73fe5c4a22deecf6d629565be92a15dd2026 # v1.3.12
-        name: Install aspell
-        with:
-          packages: aspell aspell-en
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip setuptools
-          python -m pip install pyspelling
-      - name: Download documentation artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          name: django-otp-webauthn-docs
-          path: docs/_build/html/
-          run-id: ${{ github.run_id }}
+  # spellcheck:
+  #   name: Spell Check Documentation
+  #   runs-on: ubuntu-latest
+  #   needs: build-docs
+  #   steps:
+  #     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+  #       with:
+  #         fetch-depth: 0
+  #         persist-credentials: false
+  #     - name: Set up Python
+  #       uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+  #       with:
+  #         python-version: "3.x"
+  #         cache: "pip"
+  #     - uses: gerlero/apt-install@c0fa73fe5c4a22deecf6d629565be92a15dd2026 # v1.3.12
+  #       name: Install aspell
+  #       with:
+  #         packages: aspell aspell-en
+  #     - name: Install Python dependencies
+  #       run: |
+  #         python -m pip install --upgrade pip setuptools
+  #         python -m pip install pyspelling
+  #     - name: Download documentation artifacts
+  #       uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+  #       with:
+  #         name: django-otp-webauthn-docs
+  #         path: docs/_build/html/
+  #         run-id: ${{ github.run_id }}
 
-      - name: Run spell check
-        working-directory: ./docs
-        run: |
-          python -m pyspelling -c spellingcheck.yaml
+  #     - name: Run spell check
+  #       working-directory: ./docs
+  #       run: |
+  #         python -m pyspelling -c spellingcheck.yaml

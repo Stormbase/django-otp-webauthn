@@ -1,7 +1,7 @@
 .. _customize-views:
 
-Customize views
-===============
+How-to: customize views
+=======================
 
 Django OTP WebAuthn has four built-in views that manage registration and authentication. While these views provide default behavior, you can subclass them to meet specific requirements. For example, you can restrict registration based on custom conditions or add logging mechanisms during the authentication process.
 

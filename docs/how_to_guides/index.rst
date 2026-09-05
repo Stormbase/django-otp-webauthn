@@ -9,6 +9,14 @@ Here are what you will find in this section:
    :gutter: 3
    :margin: 0
 
+   .. grid-item-card:: :ref:`Share passkeys between domains <configure_related_origins>`
+
+       Learn how to configure WebAuthn to work across multiple domains. For example, if your main application runs on ``https://example.com`` and you have a localized version on ``https://example.co.uk``.
+
+   .. grid-item-card:: :ref:`Identify passkeys <howto-identify-passkeys>`
+
+       Learn how to identify the authenticator that created a Passkey, for example Apple Passwords, Yubikey, Android etc. This is useful context to give your users when presenting them with a list of their registered Passkeys.
+
    .. grid-item-card:: :ref:`Customize views <customize-views>`
 
        Learn how to subclass Django OTP WebAuthn's built-in views to customize registration and authentication behavior. For example, adding restrictions or logging mechanisms.
@@ -21,15 +29,17 @@ Here are what you will find in this section:
 
        Learn how to create custom Django OTP WebAuthn models if the base models don't suit your needs.
 
-   .. grid-item-card:: :ref:`Configure related origins <configure_related_origins>`
+   .. grid-item-card:: :ref:`Keep passkeys up-to-date with changing user details <keep_passkeys_in_sync>`
 
-       Learn how to configure WebAuthn to work across multiple domains. For example, if your main application runs on ``https://example.com`` and you have a localized version on ``https://example.co.uk``.
+       Learn how to keep Passkey user details saved in users' browsers up-to-date when details like email or username change.
 
 .. toctree::
     :maxdepth: 2
     :hidden:
 
+    Share passkeys between domains <configure_related_origins.rst>
+    Identify passkeys <identify_passkeys.rst>
     Customize views <customize_views.rst>
     Customize helper class <customize_helper_class.rst>
     Customize models <customize_models.rst>
-    Configure related origins <configure_related_origins.rst>
+    Keep passkeys up-to-date with changing user details <keep_passkeys_in_sync.rst>
