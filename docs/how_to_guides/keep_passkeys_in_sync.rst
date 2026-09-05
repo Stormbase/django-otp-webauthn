@@ -132,7 +132,6 @@ For more information about the WebAuthn browser APIs, see:
 
 .. note::
 
-    As of November 2025, the WebAuthn browser APIs are still new and don't enjoy
-    broad support from all browsers. Please see `Web authentication signal
-    methods on caniuse.com <https://caniuse.com/wf-webauthn-signals>`_ for the
+    As of September 2026, the WebAuthn signal browser APIs are supported by all major browsers except Firefox.
+    Please see `Web authentication signal methods on caniuse.com <https://caniuse.com/wf-webauthn-signals>`_ for the
     most up-to-date browser support information.
