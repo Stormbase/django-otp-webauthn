@@ -1,7 +1,7 @@
 .. _models:
 
-Models
-======
+Reference: models
+=================
 
 Django OTP WebAuthn comes with two abstract models that you can customize. Each abstract model has a concrete version that you can use out of the box:
 

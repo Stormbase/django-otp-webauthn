@@ -1,8 +1,8 @@
 .. _ref_configuration:
 
 
-Configuration
-=============
+Reference: configuration
+========================
 
 This reference page lists the available configuration options and describes what
 each option controls. Configure these options in your Django

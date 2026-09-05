@@ -9,7 +9,7 @@ Here are what you will find in this section:
    :gutter: 3
    :margin: 0
 
-   .. grid-item-card:: :ref:`Sharing passkeys between domains <configure_related_origins>`
+   .. grid-item-card:: :ref:`Share passkeys between domains <configure_related_origins>`
 
        Learn how to configure WebAuthn to work across multiple domains. For example, if your main application runs on ``https://example.com`` and you have a localized version on ``https://example.co.uk``.
 

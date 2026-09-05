@@ -1,7 +1,7 @@
 .. _customize-helper-class:
 
-Customize helper class
-======================
+How-to: Customize helper class
+==============================
 
 The :term:`WebAuthn` helper class acts as the bridge between views, models, and ``py_webauthn``. You can customize it to customize the behavior of WebAuthn in your Django application. For example, if you add additional fields to the credential model, you may want to override the ``create_credential`` method to populate these fields.
 

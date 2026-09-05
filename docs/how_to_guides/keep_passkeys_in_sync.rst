@@ -1,7 +1,7 @@
 .. _keep_passkeys_in_sync:
 
-Keeping user details in sync with Passkeys
-==========================================
+How-to: keep user details in sync with passkeys
+===============================================
 
 When your users make changes to their details, such as their email address or
 username, these changes won't automatically be reflected in the passkeys they

@@ -1,7 +1,7 @@
 .. _about-passkeys:
 
-About passkeys
-==============
+Getting started: about passkeys
+===============================
 
 :term:`Passkeys <passkey/discoverable credential>` are a more secure alternative to passwords. Passwords require users to remember and type in secret combinations of words, numbers, or characters. In contrast, passkeys are securely stored on a user's device and accessed through the device's biometric sensor, PIN, or pattern.
 

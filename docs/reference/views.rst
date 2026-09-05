@@ -1,7 +1,7 @@
 .. _views:
 
-Views
-=====
+Reference: views
+================
 
 Django OTP WebAuthn provides the following built-in API views:
 

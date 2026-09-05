@@ -1,7 +1,7 @@
 .. _quickstart:
 
-Quickstart
-==========
+Getting started: quickstart
+===========================
 
 You can start using Django OTP WebAuthn in your Django projects by following
 these steps:

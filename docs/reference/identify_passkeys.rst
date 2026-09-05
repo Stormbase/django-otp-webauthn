@@ -1,6 +1,6 @@
 .. _ref_identify_passkeys:
 
-Reference: Identifying passkeys using ``django.contrib.identify``
+Reference: identify passkeys using ``django.contrib.identify``
 =================================================================
 
 .. versionadded:: v0.11.0

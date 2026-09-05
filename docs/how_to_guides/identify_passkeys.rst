@@ -1,6 +1,6 @@
 .. _howto-identify-passkeys:
 
-How to: identify passkeys
+How-to: identify passkeys
 =========================
 
 .. versionadded:: v0.11.0

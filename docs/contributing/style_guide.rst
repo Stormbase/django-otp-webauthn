@@ -1,7 +1,7 @@
 .. _`style-guide`:
 
-Style guide
-===========
+Contributing: style guide
+=========================
 
 This documentation follows the `Google Developer Documentation Style Guide <https://developers.google.com/style>`_.
 

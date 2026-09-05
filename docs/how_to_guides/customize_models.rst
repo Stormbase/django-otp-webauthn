@@ -1,7 +1,7 @@
 .. _customize-models:
 
-Customize models
-==================
+How-to: customize models
+========================
 
 Django OTP WebAuthn provides the following base models for credentials
 and attestations:

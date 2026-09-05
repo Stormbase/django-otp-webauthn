@@ -3,8 +3,8 @@
 .. index::
     single: related origin
 
-Sharing passkeys between domains (related origins)
-==================================================
+How-to: share passkeys between domains (related origins)
+========================================================
 
 You can use ``WellKnownWebAuthnView`` to configure your application to use the
 same :term:`WebAuthn credentials <WebAuthn credential>` across multiple domains.

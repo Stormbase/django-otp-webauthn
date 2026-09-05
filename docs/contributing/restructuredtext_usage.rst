@@ -1,5 +1,5 @@
-reStructuredText usage
-======================
+Contributing: reStructuredText usage
+====================================
 
 This documentation is written in ``reStructuredText``. The following are the common syntax elements with examples:
 
