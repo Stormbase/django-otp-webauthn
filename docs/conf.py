@@ -33,6 +33,10 @@ extensions = [
     "django_otp_webauthn_settings",
 ]
 
+myst_enable_extensions = [
+    "alert",  # Parse GitHub-style admonitions like `> [!IMPORTANT]`
+]
+
 if on_rtd or os.environ.get("BUILD_LLMS_TXT", ""):
     extensions.append("sphinx_llm.txt")
 
