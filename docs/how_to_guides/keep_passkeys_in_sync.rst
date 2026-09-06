@@ -1,5 +1,14 @@
 .. _keep_passkeys_in_sync:
 
+:og:title: How-to keep user details in sync with passkeys
+:og:description: Step-by-step guide to help keep Passkey user details saved in users' browsers up-to-date when details like email or username change
+:og:image:alt: Step-by-step guide to help keep Passkey user details saved in users' browsers up-to-date when details like email or username change
+
+.. meta::
+    :title: How-to keep user details in sync with passkeys
+    :description: Step-by-step guide to help you keep Passkey user details saved in users' browsers up-to-date when details like email or username change
+
+
 How-to: keep user details in sync with passkeys
 ===============================================
 

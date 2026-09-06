@@ -1,5 +1,13 @@
 .. _`style-guide`:
 
+:og:title: Django OTP WebAuthn documentation style guide
+:og:description: Follow the writing style guide for Django OTP WebAuthn documentation, including language, terminology, formatting, and documentation best practices.
+:og:image:alt: Follow the writing style guide for Django OTP WebAuthn documentation, including language, terminology, formatting, and documentation best practices.
+
+.. meta::
+    :title: Django OTP WebAuthn documentation style guide
+    :description: Follow the writing style guide for Django OTP WebAuthn documentation, including language, terminology, formatting, and documentation best practices.
+
 Contributing: style guide
 =========================
 

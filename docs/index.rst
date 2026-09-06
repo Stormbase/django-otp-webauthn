@@ -1,3 +1,11 @@
+:og:title: About Django OTP WebAuthn
+:og:description: Learn how Django OTP WebAuthn adds passkey authentication to Django applications with support for WebAuthn, passwordless login, and multi-factor authentication.
+:og:image:alt: Learn how Django OTP WebAuthn adds passkey authentication to Django applications with support for WebAuthn, passwordless login, and multi-factor authentication.
+
+.. meta::
+    :title: About Django OTP WebAuthn
+    :description: Learn how Django OTP WebAuthn adds passkey authentication to Django applications with support for WebAuthn, passwordless login, and multi-factor authentication.
+
 About Django OTP WebAuthn
 =========================
 

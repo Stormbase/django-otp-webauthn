@@ -1,3 +1,11 @@
+:og:title: How-to guides for Django OTP WebAuthn
+:og:description: Step-by-step guides to help you implement key features of Django OTP WebAuthn
+:og:image:alt: Step-by-step guides to help you implement key features of Django OTP WebAuthn
+
+.. meta::
+    :title: How-to guides for Django OTP WebAuthn
+    :description: Step-by-step guides to help you implement key features of Django OTP WebAuthn
+
 How-to guides
 =============
 

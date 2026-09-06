@@ -1,5 +1,13 @@
 .. _ref_identify_passkeys:
 
+:og:title: Identify passkey reference
+:og:description: Reference documentation for the django_otp_webauthn.contrib.identify module, which helps identify the authenticator that created a Passkey.
+:og:image:alt: Reference documentation for the django_otp_webauthn.contrib.identify module, which helps identify the authenticator that created a Passkey.
+
+.. meta::
+    :title: Identify passkey reference
+    :description: Reference documentation for the django_otp_webauthn.contrib.identify module, which helps identify the authenticator that created a Passkey.
+
 Reference: identify passkeys using ``django.contrib.identify``
 =================================================================
 

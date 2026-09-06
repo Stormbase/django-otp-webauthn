@@ -1,5 +1,14 @@
 .. _customize-models:
 
+:og:title: Customize models in Django OTP WebAuthn
+:og:description: Learn how to create custom credential and attestation models in Django OTP WebAuthn and configure them for your application's requirements.
+:og:image:alt: Learn how to create custom credential and attestation models in Django OTP WebAuthn and configure them for your application's requirements.
+
+.. meta::
+    :title: Customize models in Django OTP WebAuthn
+    :description: Learn how to create custom credential and attestation models in Django OTP WebAuthn and configure them for your application's requirements.
+
+
 How-to: customize models
 ========================
 

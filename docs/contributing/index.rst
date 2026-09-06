@@ -1,5 +1,13 @@
 .. _contributing:
 
+:og:title: Contributing to Django OTP WebAuthn
+:og:description: Learn how to contribute to Django OTP WebAuthn, including development setup, translations, documentation, coding standards, and project guidelines.
+:og:image:alt: Learn how to contribute to Django OTP WebAuthn, including development setup, translations, documentation, coding standards, and project guidelines.
+
+.. meta::
+    :title: Contributing to Django OTP WebAuthn
+    :description: Learn how to contribute to Django OTP WebAuthn, including development setup, translations, documentation, coding standards, and project guidelines.
+
 Contributing
 ============
 

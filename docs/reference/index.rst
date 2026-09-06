@@ -1,3 +1,11 @@
+:og:title: Django OTP WebAuthn reference
+:og:description: Explore the Django OTP WebAuthn API reference for views, helper classes, models, frontend APIs, and other components used to integrate passkeys.
+:og:image:alt: Explore the Django OTP WebAuthn API reference for views, helper classes, models, frontend APIs, and other components used to integrate passkeys.
+
+.. meta::
+    :title: Django OTP WebAuthn reference
+    :description: Explore the Django OTP WebAuthn API reference for views, helper classes, models, frontend APIs, and other components used to integrate passkeys.
+
 Reference
 =========
 
