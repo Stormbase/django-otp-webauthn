@@ -1,6 +1,3 @@
-.. _getting-started:
-
-
 :og:title: Getting started overview
 :og:description: Learn how to get started with Django OTP WebAuthn, including an overview of the documentation structure, key concepts, and step-by-step instructions for integrating passkey authentication into your Django project.
 :og:image:alt: Learn how to get started with Django OTP WebAuthn, including an overview of the documentation structure, key concepts, and step-by-step instructions for integrating passkey authentication into your Django project.
@@ -9,6 +6,7 @@
     :title: Getting started overview
     :description: Learn how to get started with Django OTP WebAuthn, including an overview of the documentation structure, key concepts, and step-by-step instructions for integrating passkey authentication into your Django project.
 
+.. _getting-started:
 
 Getting started
 ===============

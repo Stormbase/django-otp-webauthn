@@ -1,5 +1,3 @@
-.. _configure_related_origins:
-
 .. index::
     single: related origin
 
@@ -11,7 +9,7 @@
     :title: Share passkeys between domains (related origins)
     :description: Configure Django OTP WebAuthn to share passkeys across multiple related domains using WebAuthn related origins and the well-known endpoint.
 
-
+.. _configure_related_origins:
 
 How-to: share passkeys between domains (related origins)
 ========================================================

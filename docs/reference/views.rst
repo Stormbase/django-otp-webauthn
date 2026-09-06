@@ -1,5 +1,3 @@
-.. _views:
-
 :og:title: Django OTP WebAuthn views reference
 :og:description: Reference for Django OTP WebAuthn views used for passkey registration, authentication, verification, and WebAuthn-related endpoints.
 :og:image:alt: Reference for Django OTP WebAuthn views used for passkey registration, authentication, verification, and WebAuthn-related endpoints.
@@ -8,6 +6,7 @@
     :title: Django OTP WebAuthn views reference
     :description: Reference for Django OTP WebAuthn views used for passkey registration, authentication, verification, and WebAuthn-related endpoints.
 
+.. _views:
 
 Reference: views
 ================

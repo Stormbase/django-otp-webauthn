@@ -1,5 +1,3 @@
-.. _ref_configuration:
-
 :og:title: Django OTP WebAuthn configuration reference
 :og:description: Setting and configuration options in Django OTP WebAuthn to customize the behaviors of WebAuthn, including attestation conveyance preference, relying party ID, and relying party name.
 :og:image:alt: Setting and configuration options in Django OTP WebAuthn to customize the behaviors of WebAuthn, including attestation conveyance preference, relying party ID, and relying party name.
@@ -7,6 +5,8 @@
 .. meta::
     :title: Django OTP WebAuthn configuration reference
     :description: Setting and configuration options in Django OTP WebAuthn to customize the behaviors of WebAuthn, including attestation conveyance preference, relying party ID, and relying party name.
+
+.. _ref_configuration:
 
 Reference: configuration
 ========================
