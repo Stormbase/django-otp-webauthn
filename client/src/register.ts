@@ -1,7 +1,7 @@
 import { State, Config, StatusEnum } from "./types";
 import { getConfig } from "./utils";
 import {
-  browserSupportsWebAuthn,
+  browserSupportsPasskeys,
   startRegistration,
   WebAuthnError,
 } from "@simplewebauthn/browser";
@@ -345,7 +345,7 @@ import {
 
     const config = await getConfig();
 
-    if (!browserSupportsWebAuthn()) {
+    if (!browserSupportsPasskeys()) {
       await setPasskeyRegisterVisible(false);
       return;
     } else {

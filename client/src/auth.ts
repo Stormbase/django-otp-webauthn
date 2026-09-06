@@ -1,7 +1,7 @@
 import { State, Config, StatusEnum } from "./types";
 import { getConfig, buildCompleteAuthenticationUrl } from "./utils";
 import {
-  browserSupportsWebAuthn,
+  browserSupportsPasskeys,
   browserSupportsWebAuthnAutofill,
   startAuthentication,
   WebAuthnError,
@@ -575,7 +575,7 @@ import {
       setupPasskeyAutofill(config);
     }
 
-    if (!browserSupportsWebAuthn()) {
+    if (!browserSupportsPasskeys()) {
       await setPasskeyVerificationVisible(false);
     } else {
       await setPasskeyVerificationVisible(true);
