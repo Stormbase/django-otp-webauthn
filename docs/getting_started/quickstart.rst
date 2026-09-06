@@ -1,5 +1,3 @@
-.. _quickstart:
-
 :og:title: Getting started with Django OTP WebAuthn
 :og:description: Install and configure Django OTP WebAuthn in your Django project, register passkeys, enable passwordless login, and complete your first WebAuthn integration.
 :og:image:alt: Install and configure Django OTP WebAuthn in your Django project, register passkeys, enable passwordless login, and complete your first WebAuthn integration.
@@ -7,6 +5,8 @@
 .. meta::
     :title: Getting started with Django OTP WebAuthn
     :description: Install and configure Django OTP WebAuthn in your Django project, register passkeys, enable passwordless login, and complete your first WebAuthn integration.
+
+.. _quickstart:
 
 Getting started: quickstart
 ===========================

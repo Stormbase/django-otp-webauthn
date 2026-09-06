@@ -1,5 +1,3 @@
-.. _customize-views:
-
 :og:title: Customize views in Django OTP WebAuthn
 :og:description: Learn how to subclass and customize Django OTP WebAuthn views to modify passkey registration, authentication, and application-specific behavior.
 :og:image:alt: Learn how to subclass and customize Django OTP WebAuthn views to modify passkey registration, authentication, and application-specific behavior.
@@ -8,6 +6,7 @@
     :title: Customize views in Django OTP WebAuthn
     :description: Learn how to subclass and customize Django OTP WebAuthn views to modify passkey registration, authentication, and application-specific behavior.
 
+.. _customize-views:
 
 How-to: customize views
 =======================

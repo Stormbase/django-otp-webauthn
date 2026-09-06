@@ -1,5 +1,3 @@
-.. _howto-identify-passkeys:
-
 :og:title: How-to identify passkeys
 :og:description: Step-by-step guide to help you identify the authenticator that created a Passkey, such as Apple Passwords, Yubikey, or Android, in Django OTP WebAuthn.
 :og:image:alt: Step-by-step guide to help you identify the authenticator that created a Passkey, such as Apple Passwords, Yubikey, or Android, in Django OTP WebAuthn.
@@ -8,6 +6,7 @@
     :title: How-to identify passkeys
     :description: Step-by-step guide to help you identify the authenticator that created a Passkey, such as Apple Passwords, Yubikey, or Android, in Django OTP WebAuthn
 
+.. _howto-identify-passkeys:
 
 How-to: identify passkeys
 =========================
