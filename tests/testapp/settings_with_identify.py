@@ -1,9 +1,10 @@
 from sandbox.settings import *  # noqa: F403
 from sandbox.settings import INSTALLED_APPS, STATICFILES_FINDERS
 
-INSTALLED_APPS += [
-    "django_otp_webauthn.contrib.identify",
-]
+if "django_otp_webauthn.contrib.identify" not in INSTALLED_APPS:
+    INSTALLED_APPS += [
+        "django_otp_webauthn.contrib.identify",
+    ]
 STATICFILES_FINDERS += [
     "django_otp_webauthn.contrib.identify.PasskeyIconsFinder",
 ]
