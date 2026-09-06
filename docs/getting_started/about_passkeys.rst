@@ -1,5 +1,14 @@
 .. _about-passkeys:
 
+:og:title: About passkeys
+:og:description: Learn about passkeys, a secure and convenient alternative to passwords, and how they work in Django OTP WebAuthn.
+:og:image:alt: Learn about passkeys, a secure and convenient alternative to passwords, and how they work in Django OTP WebAuthn.
+
+.. meta::
+    :title: About passkeys
+    :description: Learn about passkeys, a secure and convenient alternative to passwords, and how they work in Django OTP WebAuthn.
+
+
 Getting started: about passkeys
 ===============================
 

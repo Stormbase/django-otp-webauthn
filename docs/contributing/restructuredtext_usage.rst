@@ -1,3 +1,11 @@
+:og:title: reStructuredText guide for Django OTP WebAuthn
+:og:description: Learn the reStructuredText conventions used in the Django OTP WebAuthn documentation, including headings, links, lists, code blocks, and formatting.
+:og:image:alt: Learn the reStructuredText conventions used in the Django OTP WebAuthn documentation, including headings, links, lists, code blocks, and formatting.
+
+.. meta::
+    :title: reStructuredText guide for Django OTP WebAuthn
+    :description: Learn the reStructuredText conventions used in the Django OTP WebAuthn documentation, including headings, links, lists, code blocks, and formatting.
+
 Contributing: reStructuredText usage
 ====================================
 

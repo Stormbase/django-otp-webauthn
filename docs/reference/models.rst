@@ -1,5 +1,13 @@
 .. _models:
 
+:og:title: Django OTP WebAuthn models reference
+:og:description: Explore the Django OTP WebAuthn models for storing WebAuthn credentials, attestations, and persistent user handles, including customization options.
+:og:image:alt: Explore the Django OTP WebAuthn models for storing WebAuthn credentials, attestations, and persistent user handles, including customization options.
+
+.. meta::
+    :title: Django OTP WebAuthn models reference
+    :description: Explore the Django OTP WebAuthn models for storing WebAuthn credentials, attestations, and persistent user handles, including customization options.
+
 Reference: models
 =================
 

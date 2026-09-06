@@ -1,3 +1,11 @@
+:og:title: Django OTP WebAuthn glossary
+:og:description: Understand WebAuthn and passkey terminology with definitions of authentication concepts, credentials, cryptographic terms, and related standards.
+:og:image:alt: Understand WebAuthn and passkey terminology with definitions of authentication concepts, credentials, cryptographic terms, and related standards.
+
+.. meta::
+    :title: Django OTP WebAuthn glossary
+    :description: Understand WebAuthn and passkey terminology with definitions of authentication concepts, credentials, cryptographic terms, and related standards.
+
 Glossary
 ========
 

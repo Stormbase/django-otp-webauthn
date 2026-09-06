@@ -1,5 +1,13 @@
 .. _customize-helper-class:
 
+:og:title: Customize the helper class in Django OTP WebAuthn
+:og:description: Learn how to extend the Django OTP WebAuthn helper class to customize WebAuthn behavior, credential handling, and application integration.
+:og:image:alt: Learn how to extend the Django OTP WebAuthn helper class to customize WebAuthn behavior, credential handling, and application integration.
+
+.. meta::
+    :title: Customize the helper class in Django OTP WebAuthn
+    :description: Learn how to extend the Django OTP WebAuthn helper class to customize WebAuthn behavior, credential handling, and application integration.
+
 How-to: Customize helper class
 ==============================
 
