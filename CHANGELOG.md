@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.11.0a5 - 2026-09-02
+## v0.11.0 - UNRELEASED
 
 ### Security
 
@@ -33,7 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Nothing yet
+- The default JavaScript implementation for interacting with the browser api has been updated to use [`@simplewebauthn/browser` v14.0.0](https://github.com/MasterKale/SimpleWebAuthn/releases/tag/v14.0.0)
+  - Our implementation switches to using the new `browserSupportsPasskeys()` method in v14 to more robustly detect whether the browser supports features that yield a good user experience
 
 ### Fixed
 
