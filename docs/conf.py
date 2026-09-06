@@ -40,6 +40,11 @@ myst_enable_extensions = [
 if on_rtd or os.environ.get("BUILD_LLMS_TXT", ""):
     extensions.append("sphinx_llm.txt")
 
+# https://github.com/NVIDIA/sphinx-llm
+llms_txt_description = "Django library for adding WebAuthn passkeys and passwordless authentication as a django-otp plugin."
+
+# OpenGraph
+# https://sphinxext-opengraph.readthedocs.io/en/latest/
 ogp_social_cards = {
     "enable": os.environ.get("ENABLE_SOCIAL_CARDS", "1" if on_rtd else "0") == "1",
 }
