@@ -120,7 +120,6 @@ To quickly start using Passkeys in your Django project, follow these steps:
    # This is used to check the origin of the request and is used for security. It is similar to Django's CSRF_TRUSTED_ORIGINS setting.
    # The origins must always be a subdomain of the RP ID or the RP ID itself.
    OTP_WEBAUTHN_ALLOWED_ORIGINS = ["http://localhost:8000"]
-
    ```
 
 6. Add `django_otp_webauthn.backends.WebAuthnBackend` to `AUTHENTICATION_BACKENDS` in your Django settings. This step is required to make 'passwordless authentication' work.
@@ -232,24 +231,34 @@ Two abstract base models exist with all of the required fields and methods imple
 
 ```python
 from django.db import models
-from django_otp_webauthn.models import AbstractWebAuthnAttestation, AbstractWebAuthnCredential
+from django_otp_webauthn.models import (
+    AbstractWebAuthnAttestation,
+    AbstractWebAuthnCredential,
+)
+
 
 class MyCredential(AbstractWebAuthnCredential):
     pass
 
 
 class MyAttestation(AbstractWebAuthnAttestation):
-    credential=models.OneToOneField(MyCredential, on_delete=models.CASCADE, related_name="attestation", editable=False)
+    credential = models.OneToOneField(
+        MyCredential,
+        on_delete=models.CASCADE,
+        related_name="attestation",
+        editable=False,
+    )
 ```
 
 The `AbstractWebAuthnCredential` model creates an index with a name which includes the concrete model's name with `_sha256_idx` appended to the end. If this combination is longer than 30 characters then you will also need to override the index on your credential model to ensure an appropriate length for the index name.
 
 ```python
 class MyCredentialModelWithALongName(AbstractWebAuthnCredential):
-
     class Meta:
         indexes = [
-            models.Index(fields=["credential_id_sha256"], name="mycredential_id_sha256_idx"),
+            models.Index(
+                fields=["credential_id_sha256"], name="mycredential_id_sha256_idx"
+            ),
         ]
 ```
 
@@ -259,9 +268,14 @@ You can also override only the attestation model without any changes to the cred
 from django.db import models
 from django_otp_webauthn.models import AbstractWebAuthnAttestation
 
-class MyAttestation(AbstractWebAuthnAttestation):
-    credential=models.OneToOneField("otp_webauthn.WebAuthnCredential", on_delete=models.CASCADE, related_name="swapped_attestation", editable=False)
 
+class MyAttestation(AbstractWebAuthnAttestation):
+    credential = models.OneToOneField(
+        "otp_webauthn.WebAuthnCredential",
+        on_delete=models.CASCADE,
+        related_name="swapped_attestation",
+        editable=False,
+    )
 ```
 
 ## What exactly is a Passkey?
