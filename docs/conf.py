@@ -42,6 +42,7 @@ if on_rtd or os.environ.get("BUILD_LLMS_TXT", ""):
 
 # https://github.com/NVIDIA/sphinx-llm
 llms_txt_description = "Django library for adding WebAuthn passkeys and passwordless authentication as a django-otp plugin."
+llms_txt_suppress_unknown_node_warnings = ["meta", "sidebar", "PassthroughTextElement"]
 
 # OpenGraph
 # https://sphinxext-opengraph.readthedocs.io/en/latest/
