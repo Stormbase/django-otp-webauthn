@@ -42,9 +42,6 @@ if on_rtd or os.environ.get("BUILD_LLMS_TXT", ""):
 
 # https://github.com/NVIDIA/sphinx-llm
 llms_txt_description = "Django library for adding WebAuthn passkeys and passwordless authentication as a django-otp plugin."
-# The Markdown builder used for llms.txt can't render these nodes and leaves
-# them out, which sphinx-llm >= 1.1 reports as warnings (sphinx-llm issue 161).
-# A list rather than True, so that newly unsupported nodes still fail the build.
 llms_txt_suppress_unknown_node_warnings = ["meta", "sidebar", "PassthroughTextElement"]
 
 # OpenGraph
