@@ -167,9 +167,9 @@ ini_options.addopts = "--reuse-db"
 ini_options.DJANGO_SETTINGS_MODULE = "settings"
 
 [tool.coverage]
-run.branch = true
-run.omit = [ "*/migrations/*", "*/tests/*" ]
 run.source_pkgs = [ "django_otp_webauthn" ]
+run.omit = [ "*/migrations/*", "*/tests/*" ]
+run.branch = true
 report.exclude_lines = [
   # Don't complain about abstract methods, they aren't run:
   "@(abc.)?abstractmethod",
