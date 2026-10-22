@@ -32,7 +32,7 @@ This package provides an implementation of [WebAuthn Passkeys](https://passkeys.
 ## Compatibility
 
 - Django >= 5.2
-- Python >= 3.10
+- Python >= 3.11
 - django-otp >= 1.4.0
 
 ### Browser compatibility
