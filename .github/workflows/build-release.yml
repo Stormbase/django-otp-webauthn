@@ -31,7 +31,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version-file: ".nvmrc"
           package-manager-cache: false # No cache to avoid cache poisoning attacks
@@ -45,7 +45,7 @@ jobs:
           yarn build
 
       - name: Upload static assets
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: static-assets
           path: src/django_otp_webauthn/static/django_otp_webauthn/
@@ -79,7 +79,7 @@ jobs:
           /bin/sh ./scripts/compile_translations.sh
 
       - name: Upload compiled message catalogs
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: compiled-message-catalogs
           if-no-files-found: error
@@ -102,13 +102,13 @@ jobs:
           python-version: "3.x"
 
       - name: Download compiled message catalogs
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: compiled-message-catalogs
           # Download to the same relative path so they can be easily merged back into the source tree
 
       - name: Download static assets
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: static-assets
           path: src/django_otp_webauthn/static/django_otp_webauthn/
@@ -129,7 +129,7 @@ jobs:
         run: |
           python .github/extract_changelog.py $TAG > RELEASE_NOTES.md
       - name: Upload distribution files and release notes
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: release-assets
           path: |
@@ -151,7 +151,7 @@ jobs:
           python-version: "3.x"
 
       - name: Download release artifacts
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: release-assets
 
@@ -182,7 +182,7 @@ jobs:
       artifact-metadata: write # Need to create attestation storage record
     steps:
       - name: Download release assets
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           name: release-assets
       - name: Create GitHub Release ${{ github.ref_name }}
