@@ -38,7 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Nothing yet
+- Fixed an `AttributeError` in async views for users who logged in with a Passkey. `WebAuthnBackend` now implements `aget_user()` and `aauthenticate()`, which Django uses for `request.auser()` and `django.contrib.auth.aauthenticate()`. They call `get_user()` and `authenticate()`, so subclasses that override the sync methods get the same behavior in async code.
 
 ### Removed
 

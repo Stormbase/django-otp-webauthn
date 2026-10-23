@@ -1,5 +1,9 @@
+from http.cookies import SimpleCookie
+
 import jsonschema
 import pytest
+from asgiref.sync import async_to_sync
+from django.test import AsyncClient
 from django.urls import reverse
 from webauthn import base64url_to_bytes
 
@@ -196,6 +200,49 @@ def test_authentication_complete__anonymous_user_passwordless_login_allowed(
     )
     # Signaled that user details sync is needed
     assert session["otp_webauthn_sync_needed"] is True
+
+
+def passwordless_login(*, api_client, settings, user):
+    """Log the user in with a Passkey through the authentication complete view."""
+    settings.OTP_WEBAUTHN_ALLOW_PASSWORDLESS_LOGIN = True
+    payload, _, _ = setup_complete_authentication(api_client=api_client, user=user)
+    response = api_client.post(
+        reverse("otp_webauthn:credential-authentication-complete"),
+        data=payload,
+        content_type="application/json",
+    )
+    assert response.status_code == 200, response.json()
+
+
+@pytest.mark.django_db
+def test_authentication_complete__passwordless_login_then_async_view(
+    api_client, settings, user
+):
+    """Test that a user who logged in with a Passkey can access an async view."""
+    passwordless_login(api_client=api_client, settings=settings, user=user)
+
+    response = api_client.get(reverse("testsuite:async-login-required"))
+
+    assert response.status_code == 200
+    assert response.json() == {"user_id": user.pk}
+
+
+@pytest.mark.django_db
+def test_authentication_complete__passwordless_login_then_async_view_over_asgi(
+    api_client, settings, user
+):
+    """Test that a user who logged in with a Passkey can access an async view
+    when the whole request is handled asynchronously."""
+    passwordless_login(api_client=api_client, settings=settings, user=user)
+    async_client = AsyncClient()
+    async_client.cookies = SimpleCookie(api_client.cookies)
+
+    response = async_to_sync(async_client.get)(
+        reverse("testsuite:async-login-required")
+    )
+
+    assert response.status_code == 200
+    assert response.json() == {"user_id": user.pk}
 
 
 @pytest.mark.django_db

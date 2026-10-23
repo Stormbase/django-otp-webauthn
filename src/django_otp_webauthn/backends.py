@@ -1,5 +1,6 @@
 from typing import Any
 
+from asgiref.sync import sync_to_async
 from django.contrib.auth import get_user_model
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.http import HttpRequest
@@ -23,12 +24,25 @@ class WebAuthnBackend:
             return user if self.user_can_authenticate(user) else None
         return None
 
+    async def aauthenticate(
+        self,
+        request: HttpRequest,
+        webauthn_credential: AbstractWebAuthnCredential | None = None,
+        **kwargs: Any,
+    ) -> AbstractBaseUser | None:
+        return await sync_to_async(self.authenticate)(
+            request, webauthn_credential=webauthn_credential, **kwargs
+        )
+
     def get_user(self, user_id) -> AbstractBaseUser | None:
         try:
             user = UserModel._default_manager.get(pk=user_id)
         except UserModel.DoesNotExist:
             return None
         return user if self.user_can_authenticate(user) else None
+
+    async def aget_user(self, user_id) -> AbstractBaseUser | None:
+        return await sync_to_async(self.get_user)(user_id)
 
     def user_can_authenticate(self, user: AbstractBaseUser | None) -> bool:
         """
